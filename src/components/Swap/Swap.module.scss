@@ -1,0 +1,126 @@
+.swap {
+    width: 100%;
+
+    &Asset {
+        padding: 15px;
+
+        &>.info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 9px;
+            
+            & > div {
+                display: flex;
+                gap: 4px;
+                align-items: center;
+
+                & > span {
+                    color: var(--tg-theme-hint-color);
+                }
+            }
+
+            &>span {
+                color: var(--tg-theme-hint-color);
+            }
+        }
+
+        &>.data {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+
+            &>div {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+
+                &>svg {
+                    width: 32px;
+                    height: 32px;
+                }
+
+                &>span {
+                    font-size: 26px;
+                    color: var(--tg-theme-text-color);
+                    font-weight: 500;
+                }
+            }
+
+            &>input {
+                background-color: transparent;
+                border: none;
+                text-align: right;
+                font-size: 26px;
+                color: var(--tg-theme-text-color);
+                padding: 0;
+                font-weight: 500;
+                width: 100%;
+
+                &:focus {
+                    outline: none;
+                }
+
+                &::placeholder {
+                    color: var(--tg-theme-hint-color);
+                }
+            }
+        }
+
+        &>span {
+            display: flex;
+            justify-content: right;
+            color: var(--tg-theme-hint-color);
+        }
+    }
+}
+
+.separator {
+    position: relative;
+    width: 100%;
+    height: 2px;
+    background-color: var(--tg-theme-secondary-bg-color);
+
+    &>div {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 42px;
+        height: 42px;
+        background-color: var(--tg-theme-bg-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &>div {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+
+            &>svg {
+                width: 24px;
+                height: 24px;
+            }
+        }
+    }
+}
+
+.btn {
+    position: fixed;
+    border: none;
+    text-transform: uppercase;
+    width: 100%;
+    color: var(--tg-theme-button-text-color);
+    color: var(--tg-theme-hint-color);
+    height: 48px;
+    font-size: 14px;
+    background-color: var(--tg-theme-button-color);
+    background-color: var(--tg-theme-secondary-bg-color);
+    opacity: 0.75;
+    bottom: 0;
+    text-align: center;
+}
