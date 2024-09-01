@@ -10,9 +10,12 @@
   },
   "dependencies": {
     "@tonconnect/ui-react": "^2.0.9",
+    "classnames": "^2.5.1",
     "hex2rgba": "^0.0.1",
+    "lottie-web": "^5.12.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.1",
     "sass": "^1.77.8"
   },
   "devDependencies": {

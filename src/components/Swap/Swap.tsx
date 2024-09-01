@@ -5,11 +5,11 @@ import WalletIcon from '../../assets/svg/wallet.svg?react'
 import ArrowIcon from '../../assets/svg/arrow.svg?react'
 import hex2rgba from 'hex2rgba'
 
-interface ISwap {
-    theme: Telegram['WebApp']['themeParams']
-}
+import { TonConnectButton } from '@tonconnect/ui-react'
 
-export default function Swap({ theme }: ISwap) {
+export default function Swap() {
+    const theme = Telegram.WebApp.themeParams
+
     return (
         <>
             <div className={styles.swap}>
@@ -55,7 +55,7 @@ export default function Swap({ theme }: ISwap) {
                     <span className={styles.quote}>$0</span>
                 </div>
             </div>
-            <button className={styles.btn}>Enter an amount</button>
+            <TonConnectButton className={styles.btn} />
         </>
     )
 }

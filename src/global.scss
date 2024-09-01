@@ -6,10 +6,25 @@
 
 a {
   text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  background-color: var(--tg-theme-bg-color);
+  background-color: var(--tg-theme-section-bg-color);
+  height: 100vh;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+main {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: auto;
 }
 
 ul {

@@ -8,13 +8,13 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 9px;
-            
-            & > div {
+
+            &>div {
                 display: flex;
                 gap: 4px;
                 align-items: center;
 
-                & > span {
+                &>span {
                     color: var(--tg-theme-hint-color);
                 }
             }
@@ -88,7 +88,7 @@
         transform: translate(-50%, -50%);
         width: 42px;
         height: 42px;
-        background-color: var(--tg-theme-bg-color);
+        background-color: var(--tg-theme-section-bg-color);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -110,17 +110,28 @@
 }
 
 .btn {
-    position: fixed;
-    border: none;
-    text-transform: uppercase;
-    width: 100%;
-    color: var(--tg-theme-button-text-color);
-    color: var(--tg-theme-hint-color);
-    height: 48px;
-    font-size: 14px;
-    background-color: var(--tg-theme-button-color);
-    background-color: var(--tg-theme-secondary-bg-color);
-    opacity: 0.75;
-    bottom: 0;
-    text-align: center;
+    width: 100% !important;
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+
+    &>div {
+        width: calc(100% - 30px);
+
+        &>tc-root>button {
+            border: none;
+            text-transform: uppercase;
+            height: 48px;
+            background-color: var(--tg-theme-button-color);
+            border-radius: 12px;
+            width: 100%;
+            justify-content: center;
+
+            &>div {
+                color: var(--tg-theme-button-text-color);
+                font-size: 14px;
+            }
+        }
+    }
 }
