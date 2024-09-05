@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tonconnect/sdk": "^3.0.5",
     "@tonconnect/ui-react": "^2.0.9",
     "classnames": "^2.5.1",
     "hex2rgba": "^0.0.1",

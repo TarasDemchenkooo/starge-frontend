@@ -2,11 +2,12 @@ import styles from './Menu.module.scss'
 import TransactionIcon from '../../assets/svg/tx.svg?react'
 import SwapIcon from '../../assets/svg/swap.svg?react'
 import SettingsIcon from '../../assets/svg/settings.svg?react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 
 export default function Menu() {
     const { pathname } = useLocation()
+    const navigate = useNavigate()
 
     function checkLinkState(path: string) {
         return classNames({
@@ -17,20 +18,23 @@ export default function Menu() {
 
     return (
         <div className={styles.menu}>
-            <Link className={checkLinkState('/')} to='/'>
+            <button className={checkLinkState('/')}
+                onClick={() => navigate('/')} >
                 <SwapIcon />
                 <span>Swap</span>
-            </Link>
+            </button>
 
-            <Link className={checkLinkState('/history')} to='/history'>
+            <button className={checkLinkState('/history')}
+                onClick={() => navigate('/history')}>
                 <TransactionIcon />
                 <span>History</span>
-            </Link>
+            </button>
 
-            <Link className={checkLinkState('/settings')} to='/settings'>
+            <button className={checkLinkState('/settings')}
+                onClick={() => navigate('/settings')} >
                 <SettingsIcon />
                 <span>Settings</span>
-            </Link>
+            </button>
         </div>
     )
 }

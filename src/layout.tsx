@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import Menu from "./components/Menu/Menu"
+import Menu from "./modules/Menu/Menu"
 
 interface ILayout {
     children: ReactNode

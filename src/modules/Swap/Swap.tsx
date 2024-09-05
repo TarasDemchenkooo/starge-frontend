@@ -3,9 +3,8 @@ import TonLogo from '../../assets/svg/ton-logo.svg?react'
 import StarsLogo from '../../assets/svg/stars-logo.svg?react'
 import WalletIcon from '../../assets/svg/wallet.svg?react'
 import ArrowIcon from '../../assets/svg/arrow.svg?react'
+import TonButtonIcon from '../../assets/svg/ton-button.svg?react'
 import hex2rgba from 'hex2rgba'
-
-import { TonConnectButton } from '@tonconnect/ui-react'
 
 export default function Swap() {
     const theme = Telegram.WebApp.themeParams
@@ -54,8 +53,11 @@ export default function Swap() {
                     </div>
                     <span className={styles.quote}>$0</span>
                 </div>
+                <button className={styles.btn}>
+                    <TonButtonIcon />
+                    Connect wallet
+                </button>
             </div>
-            <TonConnectButton className={styles.btn} />
         </>
     )
 }
