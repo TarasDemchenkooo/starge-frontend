@@ -6,7 +6,7 @@
     align-items: center;
     justify-content: space-around;
 
-    &>.linkDefault {
+    &LinkDefault {
         border: none;
         background-color: transparent;
         padding: 0;
@@ -33,7 +33,7 @@
         }
     }
 
-    &>.linkActive {
+    &LinkActive {
         color: var(--tg-theme-link-color);
 
         &>svg {

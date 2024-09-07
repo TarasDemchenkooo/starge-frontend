@@ -8,7 +8,7 @@
     &Asset {
         padding: 15px;
 
-        &>.info {
+        &Info {
             display: flex;
             justify-content: space-between;
             margin-bottom: 9px;
@@ -28,7 +28,7 @@
             }
         }
 
-        &>.data {
+        &Data {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -71,66 +71,56 @@
             }
         }
 
-        &>span {
+        &Quote {
             display: flex;
             justify-content: right;
             color: var(--tg-theme-hint-color);
         }
     }
-}
 
-.separator {
-    position: relative;
-    width: 100%;
-    height: 2px;
-    background-color: var(--tg-theme-secondary-bg-color);
-
-    &>div {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        width: 42px;
-        height: 42px;
-        background-color: var(--tg-theme-section-bg-color);
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    &Separator {
+        position: relative;
+        width: 100%;
+        height: 2px;
+        background-color: var(--tg-theme-secondary-bg-color);
 
         &>div {
-            width: 36px;
-            height: 36px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 42px;
+            height: 42px;
+            background-color: var(--tg-theme-section-bg-color);
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
 
-            &>svg {
-                width: 24px;
-                height: 24px;
+            &>div {
+                width: 36px;
+                height: 36px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+
+                &>svg {
+                    width: 24px;
+                    height: 24px;
+                }
             }
         }
     }
-}
 
-.btn {
-    width: calc(100% - 30px);
-    margin-top: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 15px;
-    border: none;
-    text-transform: uppercase;
-    height: 48px;
-    background-color: var(--tg-theme-button-color);
-    border-radius: 12px;
-    color:  var(--tg-theme-button-text-color);
-    font-weight: 600;
-    font-size: 14px;
+    &Connect {
+        margin-top: auto;
+        width: calc(100% - 30px) !important;
+        margin-bottom: 15px;
+    }
 
-    & > svg {
-        width: 28px;
-        height: 28px;
+    &Btn {
+        margin-top: auto;
+        margin-bottom: 15px;
+        width: calc(100% - 30px);
     }
 }

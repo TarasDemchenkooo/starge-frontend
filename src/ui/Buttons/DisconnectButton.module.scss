@@ -1,0 +1,28 @@
+.disconnect {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 48px;
+    border: none;
+    gap: 4px;
+    text-transform: uppercase;
+    background-color: var(--tg-theme-destructive-text-color);
+    border-radius: 12px;
+
+    &>span:first-child {
+        font-weight: 600;
+        font-size: 14px;
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        color: var(--tg-theme-button-text-color);
+    }
+
+    &>span:last-child {
+        color: var(--tg-theme-button-text-color);
+        font-size: 12px;
+        text-transform: none;
+        font-weight: 500;
+    }
+}

@@ -25,36 +25,27 @@
             color: var(--tg-theme-hint-color);
             margin-bottom: 32px;
         }
+    }
 
-        &>div {
-            width: 100% !important;
-            margin-bottom: 20px;
+    &Connect {
+        margin-top: auto;
+        width: 100% !important;
+        margin-bottom: 15px;
+        display: flex;
+    }
 
-            &>div>tc-root>button {
-                border: none;
-                text-transform: uppercase;
-                height: 48px;
-                background-color: var(--tg-theme-button-color);
-                border-radius: 12px;
-                width: 100%;
-                justify-content: center;
-
-                &>div {
-                    color: var(--tg-theme-button-text-color);
-                    font-size: 14px;
-                }
-            }
-        }
+    &Disconnect {
+        margin-bottom: 15px;
     }
 
     &App {
         background-color: var(--tg-theme-section-bg-color);
-        margin-top: -20px;
+        margin-top: -15px;
         border-top-right-radius: 12px;
         border-top-left-radius: 12px;
         padding: 15px 0;
 
-        & > h3 {
+        &>h3 {
             color: var(--tg-theme-link-color);
             font-weight: 500;
             font-size: 16px;
@@ -70,7 +61,7 @@
             position: relative;
             margin-right: 22px;
 
-            & > div {
+            &>div {
                 width: 20px;
                 height: 20px;
                 border-radius: 50%;
@@ -83,32 +74,32 @@
             }
         }
 
-        & > div {
+        &>div {
             display: flex;
             align-items: center;
             gap: 15px;
             padding-left: 15px;
             transition: background-color 0.2s ease-in-out;
 
-            & > svg {
+            &>svg {
                 width: 32px;
                 height: 32px;
                 flex-shrink: 0;
             }
 
-            &:nth-child(3) > svg {
+            &:nth-child(3)>svg {
                 padding: 4px;
             }
 
-            &:nth-child(4) > svg {
+            &:nth-child(4)>svg {
                 padding: 1px;
             }
 
-            &:last-child > div {
+            &:last-child>div {
                 border-bottom: none;
             }
 
-            & > div {
+            &>div {
                 width: 100%;
                 border-bottom: 1px solid var(--tg-theme-secondary-bg-color);
                 display: flex;
@@ -116,12 +107,12 @@
                 align-items: center;
                 justify-content: space-between;
 
-                & > div {
+                &>div {
                     display: flex;
                     flex-direction: column;
                     gap: 4px;
 
-                    & > h4 {
+                    &>h4 {
                         font-size: 16px;
                         color: var(--tg-theme-text-color);
                         font-weight: 300;
@@ -129,7 +120,7 @@
                         user-select: none;
                     }
 
-                    & > p {
+                    &>p {
                         margin: 0;
                         color: var(--tg-theme-subtitle-text-color);
                         font-size: 14px;

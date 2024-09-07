@@ -1,8 +1,8 @@
-import { createBrowserRouter } from "react-router-dom"
 import Swap from "./modules/Swap/Swap"
 import History from "./modules/History/History"
 import Settings from "./modules/Settings/Settings"
 import Layout from "./layout"
+import { createBrowserRouter } from "react-router-dom"
 
 export default createBrowserRouter([
     {

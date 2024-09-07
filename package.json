@@ -17,7 +17,10 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.1",
-    "sass": "^1.77.8"
+    "sass": "^1.77.8",
+    "ton": "^13.9.0",
+    "ton-core": "^0.53.0",
+    "ton-crypto": "^3.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
@@ -27,6 +30,7 @@
     "globals": "^15.9.0",
     "typescript": "^5.5.3",
     "vite": "^5.4.1",
+    "vite-plugin-node-polyfills": "^0.22.0",
     "vite-plugin-svgr": "^4.2.0"
   }
 }

@@ -1,12 +1,17 @@
+import hex2rgba from 'hex2rgba'
+import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react'
 import styles from './Settings.module.scss'
 import ThemeIcon from '../../assets/svg/theme.svg?react'
 import NotificationsIcon from '../../assets/svg/notifications.svg?react'
 import VibrationIcon from '../../assets/svg/vibration.svg?react'
-import hex2rgba from 'hex2rgba'
+import TonConnectButtonUI from '../../ui/Buttons/ConnectButton'
+import DisconnectButton from '../../ui/Buttons/DisconnectButton'
 
 export default function Settings() {
     const data = Telegram.WebApp.initDataUnsafe.user
     const theme = Telegram.WebApp.themeParams
+    const address = useTonAddress()
+    const [tonConnect, _] = useTonConnectUI()
 
     function handleTouchStart(event: React.TouchEvent<HTMLDivElement>) {
         event.currentTarget.style.backgroundColor = hex2rgba(theme.hint_color!, 0.1)
@@ -16,16 +21,17 @@ export default function Settings() {
         event.currentTarget.style.backgroundColor = theme.section_bg_color!
     }
 
-    // function handleClick(event: React.TouchEvent<HTMLDivElement>) {
-    //     event.currentTarget.
-    // }
-
     return (
         <div className={styles.settings}>
             <div className={styles.settingsProfile}>
                 <img src={data?.photo_url} alt="User's pfp" />
                 <h3>{`${data?.first_name} ${data?.last_name}`.trim()}</h3>
                 <span>@{data?.username}</span>
+                {address ?
+                    <DisconnectButton address={address} disconnect={() => tonConnect.disconnect()}
+                        className={styles.settingsDisconnect} /> :
+                    <TonConnectButtonUI className={styles.settingsConnect} />
+                }
             </div>
             <div className={styles.settingsApp}>
                 <h3>Settings</h3>

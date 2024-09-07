@@ -1,7 +1,7 @@
 import Lottie from 'lottie-web'
+import { useEffect, useRef } from 'react'
 import styles from './History.module.scss'
 import duckTgSticker from '../../../public/animations-json/duck-tg-sticker.json'
-import { useEffect, useRef } from 'react'
 
 export default function History() {
     const lottieRef = useRef(null)
@@ -22,7 +22,7 @@ export default function History() {
         <div className={styles.history}>
             <h2>Transaction History</h2>
 
-            <div className={styles.info}>
+            <div className={styles.historyInfoNull}>
                 <div ref={lottieRef}></div>
                 <h3>No History Yet</h3>
                 <p>All your transactions will be displayed here.</p>

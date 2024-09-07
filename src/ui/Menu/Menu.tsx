@@ -1,9 +1,9 @@
+import classNames from 'classnames'
+import { useLocation, useNavigate } from 'react-router-dom'
 import styles from './Menu.module.scss'
 import TransactionIcon from '../../assets/svg/tx.svg?react'
 import SwapIcon from '../../assets/svg/swap.svg?react'
 import SettingsIcon from '../../assets/svg/settings.svg?react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import classNames from 'classnames'
 
 export default function Menu() {
     const { pathname } = useLocation()
@@ -11,8 +11,8 @@ export default function Menu() {
 
     function checkLinkState(path: string) {
         return classNames({
-            [styles.linkDefault]: true,
-            [styles.linkActive]: pathname === path
+            [styles.menuLinkDefault]: true,
+            [styles.menuLinkActive]: pathname === path
         })
     }
 
