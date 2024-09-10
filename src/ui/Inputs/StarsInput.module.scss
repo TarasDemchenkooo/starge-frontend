@@ -1,0 +1,17 @@
+.starsInput {
+    background-color: transparent;
+    border: none;
+    text-align: right;
+    font-size: 26px;
+    padding: 0;
+    font-weight: 500;
+    width: 100%;
+
+    &:focus {
+        outline: none;
+    }
+
+    &::placeholder {
+        color: var(--tg-theme-hint-color);
+    }
+}

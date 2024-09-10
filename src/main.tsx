@@ -12,7 +12,7 @@ Telegram.WebApp.disableVerticalSwipes()
 Telegram.WebApp.setHeaderColor(Telegram.WebApp.themeParams.secondary_bg_color!)
 Telegram.WebApp.enableClosingConfirmation()
 
-const manifest = 'https://f670-94-141-125-31.ngrok-free.app/tonconnect-manifest.json'
+const manifest = 'https://751d-141-11-170-116.ngrok-free.app/tonconnect-manifest.json'
 
 const domNode = document.getElementById('root')!
 const root = createRoot(domNode)

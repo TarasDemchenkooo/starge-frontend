@@ -19,16 +19,19 @@ body {
 }
 
 #root {
-  display: flex;
-  flex-direction: column;
   height: 100%;
 }
 
 main {
-  height: 100%;
+  height: calc(100% - 64px);
   display: flex;
   flex-direction: column;
-  margin-bottom: auto;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 
 ul {

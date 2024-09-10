@@ -1,4 +1,4 @@
-import { TonClient } from "ton"
+import { Address, TonClient } from "ton"
 
 class TonService {
     private client: TonClient
@@ -11,6 +11,10 @@ class TonService {
 
     getClient() {
         return this.client
+    }
+
+    async getBalance(address: Address): Promise<number> {
+        return this.client.getBalance(address).then(balance => Number(balance) / 10**9)
     }
 }
 
