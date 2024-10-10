@@ -1,19 +1,9 @@
-import { ReactNode } from "react"
-import Menu from "./ui/Menu/Menu"
-import { THEME, useTonConnectUI } from "@tonconnect/ui-react"
+import { useTonConnectUI } from "@tonconnect/ui-react"
+import Menu from "./shared/components/Menu/components/Menu"
+import UIOptions from "./shared/constants/TonConnectUI"
 
-interface ILayout {
-    children: ReactNode
-}
-
-export default function Layout({ children }: ILayout) {
-    const [_, setOptions] = useTonConnectUI()
-    
-    setOptions({
-        uiPreferences: {
-            theme: Telegram.WebApp.colorScheme === 'light' ? THEME.LIGHT : THEME.DARK
-        }
-    })
+export default function Layout({ children }: { children: React.ReactNode }) {
+    useTonConnectUI()[1](UIOptions)
 
     return (
         <>

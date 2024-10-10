@@ -1,0 +1,57 @@
+.settingsUser {
+    padding: 15px;
+    padding-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--tg-theme-section-bg-color);
+
+
+    &>img,
+    &>div {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        margin-bottom: 10px;
+    }
+
+    &>div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 36px;
+        font-weight: var(--font-weight-bold);
+        color: #fff;
+        background: linear-gradient(0deg, rgba(66, 140, 209, 1) 0%, rgba(90, 173, 246, 1) 100%);
+    }
+
+    &>h3 {
+        color: var(--tg-theme-text-color);
+        font-weight: var(--font-weight-bold);
+        font-size: 20px;
+    }
+
+    &>span {
+        color: var(--tg-theme-hint-color);
+        font-weight: var(--font-weight-default);
+    }
+
+    &Wallet {
+
+        &Connect {
+            margin-top: 32px;
+            font-weight: var(--font-weight-ultra-bold);
+            font-size: 14px;
+            background-color: var(--tg-theme-button-color);
+            width: 100%;
+        }
+
+        &Disconnect {
+            margin-top: 32px;
+            font-weight: var(--font-weight-ultra-bold);
+            font-size: 14px;
+            background-color: var(--tg-theme-destructive-text-color);
+            width: 100%;
+        }
+    }
+}

@@ -1,0 +1,20 @@
+.skeleton {
+
+    &Title {
+        width: 110px;
+        height: 22px;
+        margin-bottom: 10px;
+        border-radius: 6px;
+    }
+
+    &Transaction {
+        height: 70px;
+        border-radius: 12px;
+        width: 100%;
+        margin-bottom: 6px;
+    }
+
+    &Separator {
+        height: 20px;
+    }
+}

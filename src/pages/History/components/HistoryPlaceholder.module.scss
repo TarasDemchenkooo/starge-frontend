@@ -1,0 +1,28 @@
+.historyPlaceholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 75%;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 60px;
+
+    &>div {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 8px;
+    }
+
+    &>h3 {
+        color: var(--tg-theme-text-color);
+        font-weight: var(--font-weight-bold);
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    &>p {
+        color: var(--tg-theme-text-color);
+        font-weight: var(--font-weight-default);
+        font-size: 16px;
+    }
+}

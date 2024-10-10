@@ -1,0 +1,32 @@
+.settingsApp {
+    background-color: var(--tg-theme-bg-color);
+    margin-top: -15px;
+    border-top-right-radius: 12px;
+    border-top-left-radius: 12px;
+    padding: 15px 0;
+
+    &>h3 {
+        color: var(--tg-theme-link-color);
+        font-weight: var(--font-weight-bold);
+        font-size: 16px;
+        margin-bottom: 6px;
+        padding-left: 15px;
+    }
+
+    &>button {
+
+        &:nth-child(2)>svg {
+            padding: 4px;
+            fill: var(--tg-theme-hint-color);
+        }
+
+        &:nth-child(3)>svg {
+            padding: 1px;
+            stroke: var(--tg-theme-hint-color);
+        }
+
+        &:last-child>div {
+            border-bottom: none;
+        }
+    }
+}

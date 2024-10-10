@@ -1,0 +1,59 @@
+.settingsModal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &Duck {
+        width: 90px;
+        height: 90px;
+        margin-bottom: 12px;
+        margin-top: 8px;
+    }
+
+    &Title {
+        font-weight: var(--font-weight-ultra-bold);
+        font-size: 18px;
+        color: var(--tg-theme-text-color);
+        margin-bottom: 4px;
+    }
+
+    &Descr {
+        font-weight: var(--font-weight-bold);
+        font-size: 14px;
+        color: var(--tg-theme-hint-color);
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    &Wallet {
+        border-radius: 12px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding: 10px 12px;
+        background-color: var(--tg-theme-bg-color);
+        margin-bottom: 24px;
+
+        &>h5 {
+            color: var(--tg-theme-hint-color);
+            font-size: 16px;
+            font-weight: var(--font-weight-bold);
+        }
+
+        &Address {
+            font-size: 16px;
+            color: var(--tg-theme-text-color);
+            font-weight: var(--font-weight-bold);
+            width: 100%;
+            text-align: left;
+        }
+    }
+
+    &Confirm {
+        width: 100%;
+        background-color: var(--tg-theme-destructive-text-color);
+        font-weight: var(--font-weight-ultra-bold);
+        font-size: 14px;
+    }
+}

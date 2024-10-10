@@ -1,0 +1,23 @@
+.swap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+
+
+    &Action {
+        width: 100%;
+        padding: 15px;
+        flex-grow: 1;
+        display: flex;
+        align-items: flex-end;
+
+        &Connect {
+            margin-top: auto;
+            font-weight: var(--font-weight-ultra-bold);
+            font-size: 14px;
+            background-color: var(--tg-theme-button-color);
+            width: 100%;
+        }
+    }
+}

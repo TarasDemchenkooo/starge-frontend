@@ -1,0 +1,81 @@
+.targetAsset {
+    padding: 15px;
+    width: 100%;
+
+    &Top {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 12px;
+
+        &>h4 {
+            font-size: 16px;
+            line-height: 16px;
+            color: var(--tg-theme-hint-color);
+            font-weight: var(--font-weight-default);
+        }
+
+        &>div {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+
+            &>svg {
+                fill: var(--tg-theme-hint-color);
+                width: 16px;
+                height: 16px;
+            }
+
+            &>span {
+                font-size: 16px;
+                line-height: 16px;
+                color: var(--tg-theme-hint-color);
+                font-weight: var(--font-weight-default);
+            }
+        }
+    }
+
+    &Middle {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+
+        &>div {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            &>svg {
+                width: 32px;
+                height: 32px;
+            }
+
+            &>span {
+                font-size: 26px;
+                line-height: 26px;
+                color: var(--tg-theme-text-color);
+                font-weight: var(--font-weight-bold);
+            }
+        }
+    }
+
+    &Bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+
+        &Price {
+            color: var(--tg-theme-hint-color);
+            font-size: 14px;
+            line-height: 14px;
+            font-weight: var(--font-weight-default);
+        }
+
+        &Quote {
+            font-size: 16px;
+            line-height: 16px;
+            color: var(--tg-theme-hint-color);
+            font-weight: var(--font-weight-default);
+        }
+    }
+}

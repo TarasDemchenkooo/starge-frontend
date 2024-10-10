@@ -1,0 +1,47 @@
+.sourceAsset {
+    padding: 15px;
+    width: 100%;
+
+    &>h4 {
+        font-size: 16px;
+        line-height: 16px;
+        color: var(--tg-theme-hint-color);
+        font-weight: var(--font-weight-default);
+        margin-bottom: 12px;
+    }
+
+    &>div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+
+        &>div {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            &>svg {
+                width: 32px;
+                height: 32px;
+            }
+
+            &>span {
+                font-size: 26px;
+                line-height: 26px;
+                text-transform: uppercase;
+                color: var(--tg-theme-text-color);
+                font-weight: var(--font-weight-bold);
+            }
+        }
+    }
+
+    &>span {
+        font-size: 16px;
+        line-height: 16px;
+        color: var(--tg-theme-hint-color);
+        font-weight: var(--font-weight-default);
+        display: flex;
+        justify-content: flex-end;
+    }
+}
