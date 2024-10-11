@@ -6,7 +6,7 @@ import { useEffect, useState } from "react"
 import CloseIcon from '../../../../assets/svg/close.svg?react'
 import vibrate from "../../../../utils/vibration"
 
-export default function Modal({ setModalStatus, children, closeRequest }: IModal) {
+export default function Modal({ setModalStatus, children, closeRequest, closeButton = false }: IModal) {
     const [isActive, setIsActive] = useState(false)
 
     const modalClassnames = classNames({
@@ -53,9 +53,11 @@ export default function Modal({ setModalStatus, children, closeRequest }: IModal
                     className={modalClassnames} onClick={backgroundClose}>
                     <div className={modalContentClassnames}>
                         {children}
-                        <button onClick={closeModal}>
-                            <CloseIcon />
-                        </button>
+                        {closeButton &&
+                            <button onClick={closeModal}>
+                                <CloseIcon />
+                            </button>
+                        }
                     </div>
                 </div>
             ), document.getElementById('modal-root')!)

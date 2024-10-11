@@ -1,23 +1,32 @@
 import styles from './Swap.module.scss'
-import AssetSeparator from './AssetSeparator'
+import ArrowIcon from '../../../assets/svg/arrow.svg?react'
 import SourceAsset from './SourceAsset'
 import SwapButton from './SwapButton'
 import TargetAsset from './TargetAsset'
-import { useTonConnectModal, useTonConnectUI } from '@tonconnect/ui-react'
+import { useTonAddress, useTonConnectModal } from '@tonconnect/ui-react'
 import Button from '../../../shared/components/Button/components/Button'
 import TonButtonIcon from '../../../assets/svg/ton-button.svg?react'
+import useRegisterUser from '../hooks/useRegisterUser'
+import useTargetAsset from '../hooks/useTargetAsset'
 
 export default function Swap() {
-    const { connected } = useTonConnectUI()[0]
+    const address = useTonAddress()
+    const isUserRegistered = useRegisterUser()
+    const { targetAsset, isLoading } = useTargetAsset()
     const { open } = useTonConnectModal()
 
-    return (
+    return !isUserRegistered || isLoading ? 'pizda' : (
         <div className={styles.swap}>
             <SourceAsset />
-            <AssetSeparator />
-            <TargetAsset />
+            <div className={styles.swapSeparator}>
+                <div>
+                    <div></div>
+                    <ArrowIcon />
+                </div>
+            </div>
+            <TargetAsset targetAsset={targetAsset!} />
             <div className={styles.swapAction}>
-                {connected ? <SwapButton /> :
+                {address ? <SwapButton /> :
                     <Button className={styles.swapActionConnect} onClick={open}>
                         <TonButtonIcon />
                         Connect wallet

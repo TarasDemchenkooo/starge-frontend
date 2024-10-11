@@ -1,0 +1,16 @@
+{
+    "jettons": [
+        {
+            "name": "Toncoin",
+            "symbol": "TON",
+            "icon": "/images/toncoin.svg",
+            "ca": ""
+        },
+        {
+            "name": "Tether",
+            "symbol": "USDT",
+            "icon": "/images/tether.svg",
+            "ca": "EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs"
+        }
+    ]
+}

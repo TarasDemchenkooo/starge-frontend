@@ -5,18 +5,18 @@ import { useEffect, useState } from "react"
 export default function useAvatar(id: number) {
     const [avatarUrl, setAvatarUrl] = useState('')
 
-    const { data, isLoading } = useQuery({
+    const { data, isLoading, isError } = useQuery({
         queryKey: ['avatar'],
         queryFn: () => getAvatar(id),
         select: data => data.data
     })
 
     useEffect(() => {
-        if (data) {
+        if (!isError && !isLoading) {
             const imageUrl = URL.createObjectURL(data)
             setAvatarUrl(imageUrl)
         }
-    }, [data])
+    }, [isLoading])
 
     return { avatarUrl, isLoading }
 }

@@ -1,0 +1,32 @@
+.assetsModal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 0;
+
+    &>h3 {
+        align-self: flex-start;
+        font-size: 20px;
+        line-height: 20px;
+        margin: 0 0 16px 16px;
+        color: var(--tg-theme-text-color);
+        font-weight: var(--font-weight-bold);
+    }
+
+    &>div {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 24px;
+        width: 100%;
+
+        &>button:last-child>div {
+            border-bottom: none;
+        }
+    }
+
+    &>button {
+        width: calc(100% - 32px);
+        background-color: var(--tg-theme-button-color);
+        font-weight: var(--font-weight-bold);
+    }
+}

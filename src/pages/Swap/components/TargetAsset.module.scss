@@ -45,9 +45,10 @@
             align-items: center;
             gap: 12px;
 
-            &>svg {
+            &>img {
                 width: 32px;
                 height: 32px;
+                border-radius: 50%;
             }
 
             &>span {
@@ -55,6 +56,36 @@
                 line-height: 26px;
                 color: var(--tg-theme-text-color);
                 font-weight: var(--font-weight-bold);
+            }
+
+            &>div {
+                position: relative;
+                width: 10px;
+                height: 18px;
+
+
+                &::before,
+                &::after {
+                    content: '';
+                    position: absolute;
+                    background-color: var(--tg-theme-hint-color);
+                    left: 0;
+                    width: 12px;
+                    height: 3px;
+                    border-radius: 2px;
+                }
+
+                &::before {
+                    transform: rotate(-60deg) translateY(100%);
+                    transform-origin: bottom left;
+                    bottom: 0;
+                }
+
+                &::after {
+                    transform: rotate(60deg) translateY(-100%);
+                    transform-origin: top left;
+                    top: 0;
+                }
             }
         }
     }

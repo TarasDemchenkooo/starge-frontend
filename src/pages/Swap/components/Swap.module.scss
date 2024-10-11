@@ -4,6 +4,43 @@
     align-items: center;
     flex-grow: 1;
 
+    &Separator {
+        position: relative;
+        width: 100%;
+        height: 2px;
+        background-color: var(--tg-theme-section-bg-color);
+
+        &>div {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 42px;
+            height: 42px;
+            background-color: var(--tg-theme-bg-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &>div {
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                opacity: 0.1;
+                background-color: var(--tg-theme-link-color);
+            }
+
+            &>svg {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                width: 24px;
+                height: 24px;
+                fill: var(--tg-theme-link-color);
+            }
+        }
+    }
 
     &Action {
         width: 100%;

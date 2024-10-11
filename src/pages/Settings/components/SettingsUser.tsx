@@ -18,7 +18,7 @@ export default function SettingsUser({ user, avatar }: ISettingsUser) {
     return (
         <div className={styles.settingsUser}>
             {avatar ?
-                <img src={avatar} alt="Avatar" /> :
+                <img src={avatar} /> :
                 <div>{user.first_name[0]}</div>
             }
             <h3>{`${user.first_name} ${user.last_name}`.trim()}</h3>

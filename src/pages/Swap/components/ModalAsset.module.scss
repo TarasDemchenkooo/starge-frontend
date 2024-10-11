@@ -1,0 +1,51 @@
+.modalAsset {
+    display: flex;
+    align-items: center;
+    background-color: var(--tg-theme-section-bg-color);
+    gap: 12px;
+
+    &>img {
+        margin-left: 16px;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+    }
+
+    &>div {
+        padding: 12px 0;
+        border-bottom: 1px solid var(--tg-theme-secondary-bg-color);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    &Data {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+
+        &>h4 {
+            font-size: 16px;
+            line-height: 16px;
+            color: var(--tg-theme-text-color);
+            font-weight: var(--font-weight-default);
+        }
+
+        &>p {
+            font-size: 14px;
+            line-height: 14px;
+            color: var(--tg-theme-hint-color);
+            font-weight: var(--font-weight-default);
+        }
+    }
+
+    &Radio {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        border: 2px solid var(--tg-theme-hint-color);
+        margin-right: 16px;
+    }
+}
