@@ -26,7 +26,56 @@
 
     &>button {
         width: calc(100% - 32px);
+        position: relative;
         background-color: var(--tg-theme-button-color);
-        font-weight: var(--font-weight-bold);
+        font-weight: var(--font-weight-default);
+        text-transform: none;
+        font-size: 14px;
+        line-height: 14px;
+        height: 44px;
+
+        &::before {
+            position: absolute;
+            content: 'Confirm';
+            transition: all 0.3s ease-in-out;
+        }
+
+        &::after {
+            position: absolute;
+            content: '';
+            width: 14px;
+            height: 14px;
+            border: 2px solid var(--tg-theme-button-text-color);
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            transition: all 0.3s ease-in-out;
+            animation: rotation 1s linear infinite;
+            top: 25px;
+            scale: 0;
+            opacity: 0;
+        }
+
+        &:disabled {
+            &::before {
+                transform: translateY(-10px) scale(0.2);
+                opacity: 0;
+            }
+
+            &::after {
+                top: 50%;
+                scale: 1;
+                opacity: 1;
+            }
+        }
+
+        @keyframes rotation {
+            0% {
+                transform: translateY(-50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translateY(-50%) rotate(360deg);
+            }
+        }
     }
 }

@@ -1,12 +1,16 @@
-import { Address, TonClient } from "ton"
+import axios from "axios"
+import tonApiUrl from "../../../shared/constants/TonApiUrl"
+import tonApiKey from "../../../shared/constants/TonApiKey"
 
-export default async function getTonBalance(address: Address) {
-    const client = new TonClient({
-        endpoint: 'https://toncenter.com/api/v2/jsonRPC'
+export default async function getTonBalance(address: string): Promise<number> {
+    if (!address) return 0
+
+    const response = await axios.get(tonApiUrl.concat(`accounts/${address}`), {
+        headers: {
+            Authorization: `Bearer ${tonApiKey}`,
+            'ngrok-skip-browser-warning': true
+        }
     })
 
-    const nanoTon = await client.getBalance(address)
-    const ton = Number(nanoTon) / 1e9
-
-    return ton
+    return response.data.balance
 }

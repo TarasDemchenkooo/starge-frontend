@@ -4,10 +4,12 @@ import getTargetAsset from "../api/getTargetAsset"
 export default function useTargetAsset() {
     const id = Telegram.WebApp.initDataUnsafe.user?.id!
 
-    const { data, isLoading, isError } = useQuery({
+    const { data, isLoading, isError, refetch } = useQuery({
         queryKey: ['target_asset'],
-        queryFn: () => getTargetAsset(id)
+        queryFn: () => getTargetAsset(id),
+        staleTime: Infinity,
+        refetchOnWindowFocus: false
     })
 
-    return { targetAsset: data, isLoading, isError }
+    return { targetAsset: data, isLoading, isError, update: refetch }
 }

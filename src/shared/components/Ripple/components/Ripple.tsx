@@ -1,37 +1,30 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import styles from './Ripple.module.scss'
 import classNames from 'classnames'
 import { IRipple } from '../types/IRipple'
+import setDefaultConfiguration from '../utils/setDefaultConfiguration'
+import defineRipple from '../utils/defineRipple'
 
-export default function Ripple({ children, className, color, onClick }: IRipple) {
+export default function Ripple(cfg: IRipple) {
+    const { color, inDuration, outDuration, holdTime } = setDefaultConfiguration(cfg)
     const [ripple, setRipple] = useState<Record<string, number> | null>(null)
     const [rippleEnd, setRippleEnd] = useState(false)
     const [isAnimating, setIsAnimating] = useState(false)
+    const [startTouch, setStartTouch] = useState(0)
 
-    const rippleClassnames = classNames({
-        [styles.rippleEffect]: true,
+    const rippleClassnames = classNames(styles.rippleEffect, {
         [styles.rippleEffectEnd]: rippleEnd
     })
-
-    const rippleContainerClassnames = classNames({
-        [className]: true,
-        [styles.ripple]: true,
-    })
+    const rippleContainerClassnames = classNames(styles.ripple, cfg.className)
 
     function createTouchRipple(event: React.TouchEvent) {
         if (isAnimating) return
-
-        const button = event.currentTarget
-        const rect = button.getBoundingClientRect()
-        const size = Math.max(button.clientWidth, button.clientHeight)
-        const x = event.touches[0].clientX - rect.left - size / 2
-        const y = event.touches[0].clientY - rect.top - size / 2
-
-        setRipple({ x, y, size })
+        setStartTouch(Date.now())
+        setRipple(defineRipple(event))
         setIsAnimating(true)
     }
 
-    function deleteTouchRipple() {
+    function deleteRipple() {
         setRippleEnd(true)
         setTimeout(() => {
             setRipple(null)
@@ -40,10 +33,16 @@ export default function Ripple({ children, className, color, onClick }: IRipple)
         }, 500)
     }
 
+    function deleteTouchRipple() {
+        const diff = Date.now() - startTouch
+        setTimeout(deleteRipple, diff > 400 ? 0 : holdTime)
+    }
+
     return (
-        <button className={rippleContainerClassnames} onClick={onClick}
-            onTouchStart={createTouchRipple} onTouchEnd={deleteTouchRipple}>
-            {children}
+        <button className={rippleContainerClassnames} onClick={cfg.onClick}
+            onTouchStart={createTouchRipple} onTouchMove={deleteRipple}
+            onTouchEnd={deleteTouchRipple}>
+            {cfg.children}
             {ripple && (
                 <span className={rippleClassnames}
                     style={{
@@ -51,7 +50,9 @@ export default function Ripple({ children, className, color, onClick }: IRipple)
                         height: ripple.size,
                         left: ripple.x,
                         top: ripple.y,
-                        backgroundColor: color
+                        backgroundColor: color,
+                        animationDuration: inDuration,
+                        transitionDuration: outDuration
                     }}
                 />
             )}

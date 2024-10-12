@@ -1,23 +1,31 @@
+import classNames from "classnames"
 import Ripple from "../../../shared/components/Ripple/components/Ripple"
 import useJettonBalance from "../hooks/useJettonBalance"
 import { IModalAsset } from "../types/IModalAsset"
 import styles from './ModalAsset.module.scss'
 
-export default function ModalAsset({ icon, name, symbol, ca, address }: IModalAsset) {
-    const { balance, isLoading } = useJettonBalance(address, ca)
+export default function ModalAsset(asset: IModalAsset) {
+    const { balance, isLoading } = useJettonBalance(asset.ca)
+
+    const radioClassnames = classNames({
+        [styles.modalAssetRadio]: true,
+        [styles.modalAssetRadioActive]: asset.activeAsset === asset.symbol
+    })
+
+    function setActiveAsset() {
+        asset.setActiveAsset(asset.symbol)
+    }
 
     return (
-        <Ripple color={Telegram.WebApp.themeParams.hint_color!}
-            className={styles.modalAsset} onClick={() => { }}>
-            <img src={icon} />
+        <Ripple className={styles.modalAsset} onClick={setActiveAsset}
+        holdTime={200} inDuration="0.8s">
+            <img src={asset.icon} />
             <div>
                 <div className={styles.modalAssetData}>
-                    <h4>{name}</h4>
-                    <p>{balance ?? 0} {symbol}</p>
+                    <h4>{asset.name}</h4>
+                    <p>{balance} {asset.symbol}</p>
                 </div>
-                <div className={styles.modalAssetRadio}>
-
-                </div>
+                <div className={radioClassnames}></div>
             </div>
         </Ripple>
     )

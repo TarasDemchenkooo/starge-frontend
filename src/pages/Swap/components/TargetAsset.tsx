@@ -3,8 +3,9 @@ import WalletIcon from '../../../assets/svg/wallet.svg?react'
 import jettons from '../../../../public/jettons/jettons.json'
 import { useState } from 'react'
 import AssetsModal from './AssetsModal'
+import { Assets } from '../../../shared/types/Assets'
 
-export default function TargetAsset({ targetAsset }: { targetAsset: string }) {
+export default function TargetAsset({ targetAsset }: { targetAsset: Assets }) {
     const jetton = jettons.jettons.find(jetton => jetton.symbol === targetAsset)!
     const [modalStatus, setModalStatus] = useState(false)
 
@@ -31,7 +32,7 @@ export default function TargetAsset({ targetAsset }: { targetAsset: string }) {
                 </span>
                 <span className={styles.targetAssetBottomQuote}>$0</span>
             </div>
-            {modalStatus && <AssetsModal setModalStatus={setModalStatus} />}
+            {modalStatus && <AssetsModal targetAsset={targetAsset} setModalStatus={setModalStatus} />}
         </div>
     )
 }

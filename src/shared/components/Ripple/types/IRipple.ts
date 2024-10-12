@@ -1,6 +1,9 @@
 export interface IRipple {
     children: React.ReactNode
-    className: string
-    color: string
     onClick: (event: React.MouseEvent) => void
+    className?: string
+    color?: string
+    holdTime?: number
+    inDuration?: string
+    outDuration?: string
 }
