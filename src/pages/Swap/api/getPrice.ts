@@ -2,11 +2,10 @@ import axios from "axios"
 import tonApiUrl from "../../../shared/constants/TonApiUrl"
 import tonApiKey from "../../../shared/constants/TonApiKey"
 
-export default async function getCurrencyPrice(address: string): Promise<number> {
-    const response = await axios.get(tonApiUrl.concat(`rates?tokens=${address}`), {
+export default async function getPrice(address: string): Promise<number> {
+    const response = await axios.get(tonApiUrl.concat(`rates?tokens=${address}&currencies=usd`), {
         headers: {
-            Authorization: `Bearer ${tonApiKey}`,
-            'ngrok-skip-browser-warning': true
+            Authorization: `Bearer ${tonApiKey}`
         }
     })
 

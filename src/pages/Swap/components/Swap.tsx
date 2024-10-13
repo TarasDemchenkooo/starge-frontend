@@ -6,16 +6,15 @@ import TargetAsset from './TargetAsset'
 import { useTonAddress, useTonConnectModal } from '@tonconnect/ui-react'
 import Button from '../../../shared/components/Button/components/Button'
 import TonButtonIcon from '../../../assets/svg/ton-button.svg?react'
-import useRegisterUser from '../hooks/useRegisterUser'
-import useTargetAsset from '../hooks/useTargetAsset'
+import useIsFullyLoaded from '../hooks/useIsFullyLoaded'
+import SwapSkeleton from './SwapSkeleton'
 
 export default function Swap() {
+    const isFullyLoaded = useIsFullyLoaded()
     const address = useTonAddress()
-    const isUserRegistered = useRegisterUser()
-    const { targetAsset, isLoading } = useTargetAsset()
     const { open } = useTonConnectModal()
 
-    return !isUserRegistered || isLoading ? 'pizda' : (
+    return !isFullyLoaded ? <SwapSkeleton/> : (
         <div className={styles.swap}>
             <SourceAsset />
             <div className={styles.swapSeparator}>
@@ -24,7 +23,7 @@ export default function Swap() {
                     <ArrowIcon />
                 </div>
             </div>
-            <TargetAsset targetAsset={targetAsset!} />
+            <TargetAsset />
             <div className={styles.swapAction}>
                 {address ? <SwapButton /> :
                     <Button className={styles.swapActionConnect} onClick={open}>

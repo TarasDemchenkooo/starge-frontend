@@ -7,14 +7,14 @@ export default function useRegisterUser() {
     const key = 'is_registered'
     const isRegistered = JSON.parse(localStorage.getItem(key)!)
 
-    const { data, isLoading, isError } = useQuery({
+    const { data, isLoading } = useQuery({
         queryKey: [key],
         queryFn: () => registerUser(id),
-        enabled: !isRegistered
+        enabled: Boolean(!isRegistered && id)
     })
 
     useEffect(() => {
-        if (!isError && data) {
+        if (data) {
             localStorage.setItem(key, 'true')
         }
     }, [isLoading])

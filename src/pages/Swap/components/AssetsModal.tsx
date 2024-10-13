@@ -19,7 +19,7 @@ export default function AssetsModal({ setModalStatus }: IAssetsModal) {
 
     useEffect(() => {
         if (isSuccess) {
-            update()
+            update!()
             setCloseRequest(true)
         }
     }, [isSuccess])

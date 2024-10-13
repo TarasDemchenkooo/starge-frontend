@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 import { TonConnectUIProvider } from '@tonconnect/ui-react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import setTma from './shared/utils/setTma'
 import './styles/global.scss'
 import './styles/variables.scss'
@@ -19,6 +20,7 @@ root.render(
       <TonConnectUIProvider manifestUrl={import.meta.env.VITE_MANIFEST_URL}>
         <RouterProvider router={router} />
       </TonConnectUIProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </StrictMode>
 )
