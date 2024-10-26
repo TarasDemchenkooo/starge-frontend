@@ -2,11 +2,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 48px;
+    height: 44px;
     border: none;
     gap: 4px;
-    text-transform: uppercase;
-    color: var(--tg-theme-button-text-color);
+    color: var(--main-color);
     border-radius: 12px;
     transition: transform 0.1s ease-in-out;
 

@@ -30,9 +30,11 @@
   "devDependencies": {
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "@types/remote-redux-devtools": "^0.5.8",
     "@types/telegram-web-app": "^7.8.1",
     "@vitejs/plugin-react": "^4.3.1",
     "globals": "^15.9.0",
+    "remote-redux-devtools": "^0.5.16",
     "typescript": "^5.5.3",
     "vite": "^5.4.1",
     "vite-plugin-node-polyfills": "^0.22.0",

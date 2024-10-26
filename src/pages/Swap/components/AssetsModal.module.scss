@@ -9,8 +9,8 @@
         font-size: 20px;
         line-height: 20px;
         margin: 0 0 16px 16px;
-        color: var(--tg-theme-text-color);
-        font-weight: var(--font-weight-bold);
+        color: var(--main-color);
+        font-weight: 600;
     }
 
     &>div {
@@ -27,8 +27,8 @@
     &>button {
         width: calc(100% - 32px);
         position: relative;
-        background-color: var(--tg-theme-button-color);
-        font-weight: var(--font-weight-default);
+        background-color: var(--button-color);
+        font-weight: 500;
         text-transform: none;
         font-size: 14px;
         line-height: 14px;
@@ -45,7 +45,7 @@
             content: '';
             width: 14px;
             height: 14px;
-            border: 2px solid var(--tg-theme-button-text-color);
+            border: 2px solid var(--main-color);
             border-bottom-color: transparent;
             border-radius: 50%;
             transition: all 0.3s ease-in-out;

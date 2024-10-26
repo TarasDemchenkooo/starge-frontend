@@ -4,17 +4,17 @@ const theme = Telegram.WebApp.themeParams
 
 const themeSettings = {
     background: {
-        primary: theme.section_bg_color,
-        tint: theme.bg_color
+        primary: '#0F1620',
+        tint: '#1D2733'
     },
     text: {
-        primary: theme.text_color,
-        secondary: theme.hint_color
+        primary: '#FFFFFF',
+        secondary: '#7F8A98'
     },
     icon: {
         error: theme.destructive_text_color
     },
-    telegramButton: theme.button_color,
+    telegramButton: '#46AEF5',
 }
 
 const UIOptions: TonConnectUiOptions = {

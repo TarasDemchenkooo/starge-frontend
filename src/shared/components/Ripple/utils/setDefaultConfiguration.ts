@@ -1,7 +1,7 @@
 import { IRipple } from "../types/IRipple"
 
 export default function setDefaultConfiguration(cfg: IRipple) {
-    const color = Telegram.WebApp.themeParams.hint_color
+    const color = '#7F8A98'
     const inDuration = '1s'
     const outDuration = '0.5s'
     const holdTime = 0

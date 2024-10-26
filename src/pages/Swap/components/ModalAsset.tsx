@@ -2,8 +2,14 @@ import classNames from "classnames"
 import Ripple from "../../../shared/components/Ripple/components/Ripple"
 import { IModalAsset } from "../types/IModalAsset"
 import styles from './ModalAsset.module.scss'
+import useBalance from "../hooks/useBalance"
+import formatDecimal from "../utils/formatDecimal"
+import { useTonAddress } from "@tonconnect/ui-react"
 
 export default function ModalAsset(asset: IModalAsset) {
+    const address = useTonAddress()
+    const { balance, isBalanceLoading } = useBalance(asset.symbol)
+
     const radioClassnames = classNames({
         [styles.modalAssetRadio]: true,
         [styles.modalAssetRadioActive]: asset.activeAsset === asset.symbol
@@ -15,12 +21,15 @@ export default function ModalAsset(asset: IModalAsset) {
 
     return (
         <Ripple className={styles.modalAsset} onClick={setActiveAsset}
-        holdTime={200} inDuration="0.8s">
+            holdTime={200} inDuration="0.8s">
             <img src={asset.icon} />
             <div>
                 <div className={styles.modalAssetData}>
                     <h4>{asset.name}</h4>
-                    <p>{0} {asset.symbol}</p>
+                    <p>{address ?
+                        isBalanceLoading ?
+                            0 : formatDecimal(balance!) :
+                        0} {asset.symbol}</p>
                 </div>
                 <div className={radioClassnames}></div>
             </div>

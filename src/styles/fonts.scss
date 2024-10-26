@@ -1,0 +1,21 @@
+$font-weights: (
+    100: 'Thin',
+    200: 'ExtraLight',
+    300: 'Light',
+    400: 'Regular',
+    500: 'Medium',
+    600: 'SemiBold',
+    700: 'Bold',
+    800: 'ExtraBold',
+    900: 'Black'
+);
+
+@each $weight, $name in $font-weights {
+    @font-face {
+        font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: $weight;
+        src: url('../assets/fonts/Montserrat-#{$name}.woff2') format('woff2');
+        font-display: swap;
+    }
+}

@@ -1,5 +1,5 @@
 export default function setTma() {
-    const interfaceColor = Telegram.WebApp.themeParams.section_bg_color!
+    const interfaceColor = '#0F1620'
 
     Telegram.WebApp.expand()
     Telegram.WebApp.setHeaderColor(interfaceColor)

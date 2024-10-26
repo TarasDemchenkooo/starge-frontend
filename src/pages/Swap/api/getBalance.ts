@@ -10,7 +10,7 @@ export default async function getBalance(address: string, ca: string): Promise<n
         }
     })
 
-    const balance = response.data.balance / (ca ? response.data.jetton.decimals : 10 ** 9)
+    const balance = response.data.balance / (ca ? 10 ** response.data.jetton.decimals : 10 ** 9)
 
     return balance
 }

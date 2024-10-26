@@ -7,12 +7,12 @@ export default function usePrice(targetAsset: Assets | null | undefined) {
     const jetton = jettons.jettons.find(jetton => jetton.symbol === targetAsset)
     const ca = jetton?.ca || 'ton'
 
-    const { data, isLoading } = useQuery({
+    const { data, isLoading, refetch } = useQuery({
         queryKey: [jetton?.symbol.concat('_price')],
         queryFn: () => getPrice(ca),
-        enabled: Boolean(targetAsset),
+        enabled: false,
         refetchInterval: 5000
     })
 
-    return { price: data, isPriceLoading: isLoading }
+    return { price: data, isPriceLoading: isLoading, refetchPrice: refetch }
 }

@@ -12,8 +12,7 @@ export default function useBalance(targetAsset: Assets | null | undefined) {
         queryKey: [jetton?.symbol.concat('_balance')],
         queryFn: () => getBalance(address, jetton?.ca!),
         enabled: Boolean(targetAsset && address),
-        refetchInterval: 15000,
-        initialData: 0
+        refetchInterval: 15000
     })
 
     return { balance: data, isBalanceLoading: isLoading }

@@ -1,7 +1,11 @@
 import styles from './SourceAsset.module.scss'
 import StarsIcon from '../../../assets/svg/stars-logo.svg?react'
+import SourceInput from './SourceInput'
+import useTargetAsset from '../hooks/useTargetAsset'
 
 export default function SourceAsset() {
+    const { targetAsset } = useTargetAsset()
+
     return (
         <div className={styles.sourceAsset}>
             <h4>You send</h4>
@@ -10,9 +14,8 @@ export default function SourceAsset() {
                     <StarsIcon />
                     <span>Stars</span>
                 </div>
-                {/* input */}
+                <SourceInput targetAsset={targetAsset!} />
             </div>
-            <span>$0</span>
         </div>
     )
 }

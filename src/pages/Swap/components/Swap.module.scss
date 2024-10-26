@@ -1,60 +1,32 @@
 .swap {
+    padding: 16px;
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    flex-grow: 1;
 
     &Separator {
-        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 100%;
-        height: 2px;
-        background-color: var(--tg-theme-section-bg-color);
+        height: 8px;
 
         &>div {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: 42px;
-            height: 42px;
-            background-color: var(--tg-theme-bg-color);
+            width: 36px;
+            height: 36px;
+            background-color: var(--sub-color);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-
-            &>div {
-                width: 36px;
-                height: 36px;
-                border-radius: 50%;
-                opacity: 0.1;
-                background-color: var(--tg-theme-link-color);
-            }
+            padding: 4px;
+            z-index: 0;
 
             &>svg {
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
-                width: 24px;
-                height: 24px;
-                fill: var(--tg-theme-link-color);
+                fill: var(--main-color);
+                width: 100%;
+                height: 100%;
             }
-        }
-    }
-
-    &Action {
-        width: 100%;
-        padding: 15px;
-        flex-grow: 1;
-        display: flex;
-        align-items: flex-end;
-
-        &Connect {
-            margin-top: auto;
-            font-weight: var(--font-weight-ultra-bold);
-            font-size: 14px;
-            background-color: var(--tg-theme-button-color);
-            width: 100%;
         }
     }
 }
