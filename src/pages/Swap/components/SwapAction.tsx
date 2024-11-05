@@ -1,22 +1,29 @@
 import { useTonAddress, useTonConnectModal } from '@tonconnect/ui-react'
 import styles from './SwapAction.module.scss'
 import Button from '../../../shared/components/Button/components/Button'
-import useSourceInput from '../hooks/useSourceInput'
 import usePrice from '../hooks/usePrice'
 import useTargetAsset from '../hooks/useTargetAsset'
+import classNames from 'classnames'
+import useInputs from '../hooks/useInputs'
+import maxSwapRange from '../../../shared/constants/maxSwapRange'
 
 export default function SwapAction() {
-    const {targetAsset} = useTargetAsset()
-    const {isPriceLoading} = usePrice(targetAsset)
-    const {sourceAmount} = useSourceInput()
+    const { targetAsset } = useTargetAsset()
+    const { source } = useInputs()
+    const { isPriceLoading } = usePrice(targetAsset)
     const address = useTonAddress()
     const { open } = useTonConnectModal()
+
+    const swapState = classNames({
+        [styles.swapActionButtonSwap]: true,
+        [styles.swapActionButtonSwapError]: Number(source) === 0 || Number(source) > maxSwapRange,
+    })
 
     return (
         <div className={styles.swapAction}>
             {address ?
-                <Button onClick={() => { }} className={styles.swapActionButton}>
-                    {isPriceLoading ? 'Loading...' : sourceAmount ? 'Swap' : 'Enter an amount'}
+                <Button disabled={isPriceLoading} onClick={() => { }} className={swapState}>
+                    Swap
                 </Button> :
                 <Button className={styles.swapActionButton} onClick={open}>
                     Connect wallet

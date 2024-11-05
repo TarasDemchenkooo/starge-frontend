@@ -1,21 +1,44 @@
-import { Address, beginCell, toNano } from 'ton'
+import { Address, beginCell, internal, storeMessageRelaxed, toNano } from "ton-core"
+import { TonClient, JettonMaster, WalletContractV4 } from "ton"
+import { sign } from "ton-crypto";
 
-export default function createBoc(address: string, amount: number) {
-    const recipientAddress = Address.parse(address)
-    const transferAmount = toNano(amount)
 
-    const msg = beginCell()
-        .storeUint(0, 32)
+export default async function createBoc() {
+    const client = new TonClient({
+        endpoint: 'https://toncenter.com/api/v2/jsonRPC',
+    });
+
+    const jettonMasterAddress = Address.parse('EQCvxJy4eG8hyHBFsZ7eePxrRsUQSFE_jpptRAYBmcG_DOGS')
+    const userAddress = Address.parse('UQCGl9xm8cIezBLfC0jtkixFPRgYdU2jV8vIE0DGxohbRx4T')
+
+    const jettonMaster = client.open(JettonMaster.create(jettonMasterAddress))
+    const jettonWalletAddress = await jettonMaster.getWalletAddress(userAddress)
+
+    const destinationAddress = Address.parse('UQCU3TLLxYk2EDe1sb3SJXgeOrm9yu-iMvdYT07qwjzlOBtg')
+
+    const messageBody = beginCell()
+        .storeUint(0x0f8a7ea5, 32)
         .storeUint(0, 64)
-        .storeCoins(transferAmount)
-        .storeAddress(recipientAddress)
-        .storeBit(false)
-        .storeCoins(0)
-        .storeBit(false)
+        .storeCoins(toNano(5))
+        .storeAddress(destinationAddress)
+        .storeAddress(destinationAddress)
+        .storeBit(0)
+        .storeCoins(toNano('0'))
+        .storeBit(0)
         .endCell()
 
-    const boc = msg.toBoc({ idx: false })
-    const bocHex = boc.toString('hex')
+    const internalMessage = internal({
+        to: jettonWalletAddress,
+        value: toNano('0.05'),
+        bounce: true,
+        body: messageBody
+    })
 
-    return bocHex
+    const internalMessageCell = beginCell()
+        .store(storeMessageRelaxed(internalMessage))
+        .endCell()
+
+        const signature = await sign(internalMessageCell, '')
+
+        const boc = 7
 }

@@ -38,7 +38,7 @@ export default function TargetAsset() {
                         <span>{jetton.symbol}</span>
                         <div></div>
                     </div>
-                    <TargetInput />
+                    <TargetInput targetAsset={targetAsset!} />
                 </div>
             </div>
             <SwapInfo targetAsset={targetAsset!} />

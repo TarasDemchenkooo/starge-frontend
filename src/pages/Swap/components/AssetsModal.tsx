@@ -9,9 +9,11 @@ import { IAssetsModal } from "../types/IAssetsModal"
 import useMutateSettings from "../hooks/useMutateSettings"
 import useTargetAsset from "../hooks/useTargetAsset"
 import { Assets } from "../../../shared/types/Assets"
+import useInputs from "../hooks/useInputs"
 
 export default function AssetsModal({ setModalStatus }: IAssetsModal) {
     const address = useTonAddress()
+    const { clearInputs } = useInputs()
     const { targetAsset, update } = useTargetAsset()
     const [activeAsset, setActiveAsset] = useState(targetAsset!)
     const [closeRequest, setCloseRequest] = useState(false)
@@ -21,6 +23,7 @@ export default function AssetsModal({ setModalStatus }: IAssetsModal) {
         if (isSuccess) {
             update!()
             setCloseRequest(true)
+            clearInputs()
         }
     }, [isSuccess])
 

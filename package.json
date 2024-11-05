@@ -25,6 +25,7 @@
     "ton": "^13.9.0",
     "ton-core": "^0.53.0",
     "ton-crypto": "^3.2.0",
+    "use-debounce": "^10.0.4",
     "zustand": "^5.0.0-rc.2"
   },
   "devDependencies": {
