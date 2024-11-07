@@ -6,8 +6,8 @@ import AssetsModal from './AssetsModal'
 import useTargetAsset from '../hooks/useTargetAsset'
 import useBalance from '../hooks/useBalance'
 import formatDecimal from '../utils/formatDecimal'
-import TargetInput from './TargetInput'
 import SwapInfo from './SwapInfo'
+import SwapInput from './SwapInput'
 
 export default function TargetAsset() {
     const { targetAsset } = useTargetAsset()
@@ -38,7 +38,7 @@ export default function TargetAsset() {
                         <span>{jetton.symbol}</span>
                         <div></div>
                     </div>
-                    <TargetInput targetAsset={targetAsset!} />
+                    <SwapInput targetAsset={targetAsset!} inputType='target'/>
                 </div>
             </div>
             <SwapInfo targetAsset={targetAsset!} />

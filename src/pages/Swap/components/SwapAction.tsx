@@ -23,7 +23,9 @@ export default function SwapAction() {
         <div className={styles.swapAction}>
             {address ?
                 <Button disabled={isPriceLoading} onClick={() => { }} className={swapState}>
-                    Swap
+                    {Number(source) === 0 ? 'Enter an amount' :
+                        Number(source) > maxSwapRange ?
+                            'Max amount is 50,000 STARS' : 'Swap'}
                 </Button> :
                 <Button className={styles.swapActionButton} onClick={open}>
                     Connect wallet

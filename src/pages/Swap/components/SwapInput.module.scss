@@ -1,4 +1,4 @@
-.assetInput {
+.swapInput {
     background-color: transparent;
     border: none;
     text-align: right;
@@ -8,12 +8,17 @@
     font-weight: 700;
     width: 100%;
     color: var(--main-color);
+    transition: color 0.2s ease-in-out;
 
     &:focus {
         outline: none;
     }
 
     &::placeholder {
+        color: var(--hint-color);
+    }
+
+    &Refetching {
         color: var(--hint-color);
     }
 }
