@@ -3,9 +3,9 @@ import styles from './SwapAction.module.scss'
 import Button from '../../../shared/components/Button/components/Button'
 import usePrice from '../hooks/usePrice'
 import useTargetAsset from '../hooks/useTargetAsset'
-import classNames from 'classnames'
 import useInputs from '../hooks/useInputs'
 import maxSwapRange from '../../../shared/constants/maxSwapRange'
+import formatSourceInput from '../utils/formatSourceInput'
 
 export default function SwapAction() {
     const { targetAsset } = useTargetAsset()
@@ -14,22 +14,25 @@ export default function SwapAction() {
     const address = useTonAddress()
     const { open } = useTonConnectModal()
 
-    const swapState = classNames({
-        [styles.swapActionButtonSwap]: true,
-        [styles.swapActionButtonSwapError]: Number(source) === 0 || Number(source) > maxSwapRange,
-    })
+    function getButtonState(source: string) {
+        const amount = Number(source)
+        const nullValueError = 'Enter an amount'
+        const maxSwapRangeError = `Max amount is ${formatSourceInput(maxSwapRange.toString())} STARS`
+        const acceptableText = 'Swap'
+
+        return {
+            content: amount === 0 ? nullValueError : amount > maxSwapRange
+                ? maxSwapRangeError : acceptableText,
+            disabled: amount === 0 || amount > maxSwapRange
+        }
+    }
 
     return (
         <div className={styles.swapAction}>
             {address ?
-                <Button disabled={isPriceLoading} onClick={() => { }} className={swapState}>
-                    {Number(source) === 0 ? 'Enter an amount' :
-                        Number(source) > maxSwapRange ?
-                            'Max amount is 50,000 STARS' : 'Swap'}
-                </Button> :
-                <Button className={styles.swapActionButton} onClick={open}>
-                    Connect wallet
-                </Button>
+                <Button content={getButtonState(source).content} isLoading={isPriceLoading}
+                    disabled={getButtonState(source).disabled} onClick={() => { }} /> :
+                <Button content='Connect wallet' isLoading={isPriceLoading} onClick={open} />
             }
         </div>
     )

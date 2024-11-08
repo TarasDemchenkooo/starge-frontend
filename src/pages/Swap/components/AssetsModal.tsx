@@ -46,7 +46,7 @@ export default function AssetsModal({ setModalStatus }: IAssetsModal) {
                             activeAsset={activeAsset} setActiveAsset={setActiveAsset} />)
                     }
                 </div>
-                <Button disabled={isPending} onClick={updateTargetAsset}></Button>
+                <Button content='Confirm' isLoading={isPending} onClick={updateTargetAsset}/>
             </div>
         </Modal>
     )

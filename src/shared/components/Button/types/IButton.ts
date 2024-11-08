@@ -1,6 +1,7 @@
 export interface IButton {
+    content: string
+    isLoading?: boolean
     className?: string
-    children?: React.ReactNode
-    onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
     disabled?: boolean
+    onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
 }

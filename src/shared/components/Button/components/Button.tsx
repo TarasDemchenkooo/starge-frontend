@@ -4,25 +4,26 @@ import { useState } from 'react'
 import classNames from 'classnames'
 import vibrate from '../../../../utils/vibration'
 
-export default function Button({ children, className, onClick, disabled = false }: IButton) {
+export default function Button({ content, className, onClick, isLoading, disabled = false }: IButton) {
     const [pressed, setPressed] = useState(false)
     const [released, setReleased] = useState(false)
+    const clickable = !isLoading && !disabled
 
     const buttonClassnames = classNames({
         [styles.button]: true,
         [styles.buttonPressed]: pressed,
         [styles.buttonReleased]: released,
+        [styles.buttonLoading]: isLoading,
+        [styles.buttonDisabled]: disabled,
         [className!]: true,
     })
 
     function press() {
-        if (!disabled) {
-            setPressed(true)
-        }
+        if (clickable) setPressed(true)
     }
 
     function release(event: React.TouchEvent<HTMLButtonElement>) {
-        if (!disabled) {
+        if (clickable) {
             setReleased(true)
             setPressed(false)
             event.currentTarget.onanimationend = () => setReleased(false)
@@ -30,14 +31,15 @@ export default function Button({ children, className, onClick, disabled = false 
     }
 
     function click(event: React.MouseEvent<HTMLButtonElement>) {
-        vibrate('medium')
-        onClick(event)
+        if (clickable) {
+            vibrate('medium')
+            onClick(event)
+        }
     }
 
     return (
-        <button disabled={disabled} className={buttonClassnames} onClick={click}
+        <button disabled={disabled} data-text={content} className={buttonClassnames} onClick={click}
             onTouchStart={press} onTouchEnd={release}>
-            {children && children}
         </button>
     )
 }

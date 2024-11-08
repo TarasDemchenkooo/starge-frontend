@@ -4,17 +4,10 @@
     display: flex;
     align-items: flex-end;
 
-    &Button,
-    &ButtonSwap {
+    &>button {
         font-weight: 600;
         font-size: 14px;
-        background-color: var(--button-color);
-        transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+        height: 44px;
         width: 100%;
-
-        &Error {
-            color: var(--hint-color);
-            background-color: var(--section-color);
-        }
     }
 }
