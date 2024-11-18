@@ -7,31 +7,36 @@ import Button from "../../../shared/components/Button/components/Button"
 import { useEffect, useState } from "react"
 import { IAssetsModal } from "../types/IAssetsModal"
 import useMutateSettings from "../hooks/useMutateSettings"
-import useTargetAsset from "../hooks/useTargetAsset"
 import { Assets } from "../../../shared/types/Assets"
 import useInputs from "../hooks/useInputs"
+import { useQueryClient } from "@tanstack/react-query"
+import { IAuth } from "../../../shared/types/IAuth"
+import useAuth from "../hooks/useAuth"
 
 export default function AssetsModal({ setModalStatus }: IAssetsModal) {
     const address = useTonAddress()
+    const { settings } = useAuth()
     const { clearInputs } = useInputs()
-    const { targetAsset, update } = useTargetAsset()
-    const [activeAsset, setActiveAsset] = useState(targetAsset!)
+    const [activeAsset, setActiveAsset] = useState(settings?.tokenSymbol!)
     const [closeRequest, setCloseRequest] = useState(false)
-    const { mutate, isPending, isSuccess } = useMutateSettings()
+    const { data, mutate, isPending, isSuccess } = useMutateSettings()
+    const queryClient = useQueryClient()
 
     useEffect(() => {
         if (isSuccess) {
-            update!()
+            queryClient.setQueryData(['user'], (oldData: IAuth) => ({
+                ...oldData,
+                user: { ...oldData, settings: data }
+            }))
             setCloseRequest(true)
             clearInputs()
         }
     }, [isSuccess])
 
     function updateTargetAsset() {
-        if (targetAsset !== activeAsset) {
-            mutate({ target_asset: activeAsset })
+        if (settings?.tokenSymbol !== activeAsset) {
+            mutate({ tokenSymbol: activeAsset })
         } else {
-            update()
             setCloseRequest(true)
         }
     }
@@ -46,7 +51,7 @@ export default function AssetsModal({ setModalStatus }: IAssetsModal) {
                             activeAsset={activeAsset} setActiveAsset={setActiveAsset} />)
                     }
                 </div>
-                <Button content='Confirm' isLoading={isPending} onClick={updateTargetAsset}/>
+                <Button content='Confirm' isLoading={isPending} onClick={updateTargetAsset} />
             </div>
         </Modal>
     )

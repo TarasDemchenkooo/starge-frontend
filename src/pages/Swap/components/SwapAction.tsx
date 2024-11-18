@@ -2,38 +2,53 @@ import { useTonAddress, useTonConnectModal } from '@tonconnect/ui-react'
 import styles from './SwapAction.module.scss'
 import Button from '../../../shared/components/Button/components/Button'
 import usePrice from '../hooks/usePrice'
-import useTargetAsset from '../hooks/useTargetAsset'
 import useInputs from '../hooks/useInputs'
-import maxSwapRange from '../../../shared/constants/maxSwapRange'
-import formatSourceInput from '../utils/formatSourceInput'
+import { useEffect, useState } from 'react'
+import ConfirmModal from './ConfirmModal'
+import useConfirmSwap from '../hooks/useConfirmeSwap'
+import getButtonState from '../utils/getButtonState'
+import { IConfirmSwap } from '../types/IConfirmSwap'
+import calculatePrice from '../utils/calculatePrice'
+import { IValidatedSwap } from '../types/IValidatedSwap'
+import useAuth from '../hooks/useAuth'
 
 export default function SwapAction() {
-    const { targetAsset } = useTargetAsset()
-    const { source } = useInputs()
-    const { isPriceLoading } = usePrice(targetAsset)
+    const { settings } = useAuth()
+    const { source, target } = useInputs()
+    const { price, isPriceLoading } = usePrice(settings?.tokenSymbol!)
     const address = useTonAddress()
     const { open } = useTonConnectModal()
+    const [modal, setModal] = useState(false)
+    const { data, mutate, isPending } = useConfirmSwap()
+    const [confirmedData, setConfirmedData] = useState<IValidatedSwap | null>(null)
 
-    function getButtonState(source: string) {
-        const amount = Number(source)
-        const nullValueError = 'Enter an amount'
-        const maxSwapRangeError = `Max amount is ${formatSourceInput(maxSwapRange.toString())} STARS`
-        const acceptableText = 'Swap'
-
-        return {
-            content: amount === 0 ? nullValueError : amount > maxSwapRange
-                ? maxSwapRangeError : acceptableText,
-            disabled: amount === 0 || amount > maxSwapRange
+    useEffect(() => {
+        if (data) {
+            setModal(true)
+            setConfirmedData(data)
         }
+    }, [data])
+
+    function swapConfirm() {
+        const validatingAssets: IConfirmSwap = {
+            address,
+            source: Number(source),
+            target: Number(target),
+            target_symbol: settings?.tokenSymbol!,
+            quote: calculatePrice(price!)
+        }
+
+        mutate(validatingAssets)
     }
 
     return (
         <div className={styles.swapAction}>
             {address ?
-                <Button content={getButtonState(source).content} isLoading={isPriceLoading}
-                    disabled={getButtonState(source).disabled} onClick={() => { }} /> :
+                <Button content={getButtonState(source).content} isLoading={isPriceLoading || isPending}
+                    disabled={getButtonState(source).disabled} onClick={swapConfirm} /> :
                 <Button content='Connect wallet' isLoading={isPriceLoading} onClick={open} />
             }
+            {modal && <ConfirmModal {...confirmedData!} />}
         </div>
     )
 }

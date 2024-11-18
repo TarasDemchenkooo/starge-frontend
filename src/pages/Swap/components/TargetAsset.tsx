@@ -3,22 +3,22 @@ import WalletIcon from '../../../assets/svg/wallet.svg?react'
 import jettons from '../../../../public/jettons/jettons.json'
 import { useEffect, useState } from 'react'
 import AssetsModal from './AssetsModal'
-import useTargetAsset from '../hooks/useTargetAsset'
 import useBalance from '../hooks/useBalance'
 import formatDecimal from '../utils/formatDecimal'
 import SwapInfo from './SwapInfo'
 import SwapInput from './SwapInput'
+import useAuth from '../hooks/useAuth'
 
 export default function TargetAsset() {
-    const { targetAsset } = useTargetAsset()
-    const { balance, isBalanceLoading } = useBalance(targetAsset)
+    const { settings } = useAuth()
+    const { balance, isBalanceLoading } = useBalance(settings?.tokenSymbol!)
     const [stickyBalance, setStickyBalance] = useState(balance || 0)
     const [modalStatus, setModalStatus] = useState(false)
-    const jetton = jettons.jettons.find(jetton => jetton.symbol === targetAsset)!
+    const jetton = jettons.jettons.find(jetton => jetton.symbol === settings?.tokenSymbol)!
 
     useEffect(() => {
         if (!isBalanceLoading && balance !== undefined) {
-            setStickyBalance(balance!)
+            setStickyBalance(balance)
         }
     }, [isBalanceLoading])
 
@@ -38,11 +38,11 @@ export default function TargetAsset() {
                         <span>{jetton.symbol}</span>
                         <div></div>
                     </div>
-                    <SwapInput targetAsset={targetAsset!} inputType='target'/>
+                    <SwapInput targetAsset={settings?.tokenSymbol!} inputType='target' />
                 </div>
             </div>
-            <SwapInfo targetAsset={targetAsset!} />
-            {modalStatus && <AssetsModal targetAsset={targetAsset!} setModalStatus={setModalStatus} />}
+            <SwapInfo targetAsset={settings?.tokenSymbol!} />
+            {modalStatus && <AssetsModal targetAsset={settings?.tokenSymbol!} setModalStatus={setModalStatus} />}
         </div>
     )
 }

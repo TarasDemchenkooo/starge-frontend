@@ -1,7 +1,6 @@
-import axios from "axios"
 import { ISettings } from "../types/ISettings"
-import backendApiUrl from "../constants/BackendApiUrl"
+import apiClient from "./apiClinet"
 
-export default function patchSettings(id: number, settings: ISettings) {
-    return axios.patch(backendApiUrl.concat(`user/${id}/settings`), settings)
+export default function patchSettings(settings: ISettings): Promise<ISettings> {
+    return apiClient.patch('/user', settings)
 }

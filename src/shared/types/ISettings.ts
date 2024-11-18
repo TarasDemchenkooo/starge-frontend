@@ -1,7 +1,7 @@
 import { Assets } from "./Assets"
 
 export interface ISettings {
+    tokenSymbol?: Assets
     vibration?: boolean
-    notification?: boolean
-    target_asset?: Assets
+    notifications?: boolean
 }

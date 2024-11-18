@@ -4,7 +4,7 @@ import { Assets } from "../../../shared/types/Assets"
 import getPrice from "../api/getPrice"
 import { useState } from "react"
 
-export default function usePrice(targetAsset: Assets | null | undefined) {
+export default function usePrice(targetAsset: Assets) {
     const [enable, setEnable] = useState(false)
     const jetton = jettons.jettons.find(jetton => jetton.symbol === targetAsset)
     const ca = jetton?.ca || 'ton'
