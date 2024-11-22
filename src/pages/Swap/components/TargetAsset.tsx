@@ -8,6 +8,7 @@ import formatDecimal from '../utils/formatDecimal'
 import SwapInfo from './SwapInfo'
 import SwapInput from './SwapInput'
 import useAuth from '../hooks/useAuth'
+import useVibrate from '../../../shared/hooks/useVibrate'
 
 export default function TargetAsset() {
     const { settings } = useAuth()
@@ -15,12 +16,18 @@ export default function TargetAsset() {
     const [stickyBalance, setStickyBalance] = useState(balance || 0)
     const [modalStatus, setModalStatus] = useState(false)
     const jetton = jettons.jettons.find(jetton => jetton.symbol === settings?.tokenSymbol)!
+    const { vibrate } = useVibrate()
 
     useEffect(() => {
         if (!isBalanceLoading && balance !== undefined) {
             setStickyBalance(balance)
         }
     }, [isBalanceLoading])
+
+    function openModal() {
+        vibrate()
+        setModalStatus(true)
+    }
 
     return (
         <div className={styles.targetAsset}>
@@ -33,11 +40,11 @@ export default function TargetAsset() {
                     </div>
                 </div>
                 <div className={styles.targetAssetMiddle}>
-                    <div onClick={() => setModalStatus(true)}>
+                    <button onClick={openModal}>
                         <img src={jetton.icon} />
                         <span>{jetton.symbol}</span>
                         <div></div>
-                    </div>
+                    </button>
                     <SwapInput targetAsset={settings?.tokenSymbol!} inputType='target' />
                 </div>
             </div>

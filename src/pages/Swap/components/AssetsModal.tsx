@@ -9,8 +9,6 @@ import { IAssetsModal } from "../types/IAssetsModal"
 import useMutateSettings from "../hooks/useMutateSettings"
 import { Assets } from "../../../shared/types/Assets"
 import useInputs from "../hooks/useInputs"
-import { useQueryClient } from "@tanstack/react-query"
-import { IAuth } from "../../../shared/types/IAuth"
 import useAuth from "../hooks/useAuth"
 
 export default function AssetsModal({ setModalStatus }: IAssetsModal) {
@@ -19,15 +17,10 @@ export default function AssetsModal({ setModalStatus }: IAssetsModal) {
     const { clearInputs } = useInputs()
     const [activeAsset, setActiveAsset] = useState(settings?.tokenSymbol!)
     const [closeRequest, setCloseRequest] = useState(false)
-    const { data, mutate, isPending, isSuccess } = useMutateSettings()
-    const queryClient = useQueryClient()
+    const { mutate, isPending, isSuccess } = useMutateSettings()
 
     useEffect(() => {
         if (isSuccess) {
-            queryClient.setQueryData(['user'], (oldData: IAuth) => ({
-                ...oldData,
-                user: { ...oldData, settings: data }
-            }))
             setCloseRequest(true)
             clearInputs()
         }

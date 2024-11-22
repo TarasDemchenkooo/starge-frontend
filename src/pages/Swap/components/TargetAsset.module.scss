@@ -45,7 +45,8 @@
         align-items: center;
         gap: 20px;
 
-        &>div {
+        &>button {
+            background-color: transparent;
             display: flex;
             align-items: center;
             gap: 12px;
@@ -59,7 +60,7 @@
             &>span {
                 font-size: 26px;
                 line-height: 26px;
-                color: var(--tg-theme-text-color);
+                color: var(--main-color);
                 font-weight: var(--font-weight-bold);
             }
 
@@ -74,7 +75,7 @@
                 &::after {
                     content: '';
                     position: absolute;
-                    background-color: var(--tg-theme-hint-color);
+                    background-color: var(--hint-color);
                     left: 0;
                     width: 11px;
                     height: 3px;

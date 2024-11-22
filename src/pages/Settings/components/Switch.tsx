@@ -1,32 +1,38 @@
 import styles from './Switch.module.scss'
 import { useState } from "react"
 import classNames from "classnames"
-import vibrate from '../../../utils/vibration'
 import Ripple from '../../../shared/components/Ripple/components/Ripple'
 import { ISwitch } from '../types/ISwitch'
+import useAuth from '../../Swap/hooks/useAuth'
+import useMutateSettings from '../../Swap/hooks/useMutateSettings'
+import { useDebouncedCallback } from 'use-debounce'
 
 export default function Switch({ name, description, children }: ISwitch) {
     const key = name.toLowerCase()
-    const status: boolean = JSON.parse(localStorage.getItem(key)!)
-    const rippleColor = Telegram.WebApp.themeParams.hint_color!
+    const { settings } = useAuth()
+    //@ts-ignore
+    const status = settings[key]
     const [isActive, setIsActive] = useState(status)
+    const { mutate } = useMutateSettings()
 
     const switchClassnames = classNames({
         [styles.switchSlider]: true,
         [styles.switchSliderActive]: isActive
     })
 
-    function handleClick() {
-        vibrate('medium')
+    const debouncedPatch = useDebouncedCallback(() => {
+        mutate({ [key]: !status })
+    }, 500)
 
+    function handleClick() {
+        debouncedPatch()
         setTimeout(() => {
-            localStorage.setItem(key, JSON.stringify(!isActive))
             setIsActive(!isActive)
         }, 200)
     }
 
     return (
-        <Ripple color={rippleColor} className={styles.switch} onClick={handleClick}>
+        <Ripple className={styles.switch} onClick={handleClick}>
             {children}
             <div>
                 <div>

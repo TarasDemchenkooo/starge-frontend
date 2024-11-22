@@ -4,8 +4,8 @@
     align-items: center;
     background-color: transparent;
     width: 100%;
-    gap: 15px;
-    padding-left: 15px;
+    gap: 16px;
+    padding-left: 16px;
 
     &>svg {
         width: 32px;
@@ -15,7 +15,7 @@
 
     &>div {
         width: 100%;
-        border-bottom: 1px solid var(--tg-theme-secondary-bg-color);
+        border-bottom: 1px solid rgba($color: #1D2733, $alpha: 0.75);
         display: flex;
         padding: 10px 0;
         align-items: center;
@@ -29,14 +29,14 @@
 
             &>h4 {
                 font-size: 16px;
-                color: var(--tg-theme-text-color);
+                color: var(--main-color);
                 font-weight: 300;
                 margin: 0;
             }
 
             &>p {
                 margin: 0;
-                color: var(--tg-theme-subtitle-text-color);
+                color: var(--hint-color);
                 font-size: 14px;
                 font-weight: 300;
             }
@@ -47,7 +47,7 @@
         width: 32px;
         height: 14px;
         border-radius: 20px;
-        background-color: var(--tg-theme-hint-color);
+        background-color: var(--hint-color);
         position: relative;
         margin-right: 22px;
         transition: background-color 0.2s ease-in-out;
@@ -56,8 +56,8 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background-color: var(--tg-theme-section-bg-color);
-            border: 2px solid var(--tg-theme-hint-color);
+            background-color: var(--bg-color);
+            border: 2px solid var(--hint-color);
             top: 50%;
             transform: translateY(-50%);
             position: absolute;
@@ -66,10 +66,10 @@
         }
 
         &Active {
-            background-color: var(--tg-theme-link-color);
+            background-color: var(--button-color);
 
             &>div {
-                border: 2px solid var(--tg-theme-link-color);
+                border: 2px solid var(--button-color);
                 left: 14px;
             }
         }

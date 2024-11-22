@@ -4,10 +4,11 @@ import classNames from "classnames"
 import styles from './Modal.module.scss'
 import { useEffect, useState } from "react"
 import CloseIcon from '../../../../assets/svg/close.svg?react'
-import vibrate from "../../../../utils/vibration"
+import useVibrate from "../../../hooks/useVibrate"
 
 export default function Modal({ setModalStatus, children, closeRequest, closeButton = false }: IModal) {
     const [isActive, setIsActive] = useState(false)
+    const { vibrate } = useVibrate()
 
     const modalClassnames = classNames({
         [styles.modal]: true,
@@ -33,7 +34,7 @@ export default function Modal({ setModalStatus, children, closeRequest, closeBut
     }, [closeRequest])
 
     function closeModal(event?: React.MouseEvent) {
-        event && vibrate('medium')
+        event && vibrate()
         setIsActive(false)
         setTimeout(() => {
             setModalStatus(false)

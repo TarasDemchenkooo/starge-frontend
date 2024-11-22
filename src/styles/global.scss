@@ -21,6 +21,15 @@ ul {
 body {
   background-color: var(--bg-color);
   font-family: 'Montserrat';
+  padding-top: var(--tg-safe-area-inset-top);
+  padding-right: var(--tg-safe-area-inset-right);
+  padding-bottom: var(--tg-safe-area-inset-bottom);
+  padding-left: var(--tg-safe-area-inset-left);
+}
+
+footer {
+  position: fixed;
+  bottom: 42px;
 }
 
 //ton-connect

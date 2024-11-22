@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { TonConnectUIProvider } from '@tonconnect/ui-react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import setTma from './shared/utils/setTma'
 import App from './App'
 import './styles/fonts.scss'
@@ -22,6 +23,7 @@ root.render(
           <App />
         </BrowserRouter>
       </TonConnectUIProvider>
+      <ReactQueryDevtools initialIsOpen={false}/>
     </QueryClientProvider>
   </StrictMode>
 )

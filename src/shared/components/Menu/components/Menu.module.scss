@@ -1,10 +1,11 @@
 .menu {
     width: 100%;
-    height: 64px;
-    background-color: var(--tg-theme-section-bg-color);
+    height: 68px;
+    background-color: var(--bg-color);
     display: flex;
     align-items: center;
     justify-content: space-around;
+    border-top: 1px solid rgba($color: #1D2733, $alpha: 0.5);
 
     &LinkDefault {
         width: 50px;
@@ -15,35 +16,36 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 2px;
-        color: var(--tg-theme-hint-color);
+        gap: 4px;
+        color: var(--hint-color);
         font-size: 14px;
+        line-height: 14px;
         transition: color 0.2s ease-in-out;
         font-weight: var(--font-weight-default);
 
         &>svg {
             width: 24px;
             height: 24px;
-            fill: var(--tg-theme-hint-color);
+            fill: var(--hint-color);
             transition: fill 0.2s ease-in-out;
         }
 
-        &:first-child > svg {
-            stroke: var(--tg-theme-hint-color);
+        &:first-child>svg {
+            stroke: var(--hint-color);
             fill: none;
             transition: stroke 0.2s ease-in-out;
         }
     }
 
     &LinkActive {
-        color: var(--tg-theme-link-color);
+        color: var(--button-color);
 
         &>svg {
-            fill: var(--tg-theme-link-color);
+            fill: var(--button-color);
         }
 
-        &:first-child > svg {
-            stroke: var(--tg-theme-link-color);
+        &:first-child>svg {
+            stroke: var(--button-color);
         }
     }
 }

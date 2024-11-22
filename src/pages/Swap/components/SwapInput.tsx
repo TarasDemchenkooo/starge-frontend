@@ -7,6 +7,7 @@ import formatSourceInput from "../utils/formatSourceInput"
 import formatTargetInput from "../utils/formatTargetInput"
 import styles from './SwapInput.module.scss'
 import classNames from "classnames"
+import useVibrate from "../../../shared/hooks/useVibrate"
 
 export default function SwapInput({ targetAsset, inputType }: ISwapInput) {
     const value = useInputs(state => state[inputType])
@@ -14,6 +15,7 @@ export default function SwapInput({ targetAsset, inputType }: ISwapInput) {
     const { source, setSource, target, setTarget, activeInput, setActiveInput } = useInputs()
     const [valueView, setValueView] = useState(value)
     const { price, initialFetch, isRefetching } = usePrice(targetAsset)
+    const { vibrate } = useVibrate()
 
     useEffect(() => {
         setValueView(value)
@@ -47,6 +49,7 @@ export default function SwapInput({ targetAsset, inputType }: ISwapInput) {
         if (regexp.test(value)) {
             setValueView(value)
             setInputs(value)
+            vibrate()
         }
     }
 

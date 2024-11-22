@@ -4,15 +4,16 @@ import styles from './Menu.module.scss'
 import TransactionIcon from '../../../../assets/svg/tx.svg?react'
 import SwapIcon from '../../../../assets/svg/swap.svg?react'
 import SettingsIcon from '../../../../assets/svg/settings.svg?react'
-import vibrate from '../../../../utils/vibration'
+import useVibrate from '../../../hooks/useVibrate'
 
 export default function Menu() {
     const { pathname } = useLocation()
     const navigate = useNavigate()
+    const { vibrate } = useVibrate()
 
     function to(to: string) {
         navigate(to)
-        vibrate('medium')
+        vibrate()
     }
 
     function checkLinkState(path: string) {
@@ -23,7 +24,7 @@ export default function Menu() {
     }
 
     return (
-        <div className={styles.menu}>
+        <footer className={styles.menu}>
             <button className={checkLinkState('/')}
                 onClick={() => to('/')} >
                 <SwapIcon />
@@ -41,6 +42,6 @@ export default function Menu() {
                 <SettingsIcon />
                 <span>Settings</span>
             </button>
-        </div>
+        </footer>
     )
 }

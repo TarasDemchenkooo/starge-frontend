@@ -2,12 +2,13 @@ import styles from './Button.module.scss'
 import { IButton } from "../types/IButton"
 import { useState } from 'react'
 import classNames from 'classnames'
-import vibrate from '../../../../utils/vibration'
+import useVibrate from '../../../hooks/useVibrate'
 
 export default function Button({ content, className, onClick, isLoading, disabled = false }: IButton) {
     const [pressed, setPressed] = useState(false)
     const [released, setReleased] = useState(false)
     const clickable = !isLoading && !disabled
+    const { vibrate } = useVibrate()
 
     const buttonClassnames = classNames({
         [styles.button]: true,
@@ -32,7 +33,7 @@ export default function Button({ content, className, onClick, isLoading, disable
 
     function click(event: React.MouseEvent<HTMLButtonElement>) {
         if (clickable) {
-            vibrate('medium')
+            vibrate()
             onClick(event)
         }
     }

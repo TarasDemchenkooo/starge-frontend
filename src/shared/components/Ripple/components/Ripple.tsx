@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import { IRipple } from '../types/IRipple'
 import setDefaultConfiguration from '../utils/setDefaultConfiguration'
 import defineRipple from '../utils/defineRipple'
+import useVibrate from '../../../hooks/useVibrate'
 
 export default function Ripple(cfg: IRipple) {
     const { color, inDuration, outDuration, holdTime } = setDefaultConfiguration(cfg)
@@ -11,6 +12,7 @@ export default function Ripple(cfg: IRipple) {
     const [rippleEnd, setRippleEnd] = useState(false)
     const [isAnimating, setIsAnimating] = useState(false)
     const [startTouch, setStartTouch] = useState(0)
+    const { vibrate } = useVibrate()
 
     const rippleClassnames = classNames(styles.rippleEffect, {
         [styles.rippleEffectEnd]: rippleEnd
@@ -38,8 +40,13 @@ export default function Ripple(cfg: IRipple) {
         setTimeout(deleteRipple, diff > 400 ? 0 : holdTime)
     }
 
+    function click(event: React.MouseEvent<HTMLButtonElement>) {
+        cfg.onClick(event)
+        vibrate()
+    }
+
     return (
-        <button className={rippleContainerClassnames} onClick={cfg.onClick}
+        <button className={rippleContainerClassnames} onClick={click}
             onTouchStart={createTouchRipple} onTouchMove={deleteRipple}
             onTouchEnd={deleteTouchRipple}>
             {cfg.children}

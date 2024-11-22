@@ -1,28 +1,28 @@
 .settingsApp {
-    background-color: var(--tg-theme-bg-color);
-    margin-top: -15px;
+    background-color: var(--bg-color);
     border-top-right-radius: 12px;
     border-top-left-radius: 12px;
-    padding: 15px 0;
+    padding: 16px 0;
+    border-top: 1px solid rgba($color: #1D2733, $alpha: 0.75);
 
     &>h3 {
-        color: var(--tg-theme-link-color);
+        color: var(--button-color);
         font-weight: var(--font-weight-bold);
         font-size: 16px;
         margin-bottom: 6px;
-        padding-left: 15px;
+        padding-left: 16px;
     }
 
     &>button {
 
         &:nth-child(2)>svg {
             padding: 4px;
-            fill: var(--tg-theme-hint-color);
+            fill: var(--hint-color);
         }
 
         &:nth-child(3)>svg {
             padding: 1px;
-            stroke: var(--tg-theme-hint-color);
+            stroke: var(--hint-color);
         }
 
         &:last-child>div {
