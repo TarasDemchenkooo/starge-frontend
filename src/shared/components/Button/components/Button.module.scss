@@ -6,6 +6,10 @@
     border: none;
     color: var(--main-color);
     background-color: var(--button-color);
+    font-weight: var(--font-weight-bold);
+    font-size: 14px;
+    line-height: 14px;
+    height: 44px;
     border-radius: 12px;
     transition: transform 0.1s ease-in-out, background-color 0.2s ease-in-out;
 

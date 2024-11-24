@@ -22,7 +22,7 @@ export default function TargetAsset() {
         if (!isBalanceLoading && balance !== undefined) {
             setStickyBalance(balance)
         }
-    }, [isBalanceLoading])
+    }, [isBalanceLoading, settings?.tokenSymbol])
 
     function openModal() {
         vibrate()

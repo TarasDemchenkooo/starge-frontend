@@ -4,8 +4,8 @@ import classNames from "classnames"
 import Ripple from '../../../shared/components/Ripple/components/Ripple'
 import { ISwitch } from '../types/ISwitch'
 import useAuth from '../../Swap/hooks/useAuth'
-import useMutateSettings from '../../Swap/hooks/useMutateSettings'
 import { useDebouncedCallback } from 'use-debounce'
+import useMutateSettings from '../hooks/useMutateSettings'
 
 export default function Switch({ name, description, children }: ISwitch) {
     const key = name.toLowerCase()

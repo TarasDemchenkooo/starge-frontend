@@ -10,7 +10,7 @@
         line-height: 20px;
         margin: 0 0 16px 16px;
         color: var(--main-color);
-        font-weight: 600;
+        font-weight: var(--font-weight-bold);
     }
 
     &>div {
@@ -26,9 +26,5 @@
 
     &>button {
         width: calc(100% - 32px);
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 14px;
-        height: 44px;
     }
 }

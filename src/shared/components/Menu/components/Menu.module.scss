@@ -1,11 +1,11 @@
 .menu {
     width: 100%;
-    height: 68px;
+    padding-top: 12px;
+    padding-bottom: 56px;
     background-color: var(--bg-color);
     display: flex;
     align-items: center;
     justify-content: space-around;
-    border-top: 1px solid rgba($color: #1D2733, $alpha: 0.5);
 
     &LinkDefault {
         width: 50px;
@@ -21,7 +21,7 @@
         font-size: 14px;
         line-height: 14px;
         transition: color 0.2s ease-in-out;
-        font-weight: var(--font-weight-default);
+        font-weight: var(--font-weight-bold);
 
         &>svg {
             width: 24px;

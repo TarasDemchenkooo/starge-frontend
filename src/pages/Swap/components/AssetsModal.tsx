@@ -6,10 +6,10 @@ import { useTonAddress } from "@tonconnect/ui-react"
 import Button from "../../../shared/components/Button/components/Button"
 import { useEffect, useState } from "react"
 import { IAssetsModal } from "../types/IAssetsModal"
-import useMutateSettings from "../hooks/useMutateSettings"
 import { Assets } from "../../../shared/types/Assets"
 import useInputs from "../hooks/useInputs"
 import useAuth from "../hooks/useAuth"
+import useMutateSettings from "../../Settings/hooks/useMutateSettings"
 
 export default function AssetsModal({ setModalStatus }: IAssetsModal) {
     const address = useTonAddress()

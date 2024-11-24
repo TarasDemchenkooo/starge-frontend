@@ -6,7 +6,7 @@
     margin-bottom: 16px;
 
     &>h1 {
-        font-weight: 700;
+        font-weight: var(--font-weight-ultra-bold);
         color: var(--main-color);
         font-size: 20px;
         line-height: 20px;

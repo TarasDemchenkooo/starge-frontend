@@ -3,6 +3,7 @@
   margin: 0;
   box-sizing: border-box;
   user-select: none;
+  font-family: 'Montserrat';
 }
 
 a {
@@ -20,7 +21,6 @@ ul {
 
 body {
   background-color: var(--bg-color);
-  font-family: 'Montserrat';
   padding-top: var(--tg-safe-area-inset-top);
   padding-right: var(--tg-safe-area-inset-right);
   padding-bottom: var(--tg-safe-area-inset-bottom);
@@ -29,7 +29,7 @@ body {
 
 footer {
   position: fixed;
-  bottom: 42px;
+  bottom: 0px;
 }
 
 //ton-connect

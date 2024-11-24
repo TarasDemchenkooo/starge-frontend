@@ -16,7 +16,7 @@
             font-size: 16px;
             line-height: 16px;
             color: var(--hint-color);
-            font-weight: 500;
+            font-weight: var(--font-weight-default);
         }
 
         &>div {
@@ -26,15 +26,15 @@
 
             &>svg {
                 fill: var(--hint-color);
-                width: 16px;
-                height: 16px;
+                width: 14px;
+                height: 14px;
             }
 
             &>span {
                 font-size: 16px;
                 line-height: 16px;
                 color: var(--hint-color);
-                font-weight: 500;
+                font-weight: var(--font-weight-default);
             }
         }
     }

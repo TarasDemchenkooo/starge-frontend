@@ -1,8 +1,8 @@
 export default function setTma() {
     const interfaceColor = '#0F1620'
-    const version = Number(Telegram.WebApp.version[0])
+    const isSupported = Telegram.WebApp.isVersionAtLeast('8.0')
 
-    if (version >= 8) {
+    if (isSupported) {
         //@ts-ignore
         Telegram.WebApp.requestFullscreen()
     }

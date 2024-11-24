@@ -1,5 +1,5 @@
 export default function formatDecimal(balance: number) {
-    const roundedDecimal = Math.round(balance * 100) / 100
+    const roundedDecimal = Math.round(balance * 10 ** 6) / 10 ** 6
 
     return roundedDecimal
 }

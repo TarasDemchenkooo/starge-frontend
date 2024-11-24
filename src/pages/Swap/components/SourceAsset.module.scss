@@ -8,7 +8,7 @@
         font-size: 16px;
         line-height: 16px;
         color: var(--hint-color);
-        font-weight: 500;
+        font-weight: var(--font-weight-default);
         margin-bottom: 12px;
     }
 
@@ -33,7 +33,7 @@
                 line-height: 26px;
                 text-transform: uppercase;
                 color: var(--main-color);
-                font-weight: 600;
+                font-weight: var(--font-weight-bold);
             }
         }
     }

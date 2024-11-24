@@ -17,7 +17,7 @@
 
         &>span {
             font-size: 14px;
-            font-weight: 600;
+            font-weight: var(--font-weight-bold);
             color: var(--main-color);
         }
 
@@ -54,13 +54,13 @@
 
                 &>span:first-child {
                     font-size: 14px;
-                    font-weight: 600;
+                    font-weight: var(--font-weight-bold);
                     color: var(--hint-color);
                 }
 
                 &>span:last-child {
                     font-size: 14px;
-                    font-weight: 600;
+                    font-weight: var(--font-weight-bold);
                     color: var(--main-color);
                 }
             }

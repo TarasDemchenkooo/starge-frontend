@@ -3,12 +3,12 @@ import authUser from "../api/auth"
 
 export default function useAuth() {
     const initData = Telegram.WebApp.initData
-    const version = Number(Telegram.WebApp.version[0])
+    const isSupported = Telegram.WebApp.isVersionAtLeast('8.0')
 
     const { data, isLoading, isError } = useQuery({
         queryKey: ['user'],
         queryFn: () => authUser(initData),
-        enabled: version >= 8,
+        enabled: isSupported,
         staleTime: Infinity,
         refetchOnWindowFocus: false,
         retry: false
@@ -16,6 +16,6 @@ export default function useAuth() {
 
     return {
         jwt: data?.jwt, settings: data?.user.settings,
-        isLoading, isError: version < 8 || isError
+        isLoading, isError: !isSupported || isError
     }
 }
