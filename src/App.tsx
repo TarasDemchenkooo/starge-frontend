@@ -7,6 +7,7 @@ import Swap from "./pages/Swap/Swap"
 import { useEffect } from "react"
 import Settings from "./pages/Settings/Settings"
 import Menu from "./shared/components/Menu/components/Menu"
+import Toast from "./shared/components/Toast/components/Toast"
 
 export default function App() {
     const { jwt, isLoading, isError } = useAuth()
@@ -36,6 +37,7 @@ export default function App() {
                 </Routes>
             </main>
             <Menu />
+            <Toast/>
         </>
     )
 }

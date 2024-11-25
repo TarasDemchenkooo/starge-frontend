@@ -6,6 +6,7 @@ import { ISettingsModal } from '../types/ISettingsModal'
 import TruncatedText from '../../../shared/components/TruncatedText/components/TruncatedText'
 import { useState } from 'react'
 import Ripple from '../../../shared/components/Ripple/components/Ripple'
+import toast from 'react-hot-toast'
 
 export default function SettingsModal({ address, setModalStatus }: ISettingsModal) {
     const tonConnect = useTonConnectUI()
@@ -20,6 +21,12 @@ export default function SettingsModal({ address, setModalStatus }: ISettingsModa
         }, 500)
     }
 
+    function handleCopy() {
+        navigator.clipboard.writeText(address).then(() => {
+            toast('Copied', { id: 'copy' })
+        })
+    }
+
     return (
         <Modal closeRequest={closeRequest} setModalStatus={setModalStatus}>
             <div className={styles.settingsModal}>
@@ -29,11 +36,11 @@ export default function SettingsModal({ address, setModalStatus }: ISettingsModa
                 </p>
                 <Ripple color={Telegram.WebApp.themeParams.hint_color!}
                     className={styles.settingsModalWallet}
-                    onClick={() => {}}>
+                    onClick={handleCopy}>
                     <h5>Connected wallet</h5>
                     <TruncatedText text={address} className={styles.settingsModalWalletAddress} />
                 </Ripple>
-                <Button content='Confirm' className={styles.settingsModalConfirm} onClick={disconnect}/>
+                <Button content='Confirm' className={styles.settingsModalConfirm} onClick={disconnect} />
             </div>
         </Modal>
     )
