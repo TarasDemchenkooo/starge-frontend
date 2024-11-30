@@ -4,4 +4,5 @@ import { InputType } from "./InputType"
 export interface ISwapInput {
     targetAsset: Assets
     inputType: InputType
+    confirmedAmount?: number
 }

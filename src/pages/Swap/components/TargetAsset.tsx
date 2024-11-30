@@ -9,13 +9,17 @@ import SwapInfo from './SwapInfo'
 import SwapInput from './SwapInput'
 import useAuth from '../hooks/useAuth'
 import useVibrate from '../../../shared/hooks/useVibrate'
+import { IValidatedSwap } from '../types/IValidatedSwap'
 
-export default function TargetAsset() {
+export default function TargetAsset({ confirmedData }: { confirmedData?: IValidatedSwap }) {
     const { settings } = useAuth()
     const { balance, isBalanceLoading } = useBalance(settings?.tokenSymbol!)
     const [stickyBalance, setStickyBalance] = useState(balance || 0)
     const [modalStatus, setModalStatus] = useState(false)
-    const jetton = jettons.jettons.find(jetton => jetton.symbol === settings?.tokenSymbol)!
+    const jetton = jettons.jettons.find(jetton => {
+        const searchKey = confirmedData?.tokenSymbol || settings?.tokenSymbol
+        return jetton.symbol === searchKey
+    })!
     const { vibrate } = useVibrate()
 
     useEffect(() => {
@@ -27,8 +31,10 @@ export default function TargetAsset() {
     ])
 
     function openModal() {
-        vibrate()
-        setModalStatus(true)
+        if (!confirmedData) {
+            vibrate()
+            setModalStatus(true)
+        }
     }
 
     return (
@@ -36,21 +42,24 @@ export default function TargetAsset() {
             <div className={styles.targetAssetMain}>
                 <div className={styles.targetAssetTop}>
                     <h4>You receive</h4>
-                    <div>
-                        <WalletIcon />
-                        <span>{formatDecimal(stickyBalance!)}</span>
-                    </div>
+                    {!confirmedData &&
+                        <div>
+                            <WalletIcon />
+                            <span>{formatDecimal(stickyBalance!)}</span>
+                        </div>
+                    }
                 </div>
                 <div className={styles.targetAssetMiddle}>
                     <button onClick={openModal}>
                         <img src={jetton.icon} />
                         <span>{jetton.symbol}</span>
-                        <div></div>
+                        {!confirmedData && <div></div>}
                     </button>
-                    <SwapInput targetAsset={settings?.tokenSymbol!} inputType='target' />
+                    <SwapInput targetAsset={settings?.tokenSymbol!} inputType='target'
+                        confirmedAmount={confirmedData?.tokenAmount} />
                 </div>
             </div>
-            <SwapInfo targetAsset={settings?.tokenSymbol!} />
+            <SwapInfo targetAsset={settings?.tokenSymbol!} confirmedData={confirmedData} />
             {modalStatus && <AssetsModal targetAsset={settings?.tokenSymbol!} setModalStatus={setModalStatus} />}
         </div>
     )

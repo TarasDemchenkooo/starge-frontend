@@ -8,16 +8,23 @@ import calculatePrice from "../utils/calculatePrice"
 import comissionRate from "../../../shared/constants/comissionRate"
 import formatSourceInput from "../utils/formatSourceInput"
 import useInputs from "../hooks/useInputs"
+import { useTonAddress } from "@tonconnect/ui-react"
+import { IValidatedSwap } from "../types/IValidatedSwap"
 
-export default function SwapInfo({ targetAsset }: { targetAsset: Assets }) {
+export default function SwapInfo({ targetAsset, confirmedData }:
+    { targetAsset: Assets, confirmedData?: IValidatedSwap }) {
     const { price } = usePrice(targetAsset)
     const { source, target } = useInputs()
+    const address = useTonAddress()
     const [stickyAmount, setStickyAmount] = useState(Number(source))
     const [isOpen, setIsOpen] = useState(true)
-    const simulationRange = 10 ** 7
+
+    const simulationRange = address ? 50000 : 10 ** 7
+    const lpFee = confirmedData?.lpFee || Math.ceil(stickyAmount * comissionRate)
+    const bchFees = confirmedData?.bchFees || (targetAsset === 'TON' ? 3 : 15)
 
     useEffect(() => {
-        if (Number(source) <= simulationRange) {
+        if (Number(source) <= simulationRange && Number(source) !== 0) {
             setStickyAmount(Number(source))
         }
     }, [source])
@@ -33,25 +40,33 @@ export default function SwapInfo({ targetAsset }: { targetAsset: Assets }) {
 
     return (
         <div className={swapInfoClassnames}>
-            <div onClick={() => setIsOpen(!isOpen)} className={styles.swapInfoButton}>
-                <span>1 STAR ≈ {calculatePrice(price!)} {targetAsset}</span>
-                <Chevron style={{ transform: `rotate(${isOpen ? -180 : 0}deg)` }} />
-            </div>
+            {!confirmedData &&
+                <div onClick={() => setIsOpen(!isOpen)} className={styles.swapInfoButton}>
+                    <span>1 STAR ≈ {calculatePrice(price!)} {targetAsset}</span>
+                    <Chevron style={{ transform: `rotate(${isOpen ? -180 : 0}deg)` }} />
+                </div>
+            }
             <div className={dropdownClassnames}>
                 <div className={styles.swapInfoDropdownContent}>
+                    {confirmedData &&
+                        <div>
+                            <span>Exchange rate</span>
+                            <span>
+                                1 STAR ≈ {calculatePrice(0, confirmedData.tokenAmount / confirmedData.starsAmount)} {confirmedData.tokenSymbol}
+                            </span>
+                        </div>
+                    }
                     <div>
                         <span>Liquidity provider fee</span>
-                        <span>{formatSourceInput(String(
-                            Math.ceil(stickyAmount * comissionRate)
-                        ))} STARS</span>
+                        <span>{formatSourceInput(String(lpFee))} STARS</span>
                     </div>
                     <div>
                         <span>Blockchain fees</span>
-                        <span>1 STAR</span>
+                        <span>{!confirmedData ? '~' : ''} {bchFees} STARS</span>
                     </div>
                     <div>
                         <span>Route</span>
-                        <span>STARS » {targetAsset}</span>
+                        <span>STARS » {confirmedData?.tokenSymbol || targetAsset}</span>
                     </div>
                 </div>
             </div>

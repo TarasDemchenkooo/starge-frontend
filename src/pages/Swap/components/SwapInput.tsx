@@ -9,7 +9,7 @@ import styles from './SwapInput.module.scss'
 import classNames from "classnames"
 import useVibrate from "../../../shared/hooks/useVibrate"
 
-export default function SwapInput({ targetAsset, inputType }: ISwapInput) {
+export default function SwapInput({ targetAsset, inputType, confirmedAmount }: ISwapInput) {
     const value = useInputs(state => state[inputType])
     const setValue = useInputs(state => inputType === 'source' ? state.setSource : state.setTarget)
     const { source, setSource, target, setTarget, activeInput, setActiveInput } = useInputs()
@@ -57,10 +57,13 @@ export default function SwapInput({ targetAsset, inputType }: ISwapInput) {
         [styles.swapInputRefetching]: isRefetching && activeInput !== inputType
     })
 
-
-    return (
-        <input value={inputType === 'source' ? formatSourceInput(valueView) : formatTargetInput(valueView)}
-            onChange={handleChange} type="text" placeholder="0" inputMode='numeric'
-            className={inputClassnames} />
+    return confirmedAmount ? (
+        <span className={styles.swapInput}>{inputType === 'source' ?
+            formatSourceInput(String(confirmedAmount)) : formatTargetInput(String(confirmedAmount))}
+        </span>
+    ) : (
+        <input className={inputClassnames}
+            value={inputType === 'source' ? formatSourceInput(valueView) : formatTargetInput(valueView)}
+            onChange={handleChange} type="text" placeholder="0" inputMode='numeric' />
     )
 }

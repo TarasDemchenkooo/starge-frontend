@@ -1,15 +1,13 @@
 import { Address, internal, toNano } from "ton-core"
 import { TonClient, WalletContractV4 } from "ton"
 import { mnemonicToPrivateKey } from "ton-crypto"
+import { addr, apiKey, mnemonic } from "./mnemonic"
 
 export default async function createBoc() {
     const client = new TonClient({
         endpoint: 'https://testnet.toncenter.com/api/v2/jsonRPC',
-        apiKey: '405072e2a27c6d2b5e37ab0b19fcb1112e0e903376fd7632ad92a870be58a95b'
+        apiKey: apiKey
     });
-
-    const mnemonic = ['adult', 'feel']
-    const addr = '0QBytvGSgRr9_pnzBZJMYepIfoN2nw0Awc6SaLEhdO77Aj9P'
 
     const keyPair = await mnemonicToPrivateKey(mnemonic)
     const walletContract = WalletContractV4.create({ workchain: 0, publicKey: keyPair.publicKey })
@@ -29,7 +27,8 @@ export default async function createBoc() {
         secretKey: keyPair.secretKey,
         messages: [message],
         seqno,
-        sendMode: 1
+        //@ts-ignore
+        sendMode: 3
     })
 
     return boc.toBoc().toString('hex')

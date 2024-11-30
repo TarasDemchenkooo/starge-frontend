@@ -4,6 +4,5 @@ export interface IConfirmSwap {
     address: string
     source: number
     target: number
-    target_symbol: Assets
-    quote: number
+    route: Assets
 }

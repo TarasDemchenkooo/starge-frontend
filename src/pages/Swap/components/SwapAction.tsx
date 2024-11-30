@@ -7,15 +7,13 @@ import { useEffect, useState } from 'react'
 import ConfirmModal from './ConfirmModal'
 import useConfirmSwap from '../hooks/useConfirmeSwap'
 import getButtonState from '../utils/getButtonState'
-import { IConfirmSwap } from '../types/IConfirmSwap'
-import calculatePrice from '../utils/calculatePrice'
 import { IValidatedSwap } from '../types/IValidatedSwap'
 import useAuth from '../hooks/useAuth'
 
 export default function SwapAction() {
     const { settings } = useAuth()
     const { source, target } = useInputs()
-    const { price, isPriceLoading } = usePrice(settings?.tokenSymbol!)
+    const { isPriceLoading } = usePrice(settings?.tokenSymbol!)
     const address = useTonAddress()
     const { open } = useTonConnectModal()
     const [modal, setModal] = useState(false)
@@ -24,21 +22,18 @@ export default function SwapAction() {
 
     useEffect(() => {
         if (data) {
-            setModal(true)
             setConfirmedData(data)
+            setModal(true)
         }
     }, [data])
 
     function swapConfirm() {
-        const validatingAssets: IConfirmSwap = {
+        mutate({
             address,
             source: Number(source),
             target: Number(target),
-            target_symbol: settings?.tokenSymbol!,
-            quote: calculatePrice(price!)
-        }
-
-        mutate(validatingAssets)
+            route: settings?.tokenSymbol!
+        })
     }
 
     return (
@@ -48,7 +43,7 @@ export default function SwapAction() {
                     disabled={getButtonState(source).disabled} onClick={swapConfirm} /> :
                 <Button content='Connect wallet' isLoading={isPriceLoading} onClick={open} />
             }
-            {modal && <ConfirmModal {...confirmedData!} />}
+            {modal && <ConfirmModal data={confirmedData!} setModalStatus={setModal} />}
         </div>
     )
 }
