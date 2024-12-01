@@ -10,9 +10,11 @@ import SwapInput from './SwapInput'
 import useAuth from '../hooks/useAuth'
 import useVibrate from '../../../shared/hooks/useVibrate'
 import { IValidatedSwap } from '../types/IValidatedSwap'
+import { useTonAddress } from '@tonconnect/ui-react'
 
 export default function TargetAsset({ confirmedData }: { confirmedData?: IValidatedSwap }) {
     const { settings } = useAuth()
+    const address = useTonAddress()
     const { balance, isBalanceLoading } = useBalance(settings?.tokenSymbol!)
     const [stickyBalance, setStickyBalance] = useState(balance || 0)
     const [modalStatus, setModalStatus] = useState(false)
@@ -26,9 +28,11 @@ export default function TargetAsset({ confirmedData }: { confirmedData?: IValida
         if (!isBalanceLoading && balance !== undefined) {
             setStickyBalance(balance)
         }
-    }, [isBalanceLoading,
-        settings?.tokenSymbol,
-    ])
+
+        if (!address) {
+            setStickyBalance(0)
+        }
+    }, [isBalanceLoading, settings?.tokenSymbol, address])
 
     function openModal() {
         if (!confirmedData) {

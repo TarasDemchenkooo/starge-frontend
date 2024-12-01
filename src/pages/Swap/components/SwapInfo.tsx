@@ -30,8 +30,8 @@ export default function SwapInfo({ targetAsset, confirmedData }:
     }, [source])
 
     const swapInfoClassnames = classNames(styles.swapInfo, {
-        [styles.swapInfoActive]: price && source && target
-            && Number(source) <= simulationRange
+        [styles.swapInfoActive]: (price && source && target
+            && Number(source) <= simulationRange) || confirmedData
     })
 
     const dropdownClassnames = classNames(styles.swapInfoDropdown, {
@@ -49,12 +49,20 @@ export default function SwapInfo({ targetAsset, confirmedData }:
             <div className={dropdownClassnames}>
                 <div className={styles.swapInfoDropdownContent}>
                     {confirmedData &&
-                        <div>
-                            <span>Exchange rate</span>
-                            <span>
-                                1 STAR ≈ {calculatePrice(0, confirmedData.tokenAmount / confirmedData.starsAmount)} {confirmedData.tokenSymbol}
-                            </span>
-                        </div>
+                        <>
+                            <div>
+                                <span>Exchange rate</span>
+                                <span>
+                                    1 STAR ≈ {calculatePrice(0, confirmedData.tokenAmount /
+                                        confirmedData.starsAmount)} {confirmedData.tokenSymbol}
+                                </span>
+                            </div>
+
+                            <div>
+                                <span>Max. price slippage</span>
+                                <span>0.5%</span>
+                            </div>
+                        </>
                     }
                     <div>
                         <span>Liquidity provider fee</span>

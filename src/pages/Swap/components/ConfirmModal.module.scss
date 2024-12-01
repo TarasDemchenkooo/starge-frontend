@@ -52,7 +52,7 @@
             }
         }
 
-        &>button {
+        &Btn {
             width: 90px;
             height: 100%;
             background-color: var(--button-color);
@@ -65,6 +65,45 @@
 
             &>svg {
                 width: 20px;
+                transition: all 0.3s ease-in-out;
+            }
+
+            &::after {
+                position: absolute;
+                content: '';
+                width: 14px;
+                height: 14px;
+                border: 2px solid var(--main-color);
+                border-bottom-color: transparent;
+                border-radius: 50%;
+                transition: all 0.3s ease-in-out;
+                animation: rotation 1s linear infinite;
+                top: 60%;
+                scale: 0;
+                opacity: 0;
+            }
+
+            @keyframes rotation {
+                0% {
+                    transform: translateY(-50%) rotate(0deg);
+                }
+
+                100% {
+                    transform: translateY(-50%) rotate(360deg);
+                }
+            }
+
+            &Loading {
+                &>svg {
+                    transform: translateY(-35%) scale(0.2);
+                    opacity: 0;
+                }
+
+                &::after {
+                    top: 50%;
+                    scale: 1;
+                    opacity: 1;
+                }
             }
         }
     }

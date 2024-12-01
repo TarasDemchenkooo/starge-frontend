@@ -5,7 +5,7 @@ import usePrice from '../hooks/usePrice'
 import useInputs from '../hooks/useInputs'
 import { useEffect, useState } from 'react'
 import ConfirmModal from './ConfirmModal'
-import useConfirmSwap from '../hooks/useConfirmeSwap'
+import useSwap from '../hooks/useSwap'
 import getButtonState from '../utils/getButtonState'
 import { IValidatedSwap } from '../types/IValidatedSwap'
 import useAuth from '../hooks/useAuth'
@@ -17,7 +17,7 @@ export default function SwapAction() {
     const address = useTonAddress()
     const { open } = useTonConnectModal()
     const [modal, setModal] = useState(false)
-    const { data, mutate, isPending } = useConfirmSwap()
+    const { data, mutate, isPending } = useSwap()
     const [confirmedData, setConfirmedData] = useState<IValidatedSwap | null>(null)
 
     useEffect(() => {

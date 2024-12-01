@@ -4,8 +4,10 @@ import styles from './ConfirmModal.module.scss'
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable'
 import SourceAsset from './SourceAsset'
 import TargetAsset from './TargetAsset'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import ConfirmArrow from '../../../assets/svg/confirm-arrow.svg?react'
+import useInvoiceLink from '../hooks/useInvoiceLink'
+import classNames from 'classnames'
 
 export default function ConfirmModal({ data, setModalStatus }:
     { data: IValidatedSwap, setModalStatus: (status: boolean) => void }) {
@@ -14,6 +16,20 @@ export default function ConfirmModal({ data, setModalStatus }:
     const [isTextShowed, setIsTextShowed] = useState(true)
     const parentRef = useRef<HTMLDivElement>(null)
     const buttonRef = useRef<HTMLButtonElement>(null)
+    const { invoice, mutate, isPending } = useInvoiceLink()
+    const [isLoading, setIsLoading] = useState(false)
+
+    const buttonClassnames = classNames(styles.confirmModalSliderBtn, {
+        [styles.confirmModalSliderBtnLoading]: isLoading
+    })
+
+    useEffect(() => {
+        if (invoice?.invoiceLink) {
+            Telegram.WebApp.openInvoice(invoice.invoiceLink, status => {
+                console.log(status)
+            })
+        }
+    }, [isPending])
 
     function handleStart(_: DraggableEvent, dragData: DraggableData) {
         setIsAnimating(false)
@@ -34,8 +50,10 @@ export default function ConfirmModal({ data, setModalStatus }:
         if (progress < parentWidth * 0.9) {
             setPosition({ x: 0, y: dragData.y })
         } else {
+            mutate(data.hash)
             setPosition({ x: parentWidth - elementWidth, y: dragData.y })
             clearTimeout(timeout)
+            setIsLoading(true)
         }
     }
 
@@ -49,7 +67,7 @@ export default function ConfirmModal({ data, setModalStatus }:
                     <span style={{ opacity: isTextShowed ? 0.5 : 0 }}>Slide to confirm</span>
                     <Draggable position={position} onDrag={handleStart}
                         onStop={handleStop} bounds='parent' axis='x'>
-                        <button ref={buttonRef} style={
+                        <button className={buttonClassnames} ref={buttonRef} style={
                             { transition: isAnimating ? 'transform 0.3s ease-in-out' : 'none' }
                         }>
                             <ConfirmArrow />
