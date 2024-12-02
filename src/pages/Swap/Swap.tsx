@@ -10,7 +10,7 @@ import createBoc from './utils/createBoc'
 export default function Swap() {
     
     useEffect(() => {
-        createBoc().then(res => console.log('BOC =>', res))
+        //createBoc().then(res => console.log('BOC =>', res))
     }, [])
 
     return (

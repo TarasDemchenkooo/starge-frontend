@@ -9,6 +9,7 @@ import useSwap from '../hooks/useSwap'
 import getButtonState from '../utils/getButtonState'
 import { IValidatedSwap } from '../types/IValidatedSwap'
 import useAuth from '../hooks/useAuth'
+import toast from 'react-hot-toast'
 
 export default function SwapAction() {
     const { settings } = useAuth()
@@ -17,15 +18,17 @@ export default function SwapAction() {
     const address = useTonAddress()
     const { open } = useTonConnectModal()
     const [modal, setModal] = useState(false)
-    const { data, mutate, isPending } = useSwap()
+    const { data, mutate, isPending, error } = useSwap()
     const [confirmedData, setConfirmedData] = useState<IValidatedSwap | null>(null)
 
     useEffect(() => {
         if (data) {
             setConfirmedData(data)
             setModal(true)
+        } else if (error) {
+            toast.error(error.message)
         }
-    }, [data])
+    }, [isPending])
 
     function swapConfirm() {
         mutate({

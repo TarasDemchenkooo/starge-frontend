@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react'
 import ConfirmArrow from '../../../assets/svg/confirm-arrow.svg?react'
 import useInvoiceLink from '../hooks/useInvoiceLink'
 import classNames from 'classnames'
+import toast from 'react-hot-toast'
 
 export default function ConfirmModal({ data, setModalStatus }:
     { data: IValidatedSwap, setModalStatus: (status: boolean) => void }) {
@@ -16,8 +17,9 @@ export default function ConfirmModal({ data, setModalStatus }:
     const [isTextShowed, setIsTextShowed] = useState(true)
     const parentRef = useRef<HTMLDivElement>(null)
     const buttonRef = useRef<HTMLButtonElement>(null)
-    const { invoice, mutate, isPending } = useInvoiceLink()
+    const { invoice, mutate, isPending, error } = useInvoiceLink()
     const [isLoading, setIsLoading] = useState(false)
+    const [closeModal, setCloseModal] = useState(false)
 
     const buttonClassnames = classNames(styles.confirmModalSliderBtn, {
         [styles.confirmModalSliderBtnLoading]: isLoading
@@ -26,8 +28,19 @@ export default function ConfirmModal({ data, setModalStatus }:
     useEffect(() => {
         if (invoice?.invoiceLink) {
             Telegram.WebApp.openInvoice(invoice.invoiceLink, status => {
-                console.log(status)
+                if (status === 'paid') {
+                    // logic for success payment
+                } else if (status === 'failed') {
+                    toast.error('Internal server error')
+                    setCloseModal(true)
+                }
+
+                setIsLoading(false)
             })
+        } else if (error) {
+            toast.error(error.message)
+            setCloseModal(true)
+            setIsLoading(false)
         }
     }, [isPending])
 
@@ -58,7 +71,7 @@ export default function ConfirmModal({ data, setModalStatus }:
     }
 
     return (
-        <Modal setModalStatus={setModalStatus}>
+        <Modal closeRequest={closeModal} setModalStatus={setModalStatus}>
             <div className={styles.confirmModal}>
                 <h3>Confirm swap</h3>
                 <SourceAsset confirmedAmount={data.starsAmount} />

@@ -1,7 +1,20 @@
 .toast {
-    background-color: var(--section-color);
+    background-color: var(--secondary-bg-color);
     color: var(--main-color);
     font-size: 14px;
-    font-weight: var(--font-weight-default);
+    font-weight: var(--font-weight-bold);
     border-radius: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0px;
+
+    &>svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    &Error {
+        color: var(--error-color);
+    }
 }

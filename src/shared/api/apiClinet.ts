@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios, { AxiosError } from "axios"
 import backendApiUrl from "../constants/BackendApiUrl"
 
 const apiClient = axios.create({
@@ -26,7 +26,7 @@ apiClient.interceptors.request.use(
 
 apiClient.interceptors.response.use(
     (response) => response.data,
-    (error) => Promise.reject(error)
+    (error: AxiosError) => Promise.reject(error.response?.data)
 )
 
 export default apiClient

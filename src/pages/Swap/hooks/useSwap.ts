@@ -3,9 +3,9 @@ import { IConfirmSwap } from "../types/IConfirmSwap"
 import swap from "../api/swap"
 
 export default function useConfirmSwap() {
-    const { data, mutate, isPending, isError } = useMutation({
+    const { data, mutate, isPending, error } = useMutation({
         mutationFn: (validatingAssets: IConfirmSwap) => swap(validatingAssets)
     })
 
-    return { data, mutate, isPending }
+    return { data, mutate, isPending, error }
 }
