@@ -4,7 +4,7 @@ import styles from './TransactionModal.module.scss'
 import TonIcon from '../../../assets/svg/ton-logo.svg?react'
 import StarsIcon from '../../../assets/svg/stars-logo.svg?react'
 import formatDate from "../utils/formatDate"
-import formatIntegerWithCommas from "../../../shared/utils/formatInteger"
+//import formatIntegerWithCommas from "../../../shared/utils/formatInteger"
 
 export default function TransactionModal({ transaction, setModalStatus }: ITransactionModal) {
 
@@ -20,9 +20,9 @@ export default function TransactionModal({ transaction, setModalStatus }: ITrans
                     </div>
                 </div>
                 <div className={styles.transactionModalData}>
-                    <span className={styles.transactionModalDataFrom}>
+                    {/* <span className={styles.transactionModalDataFrom}>
                         -&thinsp;{formatIntegerWithCommas(transaction.from.amount)} {transaction.from.symbol}
-                    </span>
+                    </span> */}
                     <span className={styles.transactionModalDataTo}>
                         +&thinsp;{transaction.to.amount} {transaction.to.symbol}
                     </span>

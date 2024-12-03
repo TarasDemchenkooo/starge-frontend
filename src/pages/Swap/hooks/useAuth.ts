@@ -15,6 +15,7 @@ export default function useAuth() {
     })
 
     return {
+        history: data?.user.transactions,
         jwt: data?.jwt, settings: data?.user.settings,
         isLoading, isError: !isSupported || isError
     }

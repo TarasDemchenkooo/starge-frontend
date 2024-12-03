@@ -4,25 +4,24 @@
     align-items: center;
     width: 75%;
     text-align: center;
-    margin: 0 auto;
-    margin-top: 60px;
-
-    &>div {
-        width: 120px;
-        height: 120px;
-        margin-bottom: 8px;
-    }
+    margin-top: 250px;
 
     &>h3 {
-        color: var(--tg-theme-text-color);
-        font-weight: var(--font-weight-bold);
-        font-size: 20px;
-        margin-bottom: 10px;
+        color: var(--main-color);
+        font-weight: var(--font-weight-ultra-bold);
+        font-size: 24px;
+        margin-bottom: 6px;
     }
 
     &>p {
-        color: var(--tg-theme-text-color);
-        font-weight: var(--font-weight-default);
+        color: var(--hint-color);
+        font-weight: var(--font-weight-bold);
         font-size: 16px;
+        margin-bottom: 24px;
+    }
+
+    &>button {
+        width: 150px;
+        border-radius: 24px;
     }
 }

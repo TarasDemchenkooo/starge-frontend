@@ -1,11 +1,11 @@
 import { useTonAddress, useTonConnectModal } from '@tonconnect/ui-react'
 import styles from './SettingsUser.module.scss'
-import { ISettingsUser } from '../types/ISettingsUser'
 import Button from '../../../shared/components/Button/components/Button'
 import { useState } from 'react'
 import SettingsModal from './SettingsModal'
 
-export default function SettingsUser({ user }: ISettingsUser) {
+export default function SettingsUser() {
+    const user = Telegram.WebApp.initDataUnsafe.user!
     const [modalStatus, setModalStatus] = useState(false)
     const address = useTonAddress()
     const { open } = useTonConnectModal()
