@@ -7,14 +7,13 @@ import useAuth from '../../Swap/hooks/useAuth'
 export default function History() {
     const { history } = useAuth()
 
-    console.log(history)
-
     return (
         <div className={styles.history}>
-            <h2>History</h2>
+            <div className={styles.historyHeader}>
+                <h2>History</h2>
+            </div>
             {history?.length !== 0 ?
-            //@ts-ignore
-                Object.entries(groupTransactions(history))
+                Object.entries(groupTransactions(history!))
                     .map(([date, transactions]) =>
                         <GroupedTransactions date={date} transactions={transactions} />) :
                 <HistoryPlaceholder />

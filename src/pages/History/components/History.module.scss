@@ -1,18 +1,28 @@
 .history {
     padding: 16px;
-    padding-top: 0;
+    padding-top: calc(var(--tg-content-safe-area-inset-top) + 24px);
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: calc(100vh - 142px);
 
-    &>h2 {
+    &Header {
+        height: calc(var(--tg-content-safe-area-inset-top) + var(--tg-safe-area-inset-top));
+        padding-top: var(--tg-safe-area-inset-top);
+        position: fixed;
+        background-color: var(--bg-color);
+        width: 100%;
+        top: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        height: var(--tg-content-safe-area-inset-top);
-        font-weight: var(--font-weight-ultra-bold);
-        color: var(--main-color);
-        font-size: 20px;
-        line-height: 20px;
+        z-index: 1;
+
+        &>h2 {
+            font-weight: var(--font-weight-ultra-bold);
+            color: var(--main-color);
+            font-size: 20px;
+            line-height: 20px;
+        }
     }
 }

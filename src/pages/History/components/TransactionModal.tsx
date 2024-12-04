@@ -1,12 +1,28 @@
 import Modal from "../../../shared/components/Modal/components/Modal"
 import { ITransactionModal } from "../types/ITransactionModal"
 import styles from './TransactionModal.module.scss'
-import TonIcon from '../../../assets/svg/ton-logo.svg?react'
 import StarsIcon from '../../../assets/svg/stars-logo.svg?react'
 import formatDate from "../utils/formatDate"
-//import formatIntegerWithCommas from "../../../shared/utils/formatInteger"
+import formatSourceInput from "../../Swap/utils/formatSourceInput"
+import jettons from '../../../../public/jettons/jettons.json'
+import formatTargetInput from "../../Swap/utils/formatTargetInput"
+import toast from "react-hot-toast"
+import Ripple from "../../../shared/components/Ripple/components/Ripple"
+import TruncatedText from "../../../shared/components/TruncatedText/components/TruncatedText"
+import WorldWideIcon from '../../../assets/svg/world-wide.svg?react'
 
 export default function TransactionModal({ transaction, setModalStatus }: ITransactionModal) {
+    const jetton = jettons.jettons.find(jetton => jetton.symbol === transaction.tokenSymbol)
+
+    function handleCopy(text: string) {
+        navigator.clipboard.writeText(text).then(() => {
+            toast('Copied', { id: text })
+        })
+    }
+
+    function openViewer() {
+        Telegram.WebApp.openLink(`https://tonviewer.com/transaction/${transaction.hash}`)
+    }
 
     return (
         <Modal setModalStatus={setModalStatus}>
@@ -16,23 +32,39 @@ export default function TransactionModal({ transaction, setModalStatus }: ITrans
                         <StarsIcon />
                     </div>
                     <div>
-                        <TonIcon />
+                        <img src={jetton?.icon} />
                     </div>
                 </div>
                 <div className={styles.transactionModalData}>
-                    {/* <span className={styles.transactionModalDataFrom}>
-                        -&thinsp;{formatIntegerWithCommas(transaction.from.amount)} {transaction.from.symbol}
-                    </span> */}
-                    <span className={styles.transactionModalDataTo}>
-                        +&thinsp;{transaction.to.amount} {transaction.to.symbol}
+                    <span className={styles.transactionModalDataFrom}>
+                        -&thinsp;{formatSourceInput(String(transaction.starsAmount))} STARS
                     </span>
-                    <span className={styles.transactionModalDataQuote}>
-                        $&thinsp;116.82
+                    <span className={styles.transactionModalDataTo}>
+                        +&thinsp;{formatTargetInput(String(transaction.tokenAmount))} {transaction.tokenSymbol}
                     </span>
                     <span className={styles.transactionModalDataDate}>
-                        Swapped on {formatDate(transaction.timestamp, false)}
+                        Swapped on {formatDate(transaction.createdAt, false)}
                     </span>
                 </div>
+                <div className={styles.transactionModalMetadata}>
+                    <Ripple
+                        className={styles.transactionModalMetadataItem}
+                        onClick={() => handleCopy(transaction.address)}>
+                        <h5>Recipient address</h5>
+                        <TruncatedText text={transaction.address} />
+                    </Ripple>
+                    <div className={styles.transactionModalMetadataSeparator}></div>
+                    <Ripple
+                        className={styles.transactionModalMetadataItem}
+                        onClick={() => handleCopy(String(transaction.lpFee + transaction.bchFees))}>
+                        <h5>Fees</h5>
+                        <div>{formatSourceInput(String(transaction.lpFee + transaction.bchFees))} STARS</div>
+                    </Ripple>
+                </div>
+                <Ripple className={styles.transactionModalViewer} onClick={openViewer}>
+                    <WorldWideIcon />
+                    <span>Transaction</span>
+                </Ripple>
             </div>
         </Modal>
     )

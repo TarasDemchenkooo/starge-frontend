@@ -1,16 +1,18 @@
 .groupedTransactions {
-    margin-bottom: 20px;
+    margin-bottom: 24px;
+    width: 100%;
     
     &>h4 {
         font-weight: var(--font-weight-bold);
         font-size: 20px;
-        color: var(--tg-theme-text-color);
-        margin-bottom: 10px;
+        line-height: 20px;
+        color: var(--main-color);
+        margin-bottom: 12px;
     }
 
     &Data {
         display: flex;
         flex-direction: column;
-        gap: 6px;
+        gap: 8px;
     }
 }

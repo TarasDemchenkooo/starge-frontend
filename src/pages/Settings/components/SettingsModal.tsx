@@ -34,7 +34,7 @@ export default function SettingsModal({ address, setModalStatus }: ISettingsModa
                 <p className={styles.settingsModalDescr}>
                     Are you sure you want to disconnect your TON wallet? You won't be able to swap stars without a connected wallet.
                 </p>
-                <Ripple color={Telegram.WebApp.themeParams.hint_color!}
+                <Ripple
                     className={styles.settingsModalWallet}
                     onClick={handleCopy}>
                     <h5>Connected wallet</h5>

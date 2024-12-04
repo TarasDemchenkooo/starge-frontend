@@ -1,4 +1,4 @@
-import { ITransaction } from "../types/ITransaction"
+import { ITransaction } from "../../../shared/types/ITransaction"
 
 export default function groupTransactions(transactions: ITransaction[]) {
     let groupLabel
@@ -7,14 +7,14 @@ export default function groupTransactions(transactions: ITransaction[]) {
     yesterday.setDate(today.getDate() - 1)
 
     const sortedTransactions = transactions.sort((a, b) => {
-        const firstDate = new Date(a.timestamp)
-        const secondDate = new Date(b.timestamp)
+        const firstDate = new Date(a.createdAt)
+        const secondDate = new Date(b.createdAt)
 
         return secondDate.getTime() - firstDate.getTime()
     })
 
     const groupedTransactions = sortedTransactions.reduce<Record<string, ITransaction[]>>((acc, transaction) => {
-        const transactionDate = new Date(transaction.timestamp)
+        const transactionDate = new Date(transaction.createdAt)
         const isToday = transactionDate.toDateString() === today.toDateString()
         const isYesterday = transactionDate.toDateString() === yesterday.toDateString()
         const isCurrentYear = transactionDate.getFullYear() === today.getFullYear()
