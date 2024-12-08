@@ -9,9 +9,13 @@ import ConfirmArrow from '../../../assets/svg/confirm-arrow.svg?react'
 import useInvoiceLink from '../hooks/useInvoiceLink'
 import classNames from 'classnames'
 import toast from 'react-hot-toast'
+import useAuth from '../hooks/useAuth'
+import { useNavigate } from 'react-router-dom'
 
 export default function ConfirmModal({ data, setModalStatus }:
     { data: IValidatedSwap, setModalStatus: (status: boolean) => void }) {
+    const { refetch } = useAuth()
+    const navigate = useNavigate()
     const [position, setPosition] = useState({ x: 0, y: 0 })
     const [isAnimating, setIsAnimating] = useState(false)
     const [isTextShowed, setIsTextShowed] = useState(true)
@@ -29,13 +33,24 @@ export default function ConfirmModal({ data, setModalStatus }:
         if (invoice?.invoiceLink) {
             Telegram.WebApp.openInvoice(invoice.invoiceLink, status => {
                 if (status === 'paid') {
-                    // logic for success payment
+                    refetch().finally(() => {
+                        setCloseModal(true)
+                        setIsLoading(false)
+                        setTimeout(() => {
+                            navigate('/history')
+                        }, 500)
+                    })
+                } else if (status === 'cancelled') {
+                    setPosition({ x: 0, y: 0 })
+                    setIsLoading(false)
+                    setTimeout(() => {
+                        setIsTextShowed(true)
+                    }, 500)
                 } else if (status === 'failed') {
                     toast.error('Internal server error')
                     setCloseModal(true)
+                    setIsLoading(false)
                 }
-
-                setIsLoading(false)
             })
         } else if (error) {
             toast.error(error.message)
@@ -60,7 +75,7 @@ export default function ConfirmModal({ data, setModalStatus }:
             setIsTextShowed(true)
         }, 500)
 
-        if (progress < parentWidth * 0.9) {
+        if (progress < parentWidth * 0.8) {
             setPosition({ x: 0, y: dragData.y })
         } else {
             mutate(data.hash)

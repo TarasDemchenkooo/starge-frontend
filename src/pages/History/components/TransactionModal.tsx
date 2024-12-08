@@ -61,10 +61,12 @@ export default function TransactionModal({ transaction, setModalStatus }: ITrans
                         <div>{formatSourceInput(String(transaction.lpFee + transaction.bchFees))} STARS</div>
                     </Ripple>
                 </div>
-                <Ripple className={styles.transactionModalViewer} onClick={openViewer}>
-                    <WorldWideIcon />
-                    <span>Transaction</span>
-                </Ripple>
+                {transaction.hash &&
+                    <Ripple className={styles.transactionModalViewer} onClick={openViewer}>
+                        <WorldWideIcon />
+                        <span>Transaction</span>
+                    </Ripple>
+                }
             </div>
         </Modal>
     )
