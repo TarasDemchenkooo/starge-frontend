@@ -56,7 +56,8 @@ export default function TransactionModal({ transaction, setModalStatus }: ITrans
                     <div className={styles.transactionModalMetadataSeparator}></div>
                     <Ripple
                         className={styles.transactionModalMetadataItem}
-                        onClick={() => handleCopy(String(transaction.lpFee + transaction.bchFees))}>
+                        onClick={() => handleCopy(String('liquidity provider fee: ' +
+                            transaction.lpFee + '\n' + 'blockchain fees: ' + transaction.bchFees))}>
                         <h5>Fees</h5>
                         <div>{formatSourceInput(String(transaction.lpFee + transaction.bchFees))} STARS</div>
                     </Ripple>

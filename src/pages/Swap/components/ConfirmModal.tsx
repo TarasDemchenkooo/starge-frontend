@@ -34,11 +34,11 @@ export default function ConfirmModal({ data, setModalStatus }:
             Telegram.WebApp.openInvoice(invoice.invoiceLink, status => {
                 if (status === 'paid') {
                     refetch().finally(() => {
-                        setCloseModal(true)
                         setIsLoading(false)
+                        setCloseModal(true)
                         setTimeout(() => {
                             navigate('/history')
-                        }, 500)
+                        }, 750)
                     })
                 } else if (status === 'cancelled') {
                     setPosition({ x: 0, y: 0 })
@@ -47,15 +47,15 @@ export default function ConfirmModal({ data, setModalStatus }:
                         setIsTextShowed(true)
                     }, 500)
                 } else if (status === 'failed') {
-                    toast.error('Internal server error')
-                    setCloseModal(true)
+                    toast.error('Price slippage exceeded')
                     setIsLoading(false)
+                    setCloseModal(true)
                 }
             })
         } else if (error) {
-            toast.error(error.message)
-            setCloseModal(true)
             setIsLoading(false)
+            setCloseModal(true)
+            toast.error(error.message)
         }
     }, [isPending])
 

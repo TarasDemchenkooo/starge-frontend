@@ -21,7 +21,7 @@ export default function SwapInfo({ targetAsset, confirmedData }:
 
     const simulationRange = address ? 50000 : 10 ** 7
     const lpFee = confirmedData?.lpFee || Math.ceil(stickyAmount * comissionRate)
-    const bchFees = confirmedData?.bchFees || (targetAsset === 'TON' ? 3 : 15)
+    const bchFees = confirmedData?.bchFees || (targetAsset === 'TON' ? 2 : 12)
 
     useEffect(() => {
         if (Number(source) <= simulationRange && Number(source) !== 0) {
@@ -57,7 +57,6 @@ export default function SwapInfo({ targetAsset, confirmedData }:
                                         confirmedData.starsAmount)} {confirmedData.tokenSymbol}
                                 </span>
                             </div>
-
                             <div>
                                 <span>Max. price slippage</span>
                                 <span>0.5%</span>
