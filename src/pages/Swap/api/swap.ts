@@ -1,7 +1,6 @@
-import { IConfirmSwap } from "../types/IConfirmSwap"
-import { IValidatedSwap } from "../types/IValidatedSwap"
 import apiClient from "../../../shared/api/apiClinet"
+import { IConfirmedSwap } from "../types/IConfirmedSwap"
 
-export default async function confirmSwap(invoice: IConfirmSwap): Promise<IValidatedSwap> {
-    return apiClient.post('/invoice', invoice)
+export default async function confirmSwap(invoice: IConfirmedSwap): Promise<{ invoiceLink: string }> {
+    return apiClient.post('/user/invoice', invoice)
 }

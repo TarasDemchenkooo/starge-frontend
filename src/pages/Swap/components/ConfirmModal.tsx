@@ -1,29 +1,29 @@
 import Modal from '../../../shared/components/Modal/components/Modal'
-import { IValidatedSwap } from '../types/IValidatedSwap'
 import styles from './ConfirmModal.module.scss'
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable'
 import SourceAsset from './SourceAsset'
 import TargetAsset from './TargetAsset'
 import { useEffect, useRef, useState } from 'react'
 import ConfirmArrow from '../../../assets/svg/confirm-arrow.svg?react'
-import useInvoiceLink from '../hooks/useInvoiceLink'
 import classNames from 'classnames'
 import toast from 'react-hot-toast'
-import useAuth from '../hooks/useAuth'
-import { useNavigate } from 'react-router-dom'
+import useSwap from '../hooks/useSwap'
+import { IConfirmedSwap } from '../types/IConfirmedSwap'
+import comissionRate from '../../../shared/constants/comissionRate'
+import formatSourceInput from '../utils/formatSourceInput'
 
 export default function ConfirmModal({ data, setModalStatus }:
-    { data: IValidatedSwap, setModalStatus: (status: boolean) => void }) {
-    const { refetch } = useAuth()
-    const navigate = useNavigate()
+    { data: IConfirmedSwap, setModalStatus: (status: boolean) => void }) {
     const [position, setPosition] = useState({ x: 0, y: 0 })
     const [isAnimating, setIsAnimating] = useState(false)
     const [isTextShowed, setIsTextShowed] = useState(true)
+    const [isTextAnimating, setIsTextAnimating] = useState(false)
     const parentRef = useRef<HTMLDivElement>(null)
     const buttonRef = useRef<HTMLButtonElement>(null)
-    const { invoice, mutate, isPending, error } = useInvoiceLink()
+    const { invoice, mutate, isPending, error } = useSwap()
     const [isLoading, setIsLoading] = useState(false)
     const [closeModal, setCloseModal] = useState(false)
+    const [currentText, setCurrentText] = useState('Slide to confirm')
 
     const buttonClassnames = classNames(styles.confirmModalSliderBtn, {
         [styles.confirmModalSliderBtnLoading]: isLoading
@@ -33,13 +33,7 @@ export default function ConfirmModal({ data, setModalStatus }:
         if (invoice?.invoiceLink) {
             Telegram.WebApp.openInvoice(invoice.invoiceLink, status => {
                 if (status === 'paid') {
-                    refetch().finally(() => {
-                        setIsLoading(false)
-                        setCloseModal(true)
-                        setTimeout(() => {
-                            navigate('/history')
-                        }, 750)
-                    })
+
                 } else if (status === 'cancelled') {
                     setPosition({ x: 0, y: 0 })
                     setIsLoading(false)
@@ -53,10 +47,24 @@ export default function ConfirmModal({ data, setModalStatus }:
                 }
             })
         } else if (error) {
+            toast.error(error.message)
             setIsLoading(false)
             setCloseModal(true)
-            toast.error(error.message)
         }
+
+        const timeout = setInterval(() => {
+            const bchFees = data.route === 'TON' ? 2 : 14
+            const lpFee = Math.ceil(data.source * comissionRate)
+            const amount = formatSourceInput(String(data.source + lpFee + bchFees))
+
+            setIsTextAnimating(true)
+            setTimeout(() => {
+                setCurrentText(prev => prev[0] === 'S' ? `~ ${amount} STARS` : 'Slide to confirm')
+                setIsTextAnimating(false)
+            }, 200)
+        }, 4000)
+
+        return () => clearInterval(timeout)
     }, [isPending])
 
     function handleStart(_: DraggableEvent, dragData: DraggableData) {
@@ -78,7 +86,7 @@ export default function ConfirmModal({ data, setModalStatus }:
         if (progress < parentWidth * 0.8) {
             setPosition({ x: 0, y: dragData.y })
         } else {
-            mutate(data.hash)
+            mutate(data)
             setPosition({ x: parentWidth - elementWidth, y: dragData.y })
             clearTimeout(timeout)
             setIsLoading(true)
@@ -89,10 +97,10 @@ export default function ConfirmModal({ data, setModalStatus }:
         <Modal closeRequest={closeModal} setModalStatus={setModalStatus}>
             <div className={styles.confirmModal}>
                 <h3>Confirm swap</h3>
-                <SourceAsset confirmedAmount={data.starsAmount} />
+                <SourceAsset confirmedAmount={data.source} />
                 <TargetAsset confirmedData={data} />
                 <div ref={parentRef} className={styles.confirmModalSlider}>
-                    <span style={{ opacity: isTextShowed ? 0.5 : 0 }}>Slide to confirm</span>
+                    <span style={{ opacity: isTextShowed && !isTextAnimating ? 0.5 : 0 }}>{currentText}</span>
                     <Draggable position={position} onDrag={handleStart}
                         onStop={handleStop} bounds='parent' axis='x'>
                         <button className={buttonClassnames} ref={buttonRef} style={

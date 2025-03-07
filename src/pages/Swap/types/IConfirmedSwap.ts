@@ -1,6 +1,6 @@
 import { Assets } from "../../../shared/types/Assets"
 
-export interface IConfirmSwap {
+export interface IConfirmedSwap {
     address: string
     source: number
     target: number

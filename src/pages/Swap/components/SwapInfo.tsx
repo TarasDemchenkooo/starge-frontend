@@ -9,10 +9,10 @@ import comissionRate from "../../../shared/constants/comissionRate"
 import formatSourceInput from "../utils/formatSourceInput"
 import useInputs from "../hooks/useInputs"
 import { useTonAddress } from "@tonconnect/ui-react"
-import { IValidatedSwap } from "../types/IValidatedSwap"
+import { IConfirmedSwap } from "../types/IConfirmedSwap"
 
 export default function SwapInfo({ targetAsset, confirmedData }:
-    { targetAsset: Assets, confirmedData?: IValidatedSwap }) {
+    { targetAsset: Assets, confirmedData?: IConfirmedSwap}) {
     const { price } = usePrice(targetAsset)
     const { source, target } = useInputs()
     const address = useTonAddress()
@@ -20,8 +20,8 @@ export default function SwapInfo({ targetAsset, confirmedData }:
     const [isOpen, setIsOpen] = useState(true)
 
     const simulationRange = address ? 50000 : 10 ** 7
-    const lpFee = confirmedData?.lpFee || Math.ceil(stickyAmount * comissionRate)
-    const bchFees = confirmedData?.bchFees || (targetAsset === 'TON' ? 2 : 12)
+    const lpFee = Math.ceil(confirmedData?.source! * comissionRate) || Math.ceil(stickyAmount * comissionRate)
+    const bchFees = targetAsset === 'TON' ? 2 : 14
 
     useEffect(() => {
         if (Number(source) <= simulationRange && Number(source) !== 0) {
@@ -53,8 +53,8 @@ export default function SwapInfo({ targetAsset, confirmedData }:
                             <div>
                                 <span>Exchange rate</span>
                                 <span>
-                                    1 STAR ≈ {calculatePrice(0, confirmedData.tokenAmount /
-                                        confirmedData.starsAmount)} {confirmedData.tokenSymbol}
+                                    1 STAR ≈ {calculatePrice(0, confirmedData.target /
+                                        confirmedData.source)} {confirmedData.route}
                                 </span>
                             </div>
                             <div>
@@ -69,11 +69,11 @@ export default function SwapInfo({ targetAsset, confirmedData }:
                     </div>
                     <div>
                         <span>Blockchain fees</span>
-                        <span>{!confirmedData ? '~' : ''} {bchFees} STARS</span>
+                        <span>~ {bchFees} STARS</span>
                     </div>
                     <div>
                         <span>Route</span>
-                        <span>STARS » {confirmedData?.tokenSymbol || targetAsset}</span>
+                        <span>STARS » {confirmedData?.route || targetAsset}</span>
                     </div>
                 </div>
             </div>

@@ -1,11 +1,11 @@
 import { useMutation } from "@tanstack/react-query"
-import { IConfirmSwap } from "../types/IConfirmSwap"
+import { IConfirmedSwap } from "../types/IConfirmedSwap"
 import swap from "../api/swap"
 
-export default function useConfirmSwap() {
+export default function useSwap() {
     const { data, mutate, isPending, error } = useMutation({
-        mutationFn: (validatingAssets: IConfirmSwap) => swap(validatingAssets)
+        mutationFn: (data: IConfirmedSwap) => swap(data)
     })
 
-    return { data, mutate, isPending, error }
+    return { invoice: data, mutate, isPending, error }
 }

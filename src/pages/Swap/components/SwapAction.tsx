@@ -3,13 +3,11 @@ import styles from './SwapAction.module.scss'
 import Button from '../../../shared/components/Button/components/Button'
 import usePrice from '../hooks/usePrice'
 import useInputs from '../hooks/useInputs'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import ConfirmModal from './ConfirmModal'
-import useSwap from '../hooks/useSwap'
 import getButtonState from '../utils/getButtonState'
-import { IValidatedSwap } from '../types/IValidatedSwap'
 import useAuth from '../hooks/useAuth'
-import toast from 'react-hot-toast'
+import { IConfirmedSwap } from '../types/IConfirmedSwap'
 
 export default function SwapAction() {
     const { settings } = useAuth()
@@ -18,31 +16,23 @@ export default function SwapAction() {
     const address = useTonAddress()
     const { open } = useTonConnectModal()
     const [modal, setModal] = useState(false)
-    const { data, mutate, isPending, error } = useSwap()
-    const [confirmedData, setConfirmedData] = useState<IValidatedSwap | null>(null)
-
-    useEffect(() => {
-        if (data) {
-            setConfirmedData(data)
-            setModal(true)
-        } else if (error) {
-            toast.error(error.message)
-        }
-    }, [isPending])
+    const [confirmedData, setConfirmedData] = useState<IConfirmedSwap | null>(null)
 
     function swapConfirm() {
-        mutate({
+        setConfirmedData({
             address,
             source: Number(source),
             target: Number(target),
             route: settings?.tokenSymbol!
         })
+
+        setModal(true)
     }
 
     return (
         <div className={styles.swapAction}>
             {address ?
-                <Button content={getButtonState(source).content} isLoading={isPriceLoading || isPending}
+                <Button content={getButtonState(source).content} isLoading={isPriceLoading}
                     disabled={getButtonState(source).disabled} onClick={swapConfirm} /> :
                 <Button content='Connect wallet' isLoading={isPriceLoading} onClick={open} />
             }

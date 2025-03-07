@@ -9,19 +9,16 @@ import SwapInfo from './SwapInfo'
 import SwapInput from './SwapInput'
 import useAuth from '../hooks/useAuth'
 import useVibrate from '../../../shared/hooks/useVibrate'
-import { IValidatedSwap } from '../types/IValidatedSwap'
 import { useTonAddress } from '@tonconnect/ui-react'
+import { IConfirmedSwap } from '../types/IConfirmedSwap'
 
-export default function TargetAsset({ confirmedData }: { confirmedData?: IValidatedSwap }) {
+export default function TargetAsset({ confirmedData }: { confirmedData?: IConfirmedSwap }) {
     const { settings } = useAuth()
     const address = useTonAddress()
     const { balance, isBalanceLoading } = useBalance(settings?.tokenSymbol!)
     const [stickyBalance, setStickyBalance] = useState(balance || 0)
     const [modalStatus, setModalStatus] = useState(false)
-    const jetton = jettons.jettons.find(jetton => {
-        const searchKey = confirmedData?.tokenSymbol || settings?.tokenSymbol
-        return jetton.symbol === searchKey
-    })!
+    const jetton = jettons.jettons.find(jetton => jetton.symbol === settings?.tokenSymbol)!
     const { vibrate } = useVibrate()
 
     useEffect(() => {
@@ -60,7 +57,7 @@ export default function TargetAsset({ confirmedData }: { confirmedData?: IValida
                         {!confirmedData && <div></div>}
                     </button>
                     <SwapInput targetAsset={settings?.tokenSymbol!} inputType='target'
-                        confirmedAmount={confirmedData?.tokenAmount} />
+                        confirmedAmount={confirmedData?.target} />
                 </div>
             </div>
             <SwapInfo targetAsset={settings?.tokenSymbol!} confirmedData={confirmedData} />
