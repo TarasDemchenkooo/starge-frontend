@@ -4,12 +4,11 @@ import styles from './Menu.module.scss'
 import TransactionIcon from '../../../../assets/svg/tx.svg?react'
 import SwapIcon from '../../../../assets/svg/swap.svg?react'
 import SettingsIcon from '../../../../assets/svg/settings.svg?react'
-import useVibrate from '../../../hooks/useVibrate'
+import { vibrate } from '../../../utils/vibrate'
 
 export default function Menu() {
     const { pathname } = useLocation()
     const navigate = useNavigate()
-    const { vibrate } = useVibrate()
 
     function to(to: string) {
         navigate(to)

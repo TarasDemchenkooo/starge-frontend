@@ -6,13 +6,13 @@ import { useState } from "react"
 
 export default function usePrice(targetAsset: Assets) {
     const [enable, setEnable] = useState(false)
-    const jetton = jettons.jettons.find(jetton => jetton.symbol === targetAsset)
-    const ca = jetton?.ca || 'ton'
+    const jetton = jettons.jettons.find(jetton => jetton.symbol === targetAsset)!
+    const ca = jetton.ca || 'ton'
 
     const { data, isLoading, refetch, isRefetching } = useQuery({
-        queryKey: [jetton?.symbol.concat('_price')],
+        queryKey: [jetton.symbol.concat('_price')],
         queryFn: () => getPrice(ca),
-        enabled: enable && targetAsset !== 'USDT',
+        enabled: enable,
         refetchInterval: 15000
     })
 

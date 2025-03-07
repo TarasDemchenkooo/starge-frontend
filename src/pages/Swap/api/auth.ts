@@ -1,6 +1,6 @@
+import { backend } from "../../../shared/api/apiClinet"
 import { IAuth } from "../../../shared/types/IAuth"
-import apiClient from "../../../shared/api/apiClinet"
 
 export default async function authUser(initData: string): Promise<IAuth> {
-    return apiClient.post('/auth', { initData })
+    return backend.post('/auth', { initData })
 }

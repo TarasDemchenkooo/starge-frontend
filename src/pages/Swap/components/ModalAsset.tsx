@@ -5,12 +5,11 @@ import styles from './ModalAsset.module.scss'
 import useBalance from "../hooks/useBalance"
 import formatDecimal from "../utils/formatDecimal"
 import { useTonAddress } from "@tonconnect/ui-react"
-import useVibrate from "../../../shared/hooks/useVibrate"
+import { vibrate } from "../../../shared/utils/vibrate"
 
 export default function ModalAsset(asset: IModalAsset) {
     const address = useTonAddress()
     const { balance, isBalanceLoading } = useBalance(asset.symbol)
-    const { vibrate } = useVibrate()
 
     const radioClassnames = classNames({
         [styles.modalAssetRadio]: true,

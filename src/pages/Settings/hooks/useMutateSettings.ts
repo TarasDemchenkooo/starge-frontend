@@ -1,23 +1,16 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import patchSettings from "../../../shared/api/patchSettings"
-import { ISettings } from "../../../shared/types/ISettings"
-import { IAuth } from "../../../shared/types/IAuth"
+import { Settings } from "../types/settings"
+import patchSettings from "../api/updateSettings"
 
 export default function useMutateSettings() {
     const query = useQueryClient()
 
-    const { data, isPending, mutate, isSuccess } = useMutation({
-        mutationFn: (settings: ISettings) => patchSettings(settings),
+    const { isPending, mutate, isSuccess } = useMutation({
+        mutationFn: (settings: Settings) => patchSettings(settings),
         onSuccess: (newSettings) => {
-            query.setQueryData(['user'], (oldData: IAuth) => ({
-                ...oldData,
-                user: {
-                    ...oldData.user,
-                    settings: newSettings
-                }
-            }))
+            query.setQueryData(['settings'], () => newSettings)
         }
     })
 
-    return { data, mutate, isPending, isSuccess }
+    return { mutate, isPending, isSuccess }
 }

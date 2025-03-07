@@ -4,11 +4,10 @@ import classNames from "classnames"
 import styles from './Modal.module.scss'
 import { useEffect, useState } from "react"
 import CloseIcon from '../../../../assets/svg/close.svg?react'
-import useVibrate from "../../../hooks/useVibrate"
+import { vibrate } from "../../../utils/vibrate"
 
 export default function Modal({ setModalStatus, children, closeRequest, closeButton = false }: IModal) {
     const [isActive, setIsActive] = useState(false)
-    const { vibrate } = useVibrate()
 
     const modalClassnames = classNames({
         [styles.modal]: true,

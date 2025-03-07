@@ -6,13 +6,13 @@ import useInputs from '../hooks/useInputs'
 import { useState } from 'react'
 import ConfirmModal from './ConfirmModal'
 import getButtonState from '../utils/getButtonState'
-import useAuth from '../hooks/useAuth'
 import { IConfirmedSwap } from '../types/IConfirmedSwap'
+import { useAsset } from '../hooks/useTargetAsset'
 
 export default function SwapAction() {
-    const { settings } = useAuth()
     const { source, target } = useInputs()
-    const { isPriceLoading } = usePrice(settings?.tokenSymbol!)
+    const asset = useAsset(state => state.asset)
+    const { isPriceLoading } = usePrice(asset)
     const address = useTonAddress()
     const { open } = useTonConnectModal()
     const [modal, setModal] = useState(false)
@@ -23,7 +23,7 @@ export default function SwapAction() {
             address,
             source: Number(source),
             target: Number(target),
-            route: settings?.tokenSymbol!
+            route: asset
         })
 
         setModal(true)

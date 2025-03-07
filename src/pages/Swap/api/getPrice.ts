@@ -1,14 +1,7 @@
-import axios from "axios"
-import tonApiUrl from "../../../shared/constants/TonApiUrl"
-import tonApiKey from "../../../shared/constants/TonApiKey"
+import { tonapi } from "../../../shared/api/apiClinet"
 
-export default async function getPrice(address: string): Promise<number> {
-    const response = await axios.get(tonApiUrl.concat(`rates?tokens=${address}&currencies=usd`), {
-        headers: {
-            Authorization: `Bearer ${tonApiKey}`
-        }
-    })
-
+export default async function getPrice(contract: string): Promise<number> {
+    const response = await tonapi.get(`/rates?tokens=${contract}&currencies=usd`)
     const data = response.data.rates
     const price: number = data[Object.keys(data)[0]].prices.USD
 

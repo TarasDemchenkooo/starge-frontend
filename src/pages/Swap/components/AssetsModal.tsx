@@ -4,31 +4,25 @@ import jettons from '../../../../public/jettons/jettons.json'
 import ModalAsset from "./ModalAsset"
 import { useTonAddress } from "@tonconnect/ui-react"
 import Button from "../../../shared/components/Button/components/Button"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { IAssetsModal } from "../types/IAssetsModal"
 import { Assets } from "../../../shared/types/Assets"
 import useInputs from "../hooks/useInputs"
-import useAuth from "../hooks/useAuth"
-import useMutateSettings from "../../Settings/hooks/useMutateSettings"
+import { useAsset } from "../hooks/useTargetAsset"
 
 export default function AssetsModal({ setModalStatus }: IAssetsModal) {
     const address = useTonAddress()
-    const { settings } = useAuth()
+    const asset = useAsset(state => state.asset)
+    const updateAsset = useAsset(state => state.updateAsset)
     const { clearInputs } = useInputs()
-    const [activeAsset, setActiveAsset] = useState(settings?.tokenSymbol!)
+    const [activeAsset, setActiveAsset] = useState(asset)
     const [closeRequest, setCloseRequest] = useState(false)
-    const { mutate, isPending, isSuccess } = useMutateSettings()
-
-    useEffect(() => {
-        if (isSuccess) {
-            setCloseRequest(true)
-            clearInputs()
-        }
-    }, [isSuccess])
 
     function updateTargetAsset() {
-        if (settings?.tokenSymbol !== activeAsset) {
-            mutate({ tokenSymbol: activeAsset })
+        if (asset !== activeAsset) {
+            updateAsset(activeAsset)
+            setCloseRequest(true)
+            clearInputs()
         } else {
             setCloseRequest(true)
         }
@@ -44,7 +38,7 @@ export default function AssetsModal({ setModalStatus }: IAssetsModal) {
                             activeAsset={activeAsset} setActiveAsset={setActiveAsset} />)
                     }
                 </div>
-                <Button content='Confirm' isLoading={isPending} onClick={updateTargetAsset} />
+                <Button content='Confirm' onClick={updateTargetAsset} />
             </div>
         </Modal>
     )

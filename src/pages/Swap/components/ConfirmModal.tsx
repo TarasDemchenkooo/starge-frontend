@@ -9,8 +9,9 @@ import classNames from 'classnames'
 import toast from 'react-hot-toast'
 import useSwap from '../hooks/useSwap'
 import { IConfirmedSwap } from '../types/IConfirmedSwap'
-import comissionRate from '../../../shared/constants/comissionRate'
 import formatSourceInput from '../utils/formatSourceInput'
+import payment from '../../../shared/constants/payment'
+import { useNavigate } from 'react-router-dom'
 
 export default function ConfirmModal({ data, setModalStatus }:
     { data: IConfirmedSwap, setModalStatus: (status: boolean) => void }) {
@@ -24,6 +25,7 @@ export default function ConfirmModal({ data, setModalStatus }:
     const [isLoading, setIsLoading] = useState(false)
     const [closeModal, setCloseModal] = useState(false)
     const [currentText, setCurrentText] = useState('Slide to confirm')
+    const navigate = useNavigate()
 
     const buttonClassnames = classNames(styles.confirmModalSliderBtn, {
         [styles.confirmModalSliderBtnLoading]: isLoading
@@ -33,7 +35,9 @@ export default function ConfirmModal({ data, setModalStatus }:
         if (invoice?.invoiceLink) {
             Telegram.WebApp.openInvoice(invoice.invoiceLink, status => {
                 if (status === 'paid') {
-
+                    setIsLoading(false)
+                    setCloseModal(true)
+                    setTimeout(() => navigate('/history?poll=true', {}), 500)
                 } else if (status === 'cancelled') {
                     setPosition({ x: 0, y: 0 })
                     setIsLoading(false)
@@ -53,8 +57,8 @@ export default function ConfirmModal({ data, setModalStatus }:
         }
 
         const timeout = setInterval(() => {
-            const bchFees = data.route === 'TON' ? 2 : 14
-            const lpFee = Math.ceil(data.source * comissionRate)
+            const bchFees = data.route === 'TON' ? payment.tonFees : payment.jettonFees
+            const lpFee = Math.ceil(data.source * payment.comissionRate)
             const amount = formatSourceInput(String(data.source + lpFee + bchFees))
 
             setIsTextAnimating(true)

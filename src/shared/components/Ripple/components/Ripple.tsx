@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import { IRipple } from '../types/IRipple'
 import setDefaultConfiguration from '../utils/setDefaultConfiguration'
 import defineRipple from '../utils/defineRipple'
-import useVibrate from '../../../hooks/useVibrate'
+import { vibrate } from '../../../utils/vibrate'
 
 export default function Ripple(cfg: IRipple) {
     const { color, inDuration, outDuration, holdTime } = setDefaultConfiguration(cfg)
@@ -12,7 +12,6 @@ export default function Ripple(cfg: IRipple) {
     const [rippleEnd, setRippleEnd] = useState(false)
     const [isAnimating, setIsAnimating] = useState(false)
     const [startTouch, setStartTouch] = useState(0)
-    const { vibrate } = useVibrate()
 
     const rippleClassnames = classNames(styles.rippleEffect, {
         [styles.rippleEffectEnd]: rippleEnd

@@ -3,15 +3,15 @@ import { useState } from "react"
 import classNames from "classnames"
 import Ripple from '../../../shared/components/Ripple/components/Ripple'
 import { ISwitch } from '../types/ISwitch'
-import useAuth from '../../Swap/hooks/useAuth'
 import { useDebouncedCallback } from 'use-debounce'
 import useMutateSettings from '../hooks/useMutateSettings'
+import useSettings from '../hooks/useSettings'
 
-export default function Switch({ name, description, children }: ISwitch) {
+export default function Switch({ name, description, children, localKey }: ISwitch) {
     const key = name.toLowerCase()
-    const { settings } = useAuth()
+    const { settings } = useSettings()
     //@ts-ignore
-    const status = settings[key]
+    const status = localKey ? JSON.parse(localStorage.getItem(localKey)) : settings[key]
     const [isActive, setIsActive] = useState(status)
     const { mutate } = useMutateSettings()
 
@@ -21,7 +21,13 @@ export default function Switch({ name, description, children }: ISwitch) {
     })
 
     const debouncedPatch = useDebouncedCallback(() => {
-        mutate({ [key]: !status })
+        if (localKey) {
+            const status = JSON.parse(localStorage.getItem(localKey)!)
+            localStorage.setItem(localKey, String(!status))
+        } else {
+            //@ts-ignore
+            mutate({ [key]: !status })
+        }
     }, 500)
 
     function handleClick() {

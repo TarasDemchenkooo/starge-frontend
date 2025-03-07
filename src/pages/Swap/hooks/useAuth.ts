@@ -6,7 +6,7 @@ export default function useAuth() {
     const isSupported = Telegram.WebApp.isVersionAtLeast('8.0')
 
     const { data, isLoading, isError, refetch } = useQuery({
-        queryKey: ['user'],
+        queryKey: ['jwt'],
         queryFn: () => authUser(initData),
         enabled: isSupported,
         staleTime: Infinity,
@@ -14,10 +14,5 @@ export default function useAuth() {
         retry: false
     })
 
-    return {
-        history: data?.user.transactions,
-        jwt: data?.jwt, settings: data?.user.settings,
-        isLoading, isError: !isSupported || isError,
-        refetch
-    }
+    return { jwt: data?.jwt, isLoading, isError: !isSupported || isError, refetch }
 }

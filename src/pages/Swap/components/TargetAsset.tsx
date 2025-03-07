@@ -7,19 +7,18 @@ import useBalance from '../hooks/useBalance'
 import formatDecimal from '../utils/formatDecimal'
 import SwapInfo from './SwapInfo'
 import SwapInput from './SwapInput'
-import useAuth from '../hooks/useAuth'
-import useVibrate from '../../../shared/hooks/useVibrate'
 import { useTonAddress } from '@tonconnect/ui-react'
 import { IConfirmedSwap } from '../types/IConfirmedSwap'
+import { useAsset } from '../hooks/useTargetAsset'
+import { vibrate } from '../../../shared/utils/vibrate'
 
 export default function TargetAsset({ confirmedData }: { confirmedData?: IConfirmedSwap }) {
-    const { settings } = useAuth()
     const address = useTonAddress()
-    const { balance, isBalanceLoading } = useBalance(settings?.tokenSymbol!)
+    const asset = useAsset(state => state.asset)
+    const { balance, isBalanceLoading } = useBalance(asset)
     const [stickyBalance, setStickyBalance] = useState(balance || 0)
     const [modalStatus, setModalStatus] = useState(false)
-    const jetton = jettons.jettons.find(jetton => jetton.symbol === settings?.tokenSymbol)!
-    const { vibrate } = useVibrate()
+    const jetton = jettons.jettons.find(jetton => jetton.symbol === asset)!
 
     useEffect(() => {
         if (!isBalanceLoading && balance !== undefined) {
@@ -29,7 +28,7 @@ export default function TargetAsset({ confirmedData }: { confirmedData?: IConfir
         if (!address) {
             setStickyBalance(0)
         }
-    }, [isBalanceLoading, settings?.tokenSymbol, address])
+    }, [isBalanceLoading, asset, address])
 
     function openModal() {
         if (!confirmedData) {
@@ -56,12 +55,12 @@ export default function TargetAsset({ confirmedData }: { confirmedData?: IConfir
                         <span>{jetton.symbol}</span>
                         {!confirmedData && <div></div>}
                     </button>
-                    <SwapInput targetAsset={settings?.tokenSymbol!} inputType='target'
+                    <SwapInput targetAsset={asset} inputType='target'
                         confirmedAmount={confirmedData?.target} />
                 </div>
             </div>
-            <SwapInfo targetAsset={settings?.tokenSymbol!} confirmedData={confirmedData} />
-            {modalStatus && <AssetsModal targetAsset={settings?.tokenSymbol!} setModalStatus={setModalStatus} />}
+            <SwapInfo targetAsset={asset} confirmedData={confirmedData} />
+            {modalStatus && <AssetsModal targetAsset={asset} setModalStatus={setModalStatus} />}
         </div>
     )
 }

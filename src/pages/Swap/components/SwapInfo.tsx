@@ -5,14 +5,14 @@ import styles from './SwapInfo.module.scss'
 import Chevron from '../../../assets/svg/chevron.svg?react'
 import { useEffect, useState } from "react"
 import calculatePrice from "../utils/calculatePrice"
-import comissionRate from "../../../shared/constants/comissionRate"
 import formatSourceInput from "../utils/formatSourceInput"
 import useInputs from "../hooks/useInputs"
 import { useTonAddress } from "@tonconnect/ui-react"
 import { IConfirmedSwap } from "../types/IConfirmedSwap"
+import payment from "../../../shared/constants/payment"
 
 export default function SwapInfo({ targetAsset, confirmedData }:
-    { targetAsset: Assets, confirmedData?: IConfirmedSwap}) {
+    { targetAsset: Assets, confirmedData?: IConfirmedSwap }) {
     const { price } = usePrice(targetAsset)
     const { source, target } = useInputs()
     const address = useTonAddress()
@@ -20,8 +20,9 @@ export default function SwapInfo({ targetAsset, confirmedData }:
     const [isOpen, setIsOpen] = useState(true)
 
     const simulationRange = address ? 50000 : 10 ** 7
-    const lpFee = Math.ceil(confirmedData?.source! * comissionRate) || Math.ceil(stickyAmount * comissionRate)
-    const bchFees = targetAsset === 'TON' ? 2 : 14
+    const lpFee = Math.ceil(confirmedData?.source! * payment.comissionRate)
+        || Math.ceil(stickyAmount * payment.comissionRate)
+    const bchFees = targetAsset === 'TON' ? payment.tonFees : payment.jettonFees
 
     useEffect(() => {
         if (Number(source) <= simulationRange && Number(source) !== 0) {

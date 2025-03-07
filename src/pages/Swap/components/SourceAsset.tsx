@@ -1,10 +1,10 @@
 import styles from './SourceAsset.module.scss'
 import StarsIcon from '../../../assets/svg/stars-logo.svg?react'
 import SwapInput from './SwapInput'
-import useAuth from '../hooks/useAuth'
+import { useAsset } from '../hooks/useTargetAsset'
 
 export default function SourceAsset({ confirmedAmount }: { confirmedAmount?: number }) {
-    const { settings } = useAuth()
+    const asset = useAsset(state => state.asset)
 
     return (
         <div className={styles.sourceAsset}>
@@ -14,8 +14,7 @@ export default function SourceAsset({ confirmedAmount }: { confirmedAmount?: num
                     <StarsIcon />
                     <span>Stars</span>
                 </div>
-                <SwapInput targetAsset={settings?.tokenSymbol!} inputType='source'
-                    confirmedAmount={confirmedAmount} />
+                <SwapInput targetAsset={asset} inputType='source' confirmedAmount={confirmedAmount} />
             </div>
         </div>
     )

@@ -2,13 +2,12 @@ import styles from './Button.module.scss'
 import { IButton } from "../types/IButton"
 import { useState } from 'react'
 import classNames from 'classnames'
-import useVibrate from '../../../hooks/useVibrate'
+import { vibrate } from '../../../utils/vibrate'
 
 export default function Button({ content, className, onClick, isLoading, disabled = false }: IButton) {
     const [pressed, setPressed] = useState(false)
     const [released, setReleased] = useState(false)
     const clickable = !isLoading && !disabled
-    const { vibrate } = useVibrate()
 
     const buttonClassnames = classNames({
         [styles.button]: true,

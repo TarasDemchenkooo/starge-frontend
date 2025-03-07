@@ -7,7 +7,7 @@ import formatSourceInput from "../utils/formatSourceInput"
 import formatTargetInput from "../utils/formatTargetInput"
 import styles from './SwapInput.module.scss'
 import classNames from "classnames"
-import useVibrate from "../../../shared/hooks/useVibrate"
+import { vibrate } from "../../../shared/utils/vibrate"
 
 export default function SwapInput({ targetAsset, inputType, confirmedAmount }: ISwapInput) {
     const value = useInputs(state => state[inputType])
@@ -15,14 +15,13 @@ export default function SwapInput({ targetAsset, inputType, confirmedAmount }: I
     const { source, setSource, target, setTarget, activeInput, setActiveInput } = useInputs()
     const [valueView, setValueView] = useState(value)
     const { price, initialFetch, isRefetching } = usePrice(targetAsset)
-    const { vibrate } = useVibrate()
 
     useEffect(() => {
         setValueView(value)
     }, [value])
 
     useEffect(() => {
-        if (price && targetAsset !== 'USDT') {
+        if (price) {
             if (activeInput === 'source') {
                 setSource(source, price)
             } else {
@@ -43,8 +42,8 @@ export default function SwapInput({ targetAsset, inputType, confirmedAmount }: I
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         const value = event.currentTarget.value.replace(/,/g, '')
-        const regexp = inputType === 'source'
-            ? /^(?!0)\d{0,18}$/ : /^(?!0\d)(\d{0,18})(\.\d{0,6})?$/
+        const regexp = inputType === 'source' ?
+            /^(?!0)\d{0,18}$/ : /^(?!0\d)(\d{0,18})(\.\d{0,6})?$/
 
         if (regexp.test(value)) {
             setValueView(value)
