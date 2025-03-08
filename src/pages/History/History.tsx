@@ -11,12 +11,11 @@ export default function History() {
 
     return (
         <div className={styles.history}>
-            <div className={styles.historyHeader}>
-                <h2>History</h2>
-            </div>
             {history?.length !== 0 ?
-                Object.entries(groupTransactions(history!)).map(([date, transactions]) =>
-                    <GroupedTransactions date={date} transactions={transactions} />) :
+                <div className={styles.historyTransactions}>
+                    {Object.entries(groupTransactions(history!)).map(([date, transactions]) =>
+                        <GroupedTransactions date={date} transactions={transactions} />)}
+                </div> :
                 <HistoryPlaceholder />
             }
         </div>

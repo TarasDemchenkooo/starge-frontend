@@ -9,7 +9,7 @@ import { vibrate } from "../../../shared/utils/vibrate"
 
 export default function ModalAsset(asset: IModalAsset) {
     const address = useTonAddress()
-    const { balance, isBalanceLoading } = useBalance(asset.symbol)
+    const { balance } = useBalance(asset.symbol)
 
     const radioClassnames = classNames({
         [styles.modalAssetRadio]: true,
@@ -28,10 +28,7 @@ export default function ModalAsset(asset: IModalAsset) {
             <div>
                 <div className={styles.modalAssetData}>
                     <h4>{asset.name}</h4>
-                    <p>{address ?
-                        isBalanceLoading ?
-                            0 : formatDecimal(balance!) :
-                        0} {asset.symbol}</p>
+                    <p>{address ? !balance ? 0 : formatDecimal(balance!) : 0} {asset.symbol}</p>
                 </div>
                 <div className={radioClassnames}></div>
             </div>

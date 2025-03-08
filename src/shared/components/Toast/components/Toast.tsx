@@ -7,7 +7,7 @@ export default function Toast() {
     const errorClassnames = classNames(styles.toast, styles.toastError)
 
     return (
-        <Toaster containerStyle={{ top: 50 }} position="top-center" toastOptions={{
+        <Toaster containerStyle={{ top: 16 }} position="top-center" toastOptions={{
             className: styles.toast,
             duration: 2000,
             error: {

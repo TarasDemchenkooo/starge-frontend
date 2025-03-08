@@ -8,12 +8,12 @@ export default function useBalance(targetAsset: Assets) {
     const address = useTonAddress()
     const jetton = jettons.jettons.find(jetton => jetton.symbol === targetAsset)!
 
-    const { data, isLoading } = useQuery({
+    const { data, isLoading, isError } = useQuery({
         queryKey: [jetton.symbol.concat('_balance')],
         queryFn: () => getBalance(address, jetton.ca),
         enabled: Boolean(address),
         refetchInterval: 15000
     })
 
-    return { balance: data, isBalanceLoading: isLoading }
+    return { balance: data, isBalanceLoading: isLoading, isBalanceError: isError }
 }

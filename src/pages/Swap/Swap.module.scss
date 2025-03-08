@@ -1,4 +1,6 @@
 .swap {
     padding: 16px;
-    padding-top: 0;
+    min-height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
 }

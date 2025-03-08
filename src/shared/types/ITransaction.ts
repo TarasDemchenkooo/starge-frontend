@@ -1,9 +1,9 @@
 import { Assets } from "./Assets"
 
-enum Status {
-    PENDING,
-    CONFIRMED,
-    FAILED
+export enum Status {
+    PENDING = 'PENDING',
+    CONFIRMED = 'CONFIRMED',
+    FAILED = 'FAILED'
 }
 
 export interface ITransaction {
@@ -13,6 +13,7 @@ export interface ITransaction {
     tokenSymbol: Assets
     lpFee: number
     bchFees: number
+    chargeId: string
     hash: string
     status: Status
     createdAt: string

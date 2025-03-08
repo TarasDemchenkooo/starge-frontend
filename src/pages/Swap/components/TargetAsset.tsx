@@ -15,19 +15,14 @@ import { vibrate } from '../../../shared/utils/vibrate'
 export default function TargetAsset({ confirmedData }: { confirmedData?: IConfirmedSwap }) {
     const address = useTonAddress()
     const asset = useAsset(state => state.asset)
-    const { balance, isBalanceLoading } = useBalance(asset)
+    const { balance, isBalanceLoading, isBalanceError } = useBalance(asset)
     const [stickyBalance, setStickyBalance] = useState(balance || 0)
     const [modalStatus, setModalStatus] = useState(false)
     const jetton = jettons.jettons.find(jetton => jetton.symbol === asset)!
 
     useEffect(() => {
-        if (!isBalanceLoading && balance !== undefined) {
-            setStickyBalance(balance)
-        }
-
-        if (!address) {
-            setStickyBalance(0)
-        }
+        if (balance) setStickyBalance(balance)
+        else if (!address || isBalanceError || isBalanceLoading) setStickyBalance(0)
     }, [isBalanceLoading, asset, address])
 
     function openModal() {

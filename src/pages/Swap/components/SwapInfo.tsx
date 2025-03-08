@@ -17,18 +17,25 @@ export default function SwapInfo({ targetAsset, confirmedData }:
     const { source, target } = useInputs()
     const address = useTonAddress()
     const [stickyAmount, setStickyAmount] = useState(Number(source))
+    const [stickyPrice, setStickyPrice] = useState(price)
+    const [stickyAsset, setStickyAsset] = useState(targetAsset)
     const [isOpen, setIsOpen] = useState(true)
 
     const simulationRange = address ? 50000 : 10 ** 7
     const lpFee = Math.ceil(confirmedData?.source! * payment.comissionRate)
         || Math.ceil(stickyAmount * payment.comissionRate)
-    const bchFees = targetAsset === 'TON' ? payment.tonFees : payment.jettonFees
+    const bchFees = stickyAsset === 'TON' ? payment.tonFees : payment.jettonFees
 
     useEffect(() => {
         if (Number(source) <= simulationRange && Number(source) !== 0) {
             setStickyAmount(Number(source))
         }
-    }, [source])
+
+        if (price) {
+            setStickyPrice(price)
+            setStickyAsset(targetAsset)
+        }
+    }, [source, price])
 
     const swapInfoClassnames = classNames(styles.swapInfo, {
         [styles.swapInfoActive]: (price && source && target
@@ -43,7 +50,7 @@ export default function SwapInfo({ targetAsset, confirmedData }:
         <div className={swapInfoClassnames}>
             {!confirmedData &&
                 <div onClick={() => setIsOpen(!isOpen)} className={styles.swapInfoButton}>
-                    <span>1 STAR ≈ {calculatePrice(price!)} {targetAsset}</span>
+                    <span>1 STAR ≈ {calculatePrice(stickyPrice!)} {stickyAsset}</span>
                     <Chevron style={{ transform: `rotate(${isOpen ? -180 : 0}deg)` }} />
                 </div>
             }
@@ -74,7 +81,7 @@ export default function SwapInfo({ targetAsset, confirmedData }:
                     </div>
                     <div>
                         <span>Route</span>
-                        <span>STARS » {confirmedData?.route || targetAsset}</span>
+                        <span>STARS » {confirmedData?.route || stickyAsset}</span>
                     </div>
                 </div>
             </div>

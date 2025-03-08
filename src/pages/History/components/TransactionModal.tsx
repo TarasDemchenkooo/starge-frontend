@@ -10,9 +10,11 @@ import toast from "react-hot-toast"
 import Ripple from "../../../shared/components/Ripple/components/Ripple"
 import TruncatedText from "../../../shared/components/TruncatedText/components/TruncatedText"
 import WorldWideIcon from '../../../assets/svg/world-wide.svg?react'
+import { Status } from "../../../shared/types/ITransaction"
 
 export default function TransactionModal({ transaction, setModalStatus }: ITransactionModal) {
     const jetton = jettons.jettons.find(jetton => jetton.symbol === transaction.tokenSymbol)
+    const copyFees = `liquidity provider fee: ${transaction.lpFee}\nblockchain fees: ${transaction.bchFees}`
 
     function handleCopy(text: string) {
         navigator.clipboard.writeText(text).then(() => {
@@ -21,7 +23,11 @@ export default function TransactionModal({ transaction, setModalStatus }: ITrans
     }
 
     function openViewer() {
-        Telegram.WebApp.openLink(`https://tonviewer.com/transaction/${transaction.hash}`)
+        if (transaction.status === Status.PENDING) {
+            toast('Transaction is still processing', { id: transaction.chargeId })
+        } else {
+            Telegram.WebApp.openLink(`https://testnet.tonviewer.com/transaction/${transaction.hash}`)
+        }
     }
 
     return (
@@ -37,7 +43,8 @@ export default function TransactionModal({ transaction, setModalStatus }: ITrans
                 </div>
                 <div className={styles.transactionModalData}>
                     <span className={styles.transactionModalDataFrom}>
-                        -&thinsp;{formatSourceInput(String(transaction.starsAmount))} STARS
+                        -&thinsp;{formatSourceInput(String(transaction.starsAmount))}
+                        &nbsp;STAR{transaction.starsAmount > 1 ? 'S' : ''}
                     </span>
                     <span className={styles.transactionModalDataTo}>
                         +&thinsp;{formatTargetInput(String(transaction.tokenAmount))} {transaction.tokenSymbol}
@@ -56,18 +63,15 @@ export default function TransactionModal({ transaction, setModalStatus }: ITrans
                     <div className={styles.transactionModalMetadataSeparator}></div>
                     <Ripple
                         className={styles.transactionModalMetadataItem}
-                        onClick={() => handleCopy(String('liquidity provider fee: ' +
-                            transaction.lpFee + '\n' + 'blockchain fees: ' + transaction.bchFees))}>
+                        onClick={() => handleCopy(copyFees)}>
                         <h5>Fees</h5>
                         <div>{formatSourceInput(String(transaction.lpFee + transaction.bchFees))} STARS</div>
                     </Ripple>
                 </div>
-                {transaction.hash &&
-                    <Ripple className={styles.transactionModalViewer} onClick={openViewer}>
-                        <WorldWideIcon />
-                        <span>Transaction</span>
-                    </Ripple>
-                }
+                <Ripple className={styles.transactionModalViewer} onClick={openViewer}>
+                    {transaction.status === Status.PENDING ? <div></div> : <WorldWideIcon />}
+                    <span>View on Tonviewer</span>
+                </Ripple>
             </div>
         </Modal>
     )
