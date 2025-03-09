@@ -8,9 +8,8 @@ export default function useAuth() {
         queryKey: ['jwt'],
         queryFn: () => authUser(initData),
         staleTime: Infinity,
-        refetchOnWindowFocus: false,
-        retry: false
+        refetchOnWindowFocus: false
     })
 
-    return { jwt: data?.jwt, isLoading, isError, refetch }
+    return { jwt: data?.jwt, isAuthLoading: isLoading, isAuthError: isError, refetch }
 }

@@ -45,7 +45,7 @@ export default function Ripple(cfg: IRipple) {
     }
 
     return (
-        <button className={rippleContainerClassnames} onClick={click}
+        <button className={rippleContainerClassnames} id={cfg.id} onClick={click}
             onTouchStart={createTouchRipple} onTouchMove={deleteRipple}
             onTouchEnd={deleteTouchRipple}>
             {cfg.children}

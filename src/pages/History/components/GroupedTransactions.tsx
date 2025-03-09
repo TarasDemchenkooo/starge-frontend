@@ -7,7 +7,7 @@ export default function GroupedTransactions({ date, transactions }: IGroupedTran
         <div className={styles.groupedTransactions}>
             <h4>{date}</h4>
             <div className={styles.groupedTransactionsData}>
-                {transactions.map(txn => <Transaction {...txn} />)}
+                {transactions.map(txn => <Transaction key={txn.chargeId} {...txn} />)}
             </div>
         </div>
     )
