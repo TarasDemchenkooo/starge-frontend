@@ -23,7 +23,7 @@ root.render(
           <App />
         </BrowserRouter>
       </TonConnectUIProvider>
-      <ReactQueryDevtools initialIsOpen={false}/>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </StrictMode>
 )

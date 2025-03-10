@@ -34,7 +34,8 @@
             height: 100%;
         }
 
-        &Pending {
+        &Pending,
+        &Failed {
             position: relative;
 
             &>div {
@@ -49,17 +50,44 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
+            }
+        }
 
-                &::after {
-                    content: '';
-                    width: 53%;
-                    height: 53%;
-                    border: 1.5px solid var(--main-color);
-                    border-bottom-color: transparent;
-                    border-radius: 50%;
-                    transition: all 0.3s ease-in-out;
-                    animation: rotation 1s linear infinite;
-                }
+        &Pending>div::after {
+            content: '';
+            width: 53%;
+            height: 53%;
+            border: 1.5px solid var(--main-color);
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            transition: all 0.3s ease-in-out;
+            animation: rotation 1s linear infinite;
+        }
+
+        &Failed>div {
+            background-color: var(--error-color);
+
+            &::after,
+            &::before {
+                content: '';
+                position: absolute;
+                background-color: var(--main-color);
+                top: 50%;
+                left: 50%;
+            }
+
+            &::before {
+                width: 56%;
+                height: 1.5px;
+                border-radius: 10px;
+                transform: translate(-50%, -50%) rotate(45deg);
+            }
+
+            &::after {
+                width: 56%;
+                height: 1.5px;
+                border-radius: 10px;
+                transform: translate(-50%, -50%) rotate(-45deg);
             }
         }
     }
@@ -102,6 +130,10 @@
             color: var(--hint-color);
             font-weight: var(--font-weight-default);
         }
+    }
+
+    &Failed>&Data>span:first-child {
+        color: var(--hint-color);
     }
 
     @keyframes rotation {

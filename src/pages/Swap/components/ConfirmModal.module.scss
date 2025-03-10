@@ -68,6 +68,16 @@
                 transition: all 0.3s ease-in-out;
             }
 
+            &>svg:last-child {
+                width: 25px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, calc(-50% + 12px));
+                scale: 0.8;
+                opacity: 0;
+            }
+
             &::after {
                 position: absolute;
                 content: '';
@@ -94,13 +104,25 @@
             }
 
             &Loading {
-                &>svg {
+                &>svg:first-child {
                     transform: translateY(-35%) scale(0.2);
                     opacity: 0;
                 }
 
                 &::after {
                     top: 50%;
+                    scale: 1;
+                    opacity: 1;
+                }
+            }
+
+            &Success {
+                &>svg:first-child {
+                    display: none;
+                }
+
+                &>svg:last-child {
+                    transform: translate(-50%, -50%);
                     scale: 1;
                     opacity: 1;
                 }

@@ -11,10 +11,15 @@ import Ripple from "../../../shared/components/Ripple/components/Ripple"
 import TruncatedText from "../../../shared/components/TruncatedText/components/TruncatedText"
 import WorldWideIcon from '../../../assets/svg/world-wide.svg?react'
 import { Status } from "../../../shared/types/ITransaction"
+import classNames from "classnames"
 
 export default function TransactionModal({ transaction, setModalStatus }: ITransactionModal) {
     const jetton = jettons.jettons.find(jetton => jetton.symbol === transaction.tokenSymbol)
     const copyFees = `liquidity provider fee: ${transaction.lpFee}\nblockchain fees: ${transaction.bchFees}`
+
+    const transactionModalDataClassnames = classNames(styles.transactionModalData, {
+        [styles.transactionModalDataError]: transaction.status === Status.FAILED
+    })
 
     function handleCopy(text: string) {
         navigator.clipboard.writeText(text).then(() => {
@@ -41,7 +46,7 @@ export default function TransactionModal({ transaction, setModalStatus }: ITrans
                         <img src={jetton?.icon} />
                     </div>
                 </div>
-                <div className={styles.transactionModalData}>
+                <div className={transactionModalDataClassnames}>
                     <span className={styles.transactionModalDataFrom}>
                         -&thinsp;{formatSourceInput(String(transaction.starsAmount))}
                         &nbsp;STAR{transaction.starsAmount > 1 ? 'S' : ''}
@@ -50,7 +55,8 @@ export default function TransactionModal({ transaction, setModalStatus }: ITrans
                         +&thinsp;{formatTargetInput(String(transaction.tokenAmount))} {transaction.tokenSymbol}
                     </span>
                     <span className={styles.transactionModalDataDate}>
-                        Swapped on {formatDate(transaction.createdAt, false)}
+                        {transaction.status === Status.FAILED ? 'Swap failed on ' : 'Swapped on '}
+                        {formatDate(transaction.createdAt, false)}
                     </span>
                 </div>
                 <div className={styles.transactionModalMetadata}>

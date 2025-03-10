@@ -67,6 +67,12 @@
             font-weight: var(--font-weight-bold);
             color: var(--hint-color);
         }
+
+        &Error {
+            &>span:first-child, &>span:nth-child(2) {
+                color: var(--hint-color);
+            }
+        }
     }
 
     &Metadata {

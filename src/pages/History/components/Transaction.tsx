@@ -16,11 +16,13 @@ export default function Transaction(transaction: ITransaction) {
     const [modalStatus, setModalStatus] = useState(false)
 
     const iconClassnames = classNames(styles.transactionIcon, {
-        [styles.transactionIconPending]: transaction.status === Status.PENDING
+        [styles.transactionIconPending]: transaction.status === Status.PENDING,
+        [styles.transactionIconFailed]: transaction.status === Status.FAILED
     })
 
     const transactionClassnames = classNames(styles.transaction, {
-        [styles.transactionActive]: isActive
+        [styles.transactionActive]: isActive,
+        [styles.transactionFailed]: transaction.status === Status.FAILED
     })
 
     useEffect(() => {

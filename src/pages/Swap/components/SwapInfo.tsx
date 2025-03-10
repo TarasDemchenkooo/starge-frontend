@@ -73,7 +73,7 @@ export default function SwapInfo({ targetAsset, confirmedData }:
                     }
                     <div>
                         <span>Liquidity provider fee</span>
-                        <span>{formatSourceInput(String(lpFee))} STARS</span>
+                        <span>{formatSourceInput(String(lpFee))} STAR{lpFee > 1 ? 'S' : ''}</span>
                     </div>
                     <div>
                         <span>Blockchain fees</span>

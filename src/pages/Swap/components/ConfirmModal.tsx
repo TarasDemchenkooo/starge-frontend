@@ -5,6 +5,7 @@ import SourceAsset from './SourceAsset'
 import TargetAsset from './TargetAsset'
 import { useEffect, useRef, useState } from 'react'
 import ConfirmArrow from '../../../assets/svg/confirm-arrow.svg?react'
+import SuccessArrow from '../../../assets/svg/success-arrow.svg?react'
 import classNames from 'classnames'
 import toast from 'react-hot-toast'
 import useSwap from '../hooks/useSwap'
@@ -12,6 +13,8 @@ import { IConfirmedSwap } from '../types/IConfirmedSwap'
 import formatSourceInput from '../utils/formatSourceInput'
 import payment from '../../../shared/constants/payment'
 import { useNavigate } from 'react-router-dom'
+import { useQueryClient } from '@tanstack/react-query'
+import { ITransaction } from '../../../shared/types/ITransaction'
 
 export default function ConfirmModal({ data, setModalStatus }:
     { data: IConfirmedSwap, setModalStatus: (status: boolean) => void }) {
@@ -23,21 +26,33 @@ export default function ConfirmModal({ data, setModalStatus }:
     const buttonRef = useRef<HTMLButtonElement>(null)
     const { invoice, mutate, isPending, error } = useSwap()
     const [isLoading, setIsLoading] = useState(false)
+    const [isSuccess, setIsSuccess] = useState(false)
     const [closeModal, setCloseModal] = useState(false)
     const [currentText, setCurrentText] = useState('Slide to confirm')
     const navigate = useNavigate()
+    const queryClient = useQueryClient()
 
     const buttonClassnames = classNames(styles.confirmModalSliderBtn, {
-        [styles.confirmModalSliderBtnLoading]: isLoading
+        [styles.confirmModalSliderBtnLoading]: isLoading,
+        [styles.confirmModalSliderBtnSuccess]: isSuccess
     })
 
     useEffect(() => {
         if (invoice?.invoiceLink) {
             Telegram.WebApp.openInvoice(invoice.invoiceLink, status => {
                 if (status === 'paid') {
-                    setIsLoading(false)
-                    setCloseModal(true)
-                    setTimeout(() => navigate('/history?poll=true', {}), 500)
+                    const targetLength = queryClient.getQueryData<ITransaction[]>(['history'])!.length + 1
+
+                    setTimeout(() => {
+                        setIsLoading(false)
+                        setIsSuccess(true)
+                        setTimeout(() => {
+                            setCloseModal(true)
+                            setTimeout(() => {
+                                navigate(`/history?target_length=${targetLength}`)
+                            }, 500)
+                        }, 1500)
+                    }, 1000)
                 } else if (status === 'cancelled') {
                     setPosition({ x: 0, y: 0 })
                     setIsLoading(false)
@@ -111,6 +126,7 @@ export default function ConfirmModal({ data, setModalStatus }:
                             { transition: isAnimating ? 'transform 0.3s ease-in-out' : 'none' }
                         }>
                             <ConfirmArrow />
+                            <SuccessArrow />
                         </button>
                     </Draggable>
                 </div>
