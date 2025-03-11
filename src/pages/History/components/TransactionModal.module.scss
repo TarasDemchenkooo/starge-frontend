@@ -66,10 +66,27 @@
             line-height: 16px;
             font-weight: var(--font-weight-bold);
             color: var(--hint-color);
+            display: flex;
+            gap: 4px;
+
+            &>svg {
+                transform: translateY(0.5px);
+                width: 16px;
+                height: 16px;
+                stroke: var(--hint-color);
+            }
         }
 
-        &Error {
-            &>span:first-child, &>span:nth-child(2) {
+        &Failed {
+            &>span:first-child,
+            &>span:nth-child(2) {
+                color: var(--dark-hint-color);
+            }
+        }
+
+        &Pending {
+            &>span:first-child,
+            &>span:nth-child(2) {
                 color: var(--hint-color);
             }
         }

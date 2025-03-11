@@ -10,6 +10,7 @@ import toast from "react-hot-toast"
 import Ripple from "../../../shared/components/Ripple/components/Ripple"
 import TruncatedText from "../../../shared/components/TruncatedText/components/TruncatedText"
 import WorldWideIcon from '../../../assets/svg/world-wide.svg?react'
+import ProcessingIcon from '../../../assets/svg/processing.svg?react'
 import { Status } from "../../../shared/types/ITransaction"
 import classNames from "classnames"
 
@@ -18,7 +19,8 @@ export default function TransactionModal({ transaction, setModalStatus }: ITrans
     const copyFees = `liquidity provider fee: ${transaction.lpFee}\nblockchain fees: ${transaction.bchFees}`
 
     const transactionModalDataClassnames = classNames(styles.transactionModalData, {
-        [styles.transactionModalDataError]: transaction.status === Status.FAILED
+        [styles.transactionModalDataPending]: transaction.status === Status.PENDING,
+        [styles.transactionModalDataFailed]: transaction.status === Status.FAILED
     })
 
     function handleCopy(text: string) {
@@ -54,10 +56,12 @@ export default function TransactionModal({ transaction, setModalStatus }: ITrans
                     <span className={styles.transactionModalDataTo}>
                         +&thinsp;{formatTargetInput(String(transaction.tokenAmount))} {transaction.tokenSymbol}
                     </span>
-                    <span className={styles.transactionModalDataDate}>
-                        {transaction.status === Status.FAILED ? 'Swap failed on ' : 'Swapped on '}
-                        {formatDate(transaction.createdAt, false)}
-                    </span>
+                    <div className={styles.transactionModalDataDate}>
+                        {transaction.status === Status.PENDING ? 'Swap is processing' :
+                            transaction.status === Status.CONFIRMED ? 'Swapped on ' : 'Swap failed on '}
+                        {transaction.status === Status.PENDING ? <ProcessingIcon /> :
+                            formatDate(transaction.processedAt!, false)}
+                    </div>
                 </div>
                 <div className={styles.transactionModalMetadata}>
                     <Ripple

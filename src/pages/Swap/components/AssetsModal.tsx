@@ -34,7 +34,7 @@ export default function AssetsModal({ setModalStatus }: IAssetsModal) {
                 <h3>Select crypto</h3>
                 <div>
                     {jettons.jettons.map(jetton =>
-                        <ModalAsset {...jetton} symbol={jetton.symbol as Assets} address={address}
+                        <ModalAsset {...jetton} symbol={jetton.symbol as Assets} key={jetton.symbol} address={address}
                             activeAsset={activeAsset} setActiveAsset={setActiveAsset} />)
                     }
                 </div>

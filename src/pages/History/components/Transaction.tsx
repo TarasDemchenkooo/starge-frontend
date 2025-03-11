@@ -15,13 +15,9 @@ export default function Transaction(transaction: ITransaction) {
     const jetton = jettons.jettons.find(jetton => jetton.symbol === transaction.tokenSymbol)!
     const [modalStatus, setModalStatus] = useState(false)
 
-    const iconClassnames = classNames(styles.transactionIcon, {
-        [styles.transactionIconPending]: transaction.status === Status.PENDING,
-        [styles.transactionIconFailed]: transaction.status === Status.FAILED
-    })
-
     const transactionClassnames = classNames(styles.transaction, {
         [styles.transactionActive]: isActive,
+        [styles.transactionPending]: transaction.status === Status.PENDING,
         [styles.transactionFailed]: transaction.status === Status.FAILED
     })
 
@@ -52,7 +48,7 @@ export default function Transaction(transaction: ITransaction) {
     return (
         <Ripple id={transaction.chargeId} className={transactionClassnames}
             onClick={() => setModalStatus(true)}>
-            <div className={iconClassnames}>
+            <div className={styles.transactionIcon}>
                 <img src={jetton.icon} />
                 <div></div>
             </div>

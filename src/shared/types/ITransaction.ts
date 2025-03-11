@@ -16,5 +16,6 @@ export interface ITransaction {
     chargeId: string
     hash: string
     status: Status
+    processedAt: null | string
     createdAt: string
 }
