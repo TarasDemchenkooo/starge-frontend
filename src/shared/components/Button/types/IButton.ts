@@ -1,5 +1,8 @@
+import { ReactNode } from "react"
+
 export interface IButton {
-    content: string
+    children?: ReactNode
+    content?: string
     isLoading?: boolean
     className?: string
     disabled?: boolean

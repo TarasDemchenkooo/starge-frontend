@@ -10,6 +10,8 @@ import Toast from "./shared/components/Toast/components/Toast"
 import UIOptions from "./shared/constants/tonConnectUi"
 import useHistory from "./pages/History/hooks/useHistory"
 import useSettings from "./pages/Settings/hooks/useSettings"
+import LoadingScreen from "./shared/components/Screens/components/Loading"
+import ErrorScreen from "./shared/components/Screens/components/Error"
 
 export default function App() {
     const startParam = Telegram.WebApp.initDataUnsafe.start_param
@@ -33,9 +35,9 @@ export default function App() {
         }
     }, [jwt])
 
-    if (isAuthLoading || isHistoryLoading || isSettingsLoading || !isRequested) return 'Loading...'
+    if (isAuthLoading || isHistoryLoading || isSettingsLoading || !isRequested) return <LoadingScreen />
 
-    if (isAuthError || isHistoryError || isSettingsError) return 'Error'
+    if (isAuthError || isHistoryError || isSettingsError) return <ErrorScreen />
 
     return (
         <>

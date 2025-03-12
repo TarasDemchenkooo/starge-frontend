@@ -4,7 +4,8 @@ import { useState } from 'react'
 import classNames from 'classnames'
 import { vibrate } from '../../../utils/vibrate'
 
-export default function Button({ content, className, onClick, isLoading, disabled = false }: IButton) {
+export default function Button({ children, content,
+    className, onClick, isLoading, disabled = false }: IButton) {
     const [pressed, setPressed] = useState(false)
     const [released, setReleased] = useState(false)
     const clickable = !isLoading && !disabled
@@ -40,6 +41,7 @@ export default function Button({ content, className, onClick, isLoading, disable
     return (
         <button disabled={disabled} data-text={content} className={buttonClassnames} onClick={click}
             onTouchStart={press} onTouchEnd={release}>
+            {children}
         </button>
     )
 }
