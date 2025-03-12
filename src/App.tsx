@@ -3,7 +3,7 @@ import useAuth from "./pages/Swap/hooks/useAuth"
 import History from "./pages/History/History"
 import { useTonConnectUI } from "@tonconnect/ui-react"
 import Swap from "./pages/Swap/Swap"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import Settings from "./pages/Settings/Settings"
 import Menu from "./shared/components/Menu/components/Menu"
 import Toast from "./shared/components/Toast/components/Toast"
@@ -12,23 +12,28 @@ import useHistory from "./pages/History/hooks/useHistory"
 import useSettings from "./pages/Settings/hooks/useSettings"
 
 export default function App() {
-    const navigate = useNavigate()
+    const startParam = Telegram.WebApp.initDataUnsafe.start_param
+    const isJwtExists = Boolean(localStorage.getItem('jwt'))
     const [_, configureTonConnectUi] = useTonConnectUI()
     const { jwt, isAuthLoading, isAuthError } = useAuth()
-    const { isHistoryLoading, isHistoryError } = useHistory()
-    const { isSettingsLoading, isSettingsError } = useSettings()
+    const { isHistoryLoading, isHistoryError, setHistoryEnabled } = useHistory(isJwtExists)
+    const { isSettingsLoading, isSettingsError, setSettingsEnabled } = useSettings(isJwtExists)
+    const [isRequested, setIsRequested] = useState(isJwtExists)
+    const navigate = useNavigate()
 
     useEffect(() => {
-        const startParam = Telegram.WebApp.initDataUnsafe.start_param
         if (startParam) navigate(`/history?${startParam}`)
 
         if (jwt) {
+            setHistoryEnabled(true)
+            setSettingsEnabled(true)
+            setIsRequested(true)
             localStorage.setItem('jwt', jwt)
             configureTonConnectUi(UIOptions)
         }
-    }, [isAuthLoading])
+    }, [jwt])
 
-    if (isAuthLoading || isHistoryLoading || isSettingsLoading) return 'Loading...'
+    if (isAuthLoading || isHistoryLoading || isSettingsLoading || !isRequested) return 'Loading...'
 
     if (isAuthError || isHistoryError || isSettingsError) return 'Error'
 
