@@ -12,8 +12,8 @@ import link from './shared/constants/link'
 
 setTma()
 
-const domNode = document.getElementById('root')!
-const root = createRoot(domNode)
+const domNode = document.getElementById('root')
+const root = createRoot(domNode!)
 
 root.render(
   <StrictMode>
