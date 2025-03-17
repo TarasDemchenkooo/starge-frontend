@@ -35,7 +35,8 @@ export default function App() {
         }
     }, [jwt])
 
-    if (isAuthLoading || isHistoryLoading || isSettingsLoading || !isRequested) return <LoadingScreen />
+    if (isAuthLoading || isHistoryLoading || isSettingsLoading ||
+        (!isRequested && !isAuthError)) return <LoadingScreen />
 
     if (isAuthError || isHistoryError || isSettingsError) return <ErrorScreen />
 
