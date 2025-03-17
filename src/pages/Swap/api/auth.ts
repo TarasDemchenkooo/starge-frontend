@@ -1,6 +1,5 @@
 import { backend } from "../../../shared/api/apiClinet"
-import { IAuth } from "../../../shared/types/IAuth"
 
-export default async function authUser(initData: string): Promise<IAuth> {
+export default async function authUser(initData: string): Promise<{ jwt: string }> {
     return backend.post('/auth', { initData })
 }
