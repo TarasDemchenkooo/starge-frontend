@@ -8,8 +8,6 @@ on:
 env:
   REGISTRY: ghcr.io
   USERNAME: ${{ github.repository_owner }}
-  IMAGE: ${{ github.event.repository.name }}
-  TAG: ${{ github.sha | slice(0, 7) }}
 
 jobs:
   build-and-push:
@@ -29,11 +27,15 @@ jobs:
           username: ${{ env.USERNAME }}
           password: ${{ secrets.CR_PAT }}
 
+      - name: Generate short SHA
+        id: sha
+        run: echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
       - name: Build and push docker image
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.USERNAME }}/${{ env.IMAGE }}/${{ env.TAG }}
+          tags: ${{ env.REGISTRY }}/${{ env.USERNAME }}/${{ github.event.repository.name }}:${{ steps.sha.outputs.short_sha }}
           cache-from: type=gha
           cache-to: type=gha, mode=max
