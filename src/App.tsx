@@ -7,11 +7,11 @@ import { useEffect, useState } from "react"
 import Settings from "./pages/Settings/Settings"
 import Menu from "./shared/components/Menu/components/Menu"
 import Toast from "./shared/components/Toast/components/Toast"
-import UIOptions from "./shared/constants/tonConnectUi"
 import useHistory from "./pages/History/hooks/useHistory"
 import useSettings from "./pages/Settings/hooks/useSettings"
 import LoadingScreen from "./shared/components/Screens/components/Loading"
 import ErrorScreen from "./shared/components/Screens/components/Error"
+import { UIOptions } from "./shared/constants/tonConnectUi"
 
 export default function App() {
     const startParam = Telegram.WebApp.initDataUnsafe.start_param

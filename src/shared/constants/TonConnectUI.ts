@@ -17,7 +17,7 @@ const themeSettings = {
     telegramButton: '#46AEF5',
 }
 
-const UIOptions: TonConnectUiOptions = {
+export const UIOptions: TonConnectUiOptions = {
     uiPreferences: {
         theme: Telegram.WebApp.colorScheme === 'light' ? THEME.LIGHT : THEME.DARK,
         colorsSet: {
@@ -26,5 +26,3 @@ const UIOptions: TonConnectUiOptions = {
         }
     }
 }
-
-export default UIOptions
