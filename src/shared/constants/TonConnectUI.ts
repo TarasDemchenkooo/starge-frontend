@@ -1,7 +1,3 @@
-import { THEME, TonConnectUiOptions } from "@tonconnect/ui-react"
-
-const theme = Telegram.WebApp.themeParams
-
 const themeSettings = {
     background: {
         primary: '#0F1620',
@@ -12,14 +8,13 @@ const themeSettings = {
         secondary: '#7F8A98'
     },
     icon: {
-        error: theme.destructive_text_color
+        error: '#FF4766'
     },
     telegramButton: '#46AEF5',
 }
 
-export const UIOptions: TonConnectUiOptions = {
+export default {
     uiPreferences: {
-        theme: Telegram.WebApp.colorScheme === 'light' ? THEME.LIGHT : THEME.DARK,
         colorsSet: {
             DARK: themeSettings,
             LIGHT: themeSettings

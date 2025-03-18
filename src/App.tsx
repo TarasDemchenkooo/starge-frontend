@@ -11,7 +11,7 @@ import useHistory from "./pages/History/hooks/useHistory"
 import useSettings from "./pages/Settings/hooks/useSettings"
 import LoadingScreen from "./shared/components/Screens/components/Loading"
 import ErrorScreen from "./shared/components/Screens/components/Error"
-import { UIOptions } from "./shared/constants/tonConnectUi"
+import UiOptions from "./shared/constants/tonConnectUi"
 
 export default function App() {
     const startParam = Telegram.WebApp.initDataUnsafe.start_param
@@ -31,7 +31,7 @@ export default function App() {
             setSettingsEnabled(true)
             setIsRequested(true)
             localStorage.setItem('jwt', jwt)
-            configureTonConnectUi(UIOptions)
+            configureTonConnectUi(UiOptions)
         }
     }, [jwt])
 
