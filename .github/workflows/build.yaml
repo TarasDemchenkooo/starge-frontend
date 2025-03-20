@@ -8,8 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    outputs:
-      tag: ${{ steps.meta.outputs.tags }}
 
     steps:
       - name: Checkout code
@@ -42,12 +40,13 @@ jobs:
           cache-to: type=gha,mode=max
 
   deploy:
+    runs-on: ubuntu-22.04
     needs: build
-    runs-on: ubuntu-22.04 
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3 
-        
+
       - name: Deploy to server
         uses: appleboy/ssh-action@master
         with:
@@ -58,5 +57,5 @@ jobs:
           script: |
             cd ~/app
             echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            export TAG=${{ needs.build.outputs.tag }}
+            export TAG=${{ github.sha:0:7 }}
             echo $TAG
