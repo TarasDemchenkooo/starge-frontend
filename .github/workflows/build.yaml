@@ -51,14 +51,5 @@ jobs:
         id: vars
         run: echo "COMMIT_SHORT_SHA=$(git rev-parse --short ${{ github.sha }}) >> $GITHUB_OUTPUT"
 
-      - name: Deploy to server
-        uses: appleboy/ssh-action@master
-        with:
-          host: starge.xyz
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          script: |
-            cd ~/app
-            export TAG=${{ steps.vars.outputs.COMMIT_SHORT_SHA }}
-            echo $TAG
+      - name: Confirm git commit SHA output
+        run: echo ${{ steps.vars.outputs.COMMIT_SHORT_SHA }}
