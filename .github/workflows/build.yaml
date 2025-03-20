@@ -45,7 +45,11 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3 
+        uses: actions/checkout@v3
+
+      - name: Extract commit short sha
+        id: vars
+        run: echo "SHORT_SHA=$(echo ${github.sha} | cut -c1-7) >> $GITHUB_OUTPUT"
 
       - name: Deploy to server
         uses: appleboy/ssh-action@master
@@ -57,5 +61,5 @@ jobs:
           script: |
             cd ~/app
             echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            export TAG=${{ github.sha:0:7 }}
+            export TAG=${{ steps.vars.outputs.SHORT_SHA }}
             echo $TAG
