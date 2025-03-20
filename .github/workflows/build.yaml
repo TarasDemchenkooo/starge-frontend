@@ -1,4 +1,4 @@
-name: Build frontend
+name: Build & Deploy Frontend
 
 on:
   push:
@@ -6,8 +6,10 @@ on:
       - master
 
 jobs:
-  build-and-push:
+  build:
     runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.meta.outputs.tags }}
 
     steps:
       - name: Checkout code
@@ -28,8 +30,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ghcr.io/${{ github.repository }}
-          tags: |
-            type=sha,format=short,prefix=
+          tags: type=sha,format=short,prefix=
 
       - name: Build and push docker image
         uses: docker/build-push-action@v4
@@ -39,3 +40,23 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-22.04 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3 
+        
+      - name: Deploy to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: starge.xyz
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd ~/app
+            echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            export TAG=${{ needs.build.outputs.tag }}
+            echo $TAG
