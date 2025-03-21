@@ -1,5 +1,5 @@
 export default {
-    backendUrl: import.meta.env.VITE_BACKEND_API_URL,
-    tonapiUrl: import.meta.env.VITE_TONAPI_URL,
-    tonapiKey: import.meta.env.VITE_TONAPI_KEY
+    backendUrl: "https://starge.xyz/api/",
+    tonapiUrl: "https://tonapi.io/v2/",
+    tonapiKey: "AEJ6J7NK7R2ECUQAAAAO3VKDETCLMFPQ2IP67K7C7ZXOBR6AV7YGOVAKD6MODZEILD4SNWA"
 }

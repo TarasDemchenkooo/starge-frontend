@@ -1,4 +1,4 @@
 export default {
-    manifestLink: import.meta.env.VITE_MANIFEST_URL,
-    channelLink: 'https://t.me/'.concat(import.meta.env.VITE_CHANNEL_USERNAME)
+    manifestLink: "https://starge.xyz/tonconnect-manifest.json",
+    channelLink: "https://t.me/starge_community"
 }
