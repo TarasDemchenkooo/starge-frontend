@@ -58,9 +58,9 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd ~/app/starge-stack
+            cd ~/app/starge-stack/compose
             echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             export TAG=${{ env.COMMIT_SHORT_SHA }}
             docker compose -f docker-compose.frontend.yaml pull
             docker compose -f docker-compose.frontend.yaml up -d
-            docker image prune -f
+            docker image prune -af
